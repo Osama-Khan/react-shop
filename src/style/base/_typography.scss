@@ -10,6 +10,14 @@ body {
 	color: $color-primary!important;
 }
 
+.text-dark {
+	color: $text-color;
+}
+
+.text-light {
+	color: $text-color-inverted;
+}
+
 [class*=has-zap] strong {
 	position: relative
 }
