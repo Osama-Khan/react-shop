@@ -1,0 +1,35 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+.btn {
+    transition: 0.25s all;
+    margin: 0.2em;
+}
+
+.btn:not(:disabled):hover {
+    box-shadow: 0 4px 8px 1px #0002;
+    transform: translateY(-1px);
+}
+
+.btn:not(:disabled):active {
+    box-shadow: none!important;
+    transform: none!important;
+    filter: brightness(0.8);
+}
+
+.btn-primary {
+    background-color: $color-primary!important;
+    border-color: $color-primary-light!important;
+}
+
+.btn-primary-outline {
+    background-color: #0000;
+    color: $color-primary!important;
+    border-color: $color-primary-light!important;
+}
+
+.btn-primary-outline:not(:disabled):hover {
+    background-color: $color-primary!important;
+    color: white!important;
+    border-color: $color-primary-light!important;
+}

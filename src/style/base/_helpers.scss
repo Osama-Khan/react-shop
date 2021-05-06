@@ -1,0 +1,49 @@
+// -----------------------------------------------------------------------------
+// This file contains CSS helper classes.
+// -----------------------------------------------------------------------------
+.switch-wrapper {
+    position: relative;
+    &>div {
+      position: absolute;
+      width: 100%;
+    }
+}
+
+.anchor-color-remover {
+  color: unset;
+  &:hover {
+    color: unset;
+  }
+
+  &:active {
+    color: unset;
+  }
+
+  &:focus {
+    color: unset;
+  }
+}
+
+.top-right {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.top-left {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}

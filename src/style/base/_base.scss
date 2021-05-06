@@ -1,0 +1,32 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #eee;
+}
+
+a {
+  color: #252525;
+  transition: $animation-fast color;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-primary;
+    text-decoration: none;
+  }
+}
+
+img {
+  max-width: 100%;
+}

@@ -1,0 +1,14 @@
+.carousel-item img {
+  height: 320px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carousel-indicators li {
+  box-sizing: none;
+  background-clip: 'border-box';
+  height: 16px;
+  width: 16px;
+  border: none;
+  border-radius: 8px;
+}

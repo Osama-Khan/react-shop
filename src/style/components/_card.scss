@@ -1,0 +1,78 @@
+.card {
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0 8px 8px 0 #0003;
+    overflow: hidden;
+}
+
+.card.clickable {
+    cursor: pointer;
+    transition: $animation-fast transform, $animation-fast box-shadow;
+}
+
+.card.clickable:hover {
+    box-shadow: 0 8px 12px 0 #0003;
+    transform: translateY(-2px);
+}
+
+.card.primary  {
+    transition: $animation-fast background-color, $animation-fast color;
+
+    &:hover {
+        background-color: $color-primary;
+        color: white;
+    }
+}
+
+.card.blue  {
+    transition: $animation-fast background-color, $animation-fast color;
+
+    &:hover {
+        background-color: $color-blue;
+        color: white;
+    }
+}
+
+.card.green  {
+    transition: $animation-fast background-color, $animation-fast color;
+
+    &:hover {
+        background-color: $color-green;
+        color: white;
+    }
+}
+
+.card.yellow  {
+    transition: $animation-fast background-color, $animation-fast color;
+
+    &:hover {
+        background-color: $color-yellow;
+        color: white;
+    }
+}
+
+.card.red  {
+    transition: $animation-fast background-color, $animation-fast color;
+
+    &:hover {
+        background-color: $color-red;
+        color: white;
+    }
+}
+
+.card.teal  {
+    transition: $animation-fast background-color, $animation-fast color;
+
+    &:hover {
+        background-color: $color-teal;
+        color: white;
+    }
+}
+
+
+.btn-icon {
+    color: white;
+    padding: 0.5em;
+    border-radius: 1em;
+    cursor: pointer;
+}

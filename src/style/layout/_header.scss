@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the header of the site/application.
+// -----------------------------------------------------------------------------
+
+nav {
+    background-color: #fff;
+}
+
+.nav-logo {
+    font-size: 34px;
+}
+
+.nav-link.active {
+    border-bottom: 2px solid $color-primary;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: .5rem;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    color: $color-primary;
+    margin-right: 1em;
+}

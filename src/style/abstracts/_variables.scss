@@ -1,0 +1,77 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/// Regular font family
+/// @type List
+$text-font-stack: ('SF Pro Display', 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif) !default;
+
+/// Code (monospace) font family
+/// @type List
+$code-font-stack: ('Ubuntu Mono', 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace) !default;
+
+/// Container's maximum width
+/// @type Length
+$max-width: 1180px !default;
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+  'small': 320px,
+  'medium': 768px,
+  'large': 1024px,
+) !default;
+
+/// Relative or absolute URL where all assets are served from
+/// @type String
+/// @example scss - When using a CDN
+///   $base-url: 'http://cdn.example.com/assets/';
+$base-url: '/assets/' !default;
+
+/// Animations
+$animation-faster: 0.1s !default;
+$animation-fast: 0.25s !default;
+$animation-normal: 0.5s !default;
+$animation-slow: 1s !default;
+$animation-slower: 2s !default;
+
+/// Colors
+/// BOOTSTRAP COLORS ///
+$color-blue: #007bff;
+$color-blue-transparent: #007bff88;
+$color-indigo: #6610f2;
+$color-indigo-transparent: #6610f288;
+$color-purple: #6f42c1;
+$color-purple-transparent: #6f42c188;
+$color-pink: #e83e8c;
+$color-pink-transparent: #e83e8c88;
+$color-red: #dc3545;
+$color-red-transparent: #dc354588;
+$color-orange: #fd7e14;
+$color-orange-transparent: #fd7e1488;
+$color-yellow: #ffc107;
+$color-yellow-transparent: #ffc10788;
+$color-green: #28a745;
+$color-green-transparent: #28a74588;
+$color-teal: #20c997;
+$color-teal-transparent: #20c99788;
+$color-cyan: #17a2b8;
+$color-cyan-transparent: #17a2b888;
+$color-white: #fff;
+$color-white-transparent: #fff8;
+$color-gray: #6c757d;
+$color-gray-transparent: #6c757d88;
+$color-gray-dark: #343a40;
+$color-gray-dark-transparent: #343a4088;
+$color-light: #f8f9fa;
+$color-light-transparent: #f8f9fa88;
+$color-dark: #343a40;
+$color-dark-transparent: #343a4088;
+
+/// CUSTOM COLORS ///
+$text-color: rgb(34, 34, 34) !default;
+$text-color-inverted: rgb(221, 221, 221) !default;
+$color-primary: #7700ff!default;
+$color-primary-transparent: #7700ff88!default;
+$color-primary-light: #9a42ff!default;
