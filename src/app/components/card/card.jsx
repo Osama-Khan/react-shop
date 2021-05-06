@@ -14,7 +14,7 @@ export function Card(props) {
   }
 }
 
-export function ProductCard({ product, classes }) {
+export function ProductCard({ product, classes = "" }) {
   const cardClasses = `card clickable m-1 p-3 row anchor-color-remover ${classes}`;
   const highlights = product.highlights.map((h, i) => <li key={i}>{h}</li>);
 
@@ -43,7 +43,7 @@ export function ProductCard({ product, classes }) {
   );
 }
 
-function IconCard({ text, icon, click, color, classes, iconClasses, linkTo }) {
+function IconCard({ text, icon, click, color="", classes = "", iconClasses = "", linkTo }) {
   const cardClasses = `card ${color} m-1 py-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
@@ -67,7 +67,7 @@ function IconCard({ text, icon, click, color, classes, iconClasses, linkTo }) {
   }
 }
 
-function ImageCard({ text, image, click, color, classes, linkTo }) {
+function ImageCard({ text, image, click, color="", classes="", linkTo }) {
   const cardClasses = `card ${color} m-1 pb-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
@@ -91,7 +91,7 @@ function ImageCard({ text, image, click, color, classes, linkTo }) {
   }
 }
 
-function TextCard({ text, image, click, color, classes }) {
+function TextCard({ text, image, click, color="", classes="" }) {
   const cardClasses = `card ${color} m-1 py-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
