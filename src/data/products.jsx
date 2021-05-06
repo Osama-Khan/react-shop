@@ -12,7 +12,7 @@ export const products = [
       "Memory Clock 5012 MHz",
     ],
     price: 9500,
-    rating: null,
+    rating: 3,
     category: "GPU",
     img:
       "https://czone.com.pk/Images/Thumbnails/1-68-1540-6119-261217021016.jpg",
@@ -30,7 +30,7 @@ export const products = [
       "DVI-D *1 // HDMI-2.0b*1",
     ],
     price: 16500,
-    rating: null,
+    rating: 0,
     category: "GPU",
     img:
       "https://czone.com.pk/Images/Thumbnails/2017051111311364-big-1540-5575-230617014221.jpg",
@@ -48,7 +48,7 @@ export const products = [
       "Memory Clock 6008 MHz",
     ],
     price: 17500,
-    rating: null,
+    rating: 2.5,
     category: "GPU",
     img:
       "https://czone.com.pk/Images/Thumbnails/91cjhpbytcl.-sl1500--1540-5769-260817023000.jpg",

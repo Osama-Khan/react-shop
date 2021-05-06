@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Icon from "../icon/icon";
 import { productsUrl } from "../../routes";
 import { IconButton } from "../button/Button";
+import ProductRating from "../product-rating/product-rating";
 
 export function Card(props) {
   if (props.image) {
@@ -27,6 +28,7 @@ export function ProductCard({ product, classes }) {
           alt=""
         />
         <b>{product.title}</b>
+        <ProductRating rating={product.rating} classes="text-warning"/>
         <p className="text-right">
           Rs. <b className="text-success">{product.price}</b>
         </p>
