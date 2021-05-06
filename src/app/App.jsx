@@ -5,8 +5,8 @@ import { AnimatedSwitch } from 'react-router-transition';
 import { routes as r } from './routes';
 
 function App() {
-  const routes = r.map(r => (
-    <Route exact path={r.path} component={r.component} />
+  const routes = r.map((r, i) => (
+    <Route key={`route-${i}`} exact path={r.path} component={r.component} />
   ));
   return (
     <div className="app">

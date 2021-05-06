@@ -11,9 +11,9 @@ export default function Products() {
 
   let prods;
   if (products.length > 0) {
-    prods = products.map((p) => {
+    prods = products.map((p, i) => {
       return (
-        <div className="col-md-4 col-sm-12">
+        <div key={`product-${i}`} className="col-md-4 col-sm-12">
           <ProductCard product={p} />
         </div>
       );
