@@ -16,7 +16,6 @@ export function Card(props) {
 
 export function ProductCard({ product, classes = "" }) {
   const cardClasses = `card clickable m-1 p-3 row anchor-color-remover ${classes}`;
-  const highlights = product.highlights.map((h, i) => <li key={i}>{h}</li>);
 
   return (
     <>
