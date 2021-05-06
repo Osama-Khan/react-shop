@@ -22,10 +22,14 @@ export default function ProductRating({rating, classes}) {
       starsEl.push(<Icon dataIcon="bi-star"></Icon>);
     }
   }
+
+  const textClass = rating? "text-dark": "text-muted";
+  const divClass = rating? "text-warning": "text-muted";
+
   return (
-    <div className={`p-1 ${classes}`}>
+    <div className={`p-1 ${divClass} ${classes?classes:""}`}>
       {starsEl}
-      <span className="text-dark"> | {rating ? rating + " Stars" : "No ratings"}</span>
+      <span className={textClass}> | {rating ? rating + " Stars" : "No ratings"}</span>
     </div>
   );
 }
