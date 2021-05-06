@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { ProductCard } from "../components/card/card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import ProductService from "../services/product-service";
+import Icon from "../components/icon/icon";
 
 export default function Products() {
   let [products, setProducts] = useState([]);
@@ -21,10 +20,10 @@ export default function Products() {
     });
   } else {
     prods = (
-      <div className="col-12 d-flex mt-5">
-        <FontAwesomeIcon
-          className="mx-auto icon-lg spin"
-          icon={faCircleNotch}
+      <div key="loadingIcon" className="col-12 d-flex mt-5">
+        <Icon
+          classes="mx-auto icon-lg spin"
+          dataIcon="fa:spinner"
         />
       </div>
     );
