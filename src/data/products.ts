@@ -1,4 +1,6 @@
-export const products = [
+import Product from "../app/models/product";
+
+export const products: Product[] = [
   {
     id: 1,
     code: "GT710-SL-2GD5-BRK",
