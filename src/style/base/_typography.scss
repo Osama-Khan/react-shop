@@ -6,6 +6,10 @@ body {
   font: normal 125% / 1.4 $text-font-stack;
 }
 
+.text-sm {
+  font-size:0.75em;
+}
+
 .text-primary {
 	color: $color-primary!important;
 }
