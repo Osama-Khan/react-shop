@@ -18,6 +18,30 @@ body {
 	color: $text-color-inverted;
 }
 
+.text-green {
+	color: $color-green;
+}
+
+.text-yellow {
+	color: $color-yellow;
+}
+
+.text-blue {
+	color: $color-blue;
+}
+
+.text-red {
+	color: $color-red;
+}
+
+.text-orange {
+	color: $color-orange;
+}
+
+.text-purple {
+	color: $color-purple;
+}
+
 [class*=has-zap] strong {
 	position: relative
 }
