@@ -34,7 +34,7 @@ export default class Home extends React.Component {
           icon={catIconMap[c.name]}
           iconClasses="icon-md"
           color={categoriesMeta.colors[0]}
-          linkTo={`${categoriesUrl}/${c.id}`}
+          linkTo={`${categoriesUrl}/${c.name.toLowerCase()}`}
         />
       </div>
     ));
