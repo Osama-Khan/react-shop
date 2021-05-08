@@ -8,21 +8,29 @@ nav {
 
 .nav-logo {
     font-size: 34px;
-}
-
-.nav-link.active {
-    border-bottom: 2px solid $color-primary;
+    margin-right: 8px!important;
 }
 
 .nav-item {
-    display: flex;
-    align-items: center;
-    padding: .5rem;
+  display: flex;
+  align-items: center;
+  padding: .5rem;
 }
 
 .nav-logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  color: $color-primary;
+  margin-right: 1em;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  color: $color-primary;
+}
+
+.nav-link.active {
+    background-color: $color-primary-subtle;
     color: $color-primary;
-    margin-right: 1em;
+    border-bottom: 2px solid $color-primary;
 }
