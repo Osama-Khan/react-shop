@@ -28,9 +28,11 @@ export function ProductCard({ product, classes = "" }) {
         />
         <b>{product.title}</b>
         <ProductRating rating={product.rating} classes="text-warning"/>
-        <p className="text-right">
-          Rs. <b className="text-success">{product.price}</b>
-        </p>
+        <div className="text-right my-3">
+        <span className="p-3 badge-pill bg-green-subtle text-green">
+          Rs. <b>{product.price}</b>
+        </span>
+        </div>
       </Link>
       <IconButton
         classes="btn-primary-outline top-right mr-4 mt-3"
