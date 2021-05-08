@@ -38,7 +38,7 @@ export function ProductCard({ product, classes = "" }) {
         classes="btn-primary-outline top-right mr-4 mt-3"
         iconClasses="icon-sm"
         color="primary"
-        icon="mi-shopping-cart-add"
+        dataIcon="mi-shopping-cart-add"
       />
     </>
   );
