@@ -16,10 +16,12 @@ export function SecondaryButton({ text, outline }) {
   );
 }
 
-export function IconButton({ icon, click, classes, iconClasses }) {
+export function IconButton({ dataIcon, click, classes = "", iconClasses = "", text }) {
+  const t = text? <span class="mx-2">{text}</span>: null;
   return (
     <div className={`btn btn-icon ${classes}`}>
-      <Icon dataIcon={icon} classes={iconClasses} />
+      <Icon dataIcon={dataIcon} classes={iconClasses} />
+      {t}
     </div>
   );
 }
