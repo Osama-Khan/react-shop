@@ -18,6 +18,12 @@ body {
   }
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .text-sm {
   font-size:0.75em;
 }
@@ -35,27 +41,27 @@ body {
 }
 
 .text-green {
-	color: $color-green;
+	color: $color-green!important;
 }
 
 .text-yellow {
-	color: $color-yellow;
+	color: $color-yellow!important;
 }
 
 .text-blue {
-	color: $color-blue;
+	color: $color-blue!important;
 }
 
 .text-red {
-	color: $color-red;
+	color: $color-red!important;
 }
 
 .text-orange {
-	color: $color-orange;
+	color: $color-orange!important;
 }
 
 .text-purple {
-	color: $color-purple;
+	color: $color-purple!important;
 }
 
 [class*=has-zap] strong {
