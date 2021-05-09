@@ -3,6 +3,7 @@ import Icon from "../icon/icon";
 import { productsUrl } from "../../routes";
 import { IconButton } from "../button/Button";
 import ProductRating from "../product-rating/product-rating";
+import State from "../../state/state";
 
 export function Card(props) {
   if (props.image) {
@@ -37,8 +38,8 @@ export function ProductCard({ product, classes = "" }) {
       <IconButton
         classes="btn-primary-outline top-right mr-4 mt-3"
         iconClasses="icon-sm"
-        color="primary"
         dataIcon="mi-shopping-cart-add"
+        click={() => State.cart.addProduct(product)}
       />
     </>
   );
