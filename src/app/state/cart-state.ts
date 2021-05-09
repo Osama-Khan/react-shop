@@ -36,6 +36,7 @@ export default class CartState {
     } else {
       // There is no such product in cart
     }
+    this.products = p;
   }
 
   /**
