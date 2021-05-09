@@ -1,4 +1,7 @@
 [role=tooltip].popup-content {
   width: 300px!important;
+  height: 50vh!important;
+  max-height: 800px;
+  overflow-y: auto;
   padding: 1em;
 }
