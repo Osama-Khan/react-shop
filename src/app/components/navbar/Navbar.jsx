@@ -80,7 +80,7 @@ const renderNavAccountButton = () => (
 );
 
 const renderNavAccountContent = () => (
-  <div class="d-flex flex-column">
+  <div className="d-flex flex-column">
     <p className="text-center font-weight-bold">ACCOUNT</p>
       <div className="form-group">
         <label>Username</label>
@@ -89,9 +89,9 @@ const renderNavAccountContent = () => (
       <div className="form-group">
         <label>Password</label>
         <input className="form-control" type="password" />
-        <a href="#" class="ml-auto text-sm">Forgot password?</a>
+        <label className="ml-auto text-sm text-clickable">Forgot password?</label>
       </div>
-      <button class="btn btn-primary">Login</button>
-      <button class="btn btn-primary-outline">Create an account</button>
+      <button className="btn btn-primary">Login</button>
+      <button className="btn btn-primary-outline">Create an account</button>
   </div>
 );
