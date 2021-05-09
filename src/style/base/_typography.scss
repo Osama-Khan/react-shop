@@ -4,6 +4,16 @@
 body {
   color: $text-color;
   font: normal 125% / 1.4 $text-font-stack;
+.text-clickable {
+  color: #252525;
+  transition: $animation-fast color;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-primary;
+    text-decoration: none;
+  }
 }
 
 .text-sm {

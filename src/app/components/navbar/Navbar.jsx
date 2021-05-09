@@ -62,7 +62,7 @@ export default function Navbar() {
 }
 
 const renderNavCartButton = () => (
-  <div className={`nav-link`}>
+  <div className={`nav-link text-clickable`}>
     <Icon dataIcon="mi-shopping-cart" />
   </div>
 );
@@ -74,7 +74,7 @@ const renderNavCartContent = () => (
 );
 
 const renderNavAccountButton = () => (
-  <div className={`nav-link`}>
+  <div className={`nav-link text-clickable`}>
     <Icon dataIcon="mi-user" />
   </div>
 );
