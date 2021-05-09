@@ -3,6 +3,8 @@ import Icon from "../icon/icon";
 import { categoriesUrl, productsUrl, homeUrl } from "../../routes";
 import { Link, useLocation } from "react-router-dom";
 import Popup from "../popup/popup";
+import State from "../../state/state";
+import NavbarCartCard from "./navbar-cart-card/navbar-cart-card";
 
 export default function Navbar() {
   let loc = useLocation().pathname;
@@ -38,7 +40,7 @@ export default function Navbar() {
         <li className="nav-item ml-auto">
           <Popup
             trigger={renderNavCartButton()}
-            content={renderNavCartContent()}
+            content={<NavbarCartCard/>}
             parent="nav"
           />
         </li>
@@ -67,12 +69,6 @@ const renderNavCartButton = () => (
   </div>
 );
 
-const renderNavCartContent = () => (
-  <div>
-    <p className="text-center font-weight-bold">CART</p>
-  </div>
-);
-
 const renderNavAccountButton = () => (
   <div className={`nav-link text-clickable`}>
     <Icon dataIcon="mi-user" />
@@ -82,16 +78,16 @@ const renderNavAccountButton = () => (
 const renderNavAccountContent = () => (
   <div className="d-flex flex-column">
     <p className="text-center font-weight-bold">ACCOUNT</p>
-      <div className="form-group">
-        <label>Username</label>
-        <input className="form-control" type="text" />
-      </div>
-      <div className="form-group">
-        <label>Password</label>
-        <input className="form-control" type="password" />
-        <label className="ml-auto text-sm text-clickable">Forgot password?</label>
-      </div>
-      <button className="btn btn-primary">Login</button>
-      <button className="btn btn-primary-outline">Create an account</button>
+    <div className="form-group">
+      <label>Username</label>
+      <input className="form-control" type="text" />
+    </div>
+    <div className="form-group">
+      <label>Password</label>
+      <input className="form-control" type="password" />
+      <label className="ml-auto text-sm text-clickable">Forgot password?</label>
+    </div>
+    <button className="btn btn-primary">Login</button>
+    <button className="btn btn-primary-outline">Create an account</button>
   </div>
 );
