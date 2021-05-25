@@ -13,6 +13,7 @@ export default class App extends React.Component {
     ));
     return (
       <AppProvider>
+        <Toaster position="bottom-right" reverseOrder={true} />
         <div className="app">
           <Router>
             <Navbar />
