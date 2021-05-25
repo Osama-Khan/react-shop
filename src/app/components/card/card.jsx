@@ -1,9 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../icon/icon";
 import { productsUrl } from "../../routes";
 import { IconButton } from "../button/Button";
 import ProductRating from "../product-rating/product-rating";
-import State from "../../state/state";
+import { AppContext } from "../../context/app.provider";
 
 export function Card(props) {
   if (props.image) {
@@ -17,6 +18,7 @@ export function Card(props) {
 
 export function ProductCard({ product, classes = "" }) {
   const cardClasses = `card clickable m-1 p-3 row anchor-color-remover ${classes}`;
+  const cartState = useContext(AppContext).state.cart;
 
   return (
     <>
@@ -28,24 +30,32 @@ export function ProductCard({ product, classes = "" }) {
           alt=""
         />
         <b>{product.title}</b>
-        <ProductRating rating={product.rating} classes="text-warning"/>
+        <ProductRating rating={product.rating} classes="text-warning" />
         <div className="text-right my-3">
-        <span className="p-3 badge-pill bg-green-subtle text-green">
-          Rs. <b>{product.price}</b>
-        </span>
+          <span className="p-3 badge-pill bg-green-subtle text-green">
+            Rs. <b>{product.price}</b>
+          </span>
         </div>
       </Link>
       <IconButton
         classes="btn-primary-outline top-right mr-4 mt-3"
         iconClasses="icon-sm"
         dataIcon="mi-shopping-cart-add"
-        click={() => State.cart.addProduct(product)}
+        click={() => cartState.addProduct(product)}
       />
     </>
   );
 }
 
-function IconCard({ text, icon, click, color="", classes = "", iconClasses = "", linkTo }) {
+function IconCard({
+  text,
+  icon,
+  click,
+  color = "",
+  classes = "",
+  iconClasses = "",
+  linkTo,
+}) {
   const cardClasses = `card ${color} m-1 py-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
@@ -69,7 +79,7 @@ function IconCard({ text, icon, click, color="", classes = "", iconClasses = "",
   }
 }
 
-function ImageCard({ text, image, click, color="", classes="", linkTo }) {
+function ImageCard({ text, image, click, color = "", classes = "", linkTo }) {
   const cardClasses = `card ${color} m-1 pb-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
@@ -93,7 +103,7 @@ function ImageCard({ text, image, click, color="", classes="", linkTo }) {
   }
 }
 
-function TextCard({ text, image, click, color="", classes="" }) {
+function TextCard({ text, image, click, color = "", classes = "" }) {
   const cardClasses = `card ${color} m-1 py-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
