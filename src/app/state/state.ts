@@ -1,5 +1,7 @@
 import CartState from "./cart-state";
+import UserState from "./user-state";
 
 export default class State {
-  static cart: CartState = new CartState();
+  cart: CartState = new CartState();
+  user: UserState = new UserState();
 }
