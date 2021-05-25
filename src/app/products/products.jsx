@@ -1,15 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ProductCard } from "../components/card/card";
-import ProductService from "../services/product-service.ts";
 import Icon from "../components/icon/icon";
 import { IconButton } from "../components/button/Button";
+import { AppContext } from "../context/app.provider";
+import { categoriesUrl } from "../routes";
 
 export default class Products extends React.Component {
+  static contextType = AppContext;
+
   productId;
 
   constructor(props) {
     super(props);
-    this.state = { products: [], product: undefined };
+    this.state = { products: [], product: undefined, categories: undefined };
 
     this.productId = props.match.params.id;
   }
@@ -22,41 +26,80 @@ export default class Products extends React.Component {
   }
 
   componentDidMount() {
+    const svc = this.context.services;
     if (this.productId) {
-      new ProductService().fetchProduct(this.productId).then((product) => {
-        this.setState({ product });
-      });
+      svc.productService
+        .fetchProduct(this.productId)
+        .then((product) => {
+          this.setState({ ...this.state, product });
+          svc.categoryService
+            .fetchParentsOf(product.category.id)
+            .then((categories) => {
+              this.setState({ ...this.state, categories });
+            })
+            .catch((err) =>
+              console.error("[products.jsx] - Failed to get category parents!")
+            );
+        })
+        .catch((err) =>
+          console.error("[products.jsx] - Failed to get product!")
+        );
     } else {
-      new ProductService().fetchProducts().then((products) => {
-        this.setState({ products });
-      });
+      svc.productService
+        .fetchProducts()
+        .then((products) => {
+          this.setState({ ...this.state, products });
+        })
+        .catch((err) =>
+          console.error("[products.jsx] - Failed to get products!")
+        );
     }
   }
 
   renderProductDetail = () => {
     let component;
-    const p = this.state.product;
-    if (p) {
-      const highlights = Object.keys(p.highlights).map((k) => (
-        <li key={"highlight" + k}>{p.highlights[k]}</li>
+    const product = this.state.product;
+    let categoryList = this.state.categories?.map((c, i) => {
+      return (
+        <span key={c.id}>
+          <Link
+            to={categoriesUrl + "/" + c.name}
+            className="badge bg-primary-subtle">
+            {c.name}
+          </Link>
+          &gt;
+        </span>
+      );
+    });
+    if (categoryList) categoryList = categoryList.reverse();
+    if (product) {
+      const highlights = Object.keys(product.highlights).map((k) => (
+        <li key={"highlight" + k}>{product.highlights[k].highlight}</li>
       ));
 
       component = (
         <div className="row">
           <div className="col-md-4">
             <div className="my-3 text-center">
-              <img src={p.img} className="m-auto" alt="Product" />
+              <img src={product.img} className="m-auto" alt="Product" />
             </div>
           </div>
           <div className="col-md-8">
             <div className="m-3">
               <p>
-                <b>{p.title}</b>
+                <b>{product.title}</b>
               </p>
-              <p>Code: {p.code}</p>
-              <p>Category: {p.category}</p>
+              <p>Code: {product.code}</p>
+              <p>
+                {categoryList}
+                <Link
+                  to={`/categories/${product.category.name}`}
+                  className="badge bg-primary shadow text-white m-1">
+                  {product.category.name.toUpperCase()}
+                </Link>
+              </p>
               <br />
-              <p>{p.description}</p>
+              <p>{product.description}</p>
               <div className="row">
                 <div className="col-md-6">
                   <b>Highlights</b>
