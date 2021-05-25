@@ -2,28 +2,31 @@ import React from "react";
 import Carousel from "../components/carousel/Carousel";
 import { Card } from "../components/card/card";
 import { categoriesUrl } from "../routes";
-import CategoryService from "../services/category-service.ts";
 import { catIconMap } from "../../data/category-icon-map.ts";
+import { AppContext } from "../context/app.provider";
 
 const carouselImages = [
   "https://hackernoon.com/hn-images/1*jFyawcsqoYctkTuZg6wQ1A.jpeg",
   "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmFuZG9tfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
   "https://static.scientificamerican.com/sciam/cache/file/4F73FD83-3377-42FC-915AD56BD66159FE_source.jpg?w=590&h=800&F7E1D298-3587-4BFF-AF028495DEAA9162",
 ];
-const categoriesMeta = {
-  colors: ["primary", "teal", "red", "green", "yellow", "blue"],
-};
 
 export default class Home extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {categories: []};
+    this.state = { categories: [] };
   }
 
   componentDidMount() {
-    new CategoryService().fetchCategories().then((categories) => {
-      this.setState({categories});
-    });
+    this.context.services.categoryService
+      .fetchRootCategories()
+      .then((categories) => {
+        this.setState({ categories });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -33,7 +36,7 @@ export default class Home extends React.Component {
           text={c.name}
           icon={catIconMap[c.name]}
           iconClasses="icon-md"
-          color={categoriesMeta.colors[0]}
+          color="primary"
           linkTo={`${categoriesUrl}/${c.name.toLowerCase()}`}
         />
       </div>
