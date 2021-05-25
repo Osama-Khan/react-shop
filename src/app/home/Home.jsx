@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "../components/carousel/Carousel";
-import { Card } from "../components/card/card";
+import Card from "../components/card/card";
 import { categoriesUrl } from "../routes";
 import { catIconMap } from "../../data/category-icon-map.ts";
 import { AppContext } from "../context/app.provider";

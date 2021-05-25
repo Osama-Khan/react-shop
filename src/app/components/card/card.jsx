@@ -6,7 +6,7 @@ import { IconButton } from "../button/Button";
 import ProductRating from "../product-rating/product-rating";
 import { AppContext } from "../../context/app.provider";
 
-export function Card(props) {
+export default function Card(props) {
   if (props.image) {
     return ImageCard(props);
   } else if (props.icon) {
