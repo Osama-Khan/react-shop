@@ -26,11 +26,17 @@ export default class NavbarCartCard extends Component {
               <div className="col-sm-4 my-auto">
                 <img src={p.img} alt={p.title} />
               </div>
-              <div className="col-sm-8">
-                <p className="truncate">{p.title}</p>
-                <p>
-                  <b>{p.price}</b> Rs. × {p.quantity} items
-                </p>
+              <div className="col-sm-8 d-flex flex-column">
+                <div className="truncate">{p.title}</div>
+                <div>
+                  <b> Rs. {p.price}</b>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={p.quantity}
+                    onChange={(e) => this.onQuantityChange(e, i)}
+                  />
+                </div>
               </div>
               <IconButton
                 classes="top-right text-sm text-red"
@@ -65,6 +71,20 @@ export default class NavbarCartCard extends Component {
     );
   }
 
+  onQuantityChange(event, index) {
+    const str = event.target.value;
+    const val = parseInt(str);
+    if (val !== 0 && !val) {
+      this.context.services.uiService.errorToast("Quantity must be a number!");
+      return;
+    }
+    if (val <= 0) {
+      this.context.services.uiService.errorToast("Quantity must be above 0!");
+      return;
+    }
+    this.state.products[index].quantity = val;
+    this.setState(this.context.state.cart);
+  }
   onRemoveCartItem(i) {
     this.state.removeProduct(i.id);
     this.setState(this.context.state.cart);
