@@ -1,13 +1,96 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import Icon from "../icon/icon";
-import { categoriesUrl, productsUrl, homeUrl } from "../../routes";
+import {
+  categoriesUrl,
+  productsUrl,
+  homeUrl,
+  userUrl,
+  registerUrl,
+} from "../../routes";
 import { Link, useLocation } from "react-router-dom";
 import Popup from "../popup/popup";
-import State from "../../state/state";
 import NavbarCartCard from "./navbar-cart-card/navbar-cart-card";
+import { PrimaryButton } from "../button/Button";
+import { AppContext } from "../../context/app.provider";
 
 export default function Navbar() {
+  const context = useContext(AppContext);
   let loc = useLocation().pathname;
+  const renderNavCartButton = () => (
+    <div className={`nav-link text-clickable`}>
+      <Icon dataIcon="mi-shopping-cart" />
+    </div>
+  );
+
+  const renderNavAccountButton = () => (
+    <div className={`nav-link text-clickable`}>
+      <Icon dataIcon="mi-user" />
+      {context.state.user.username ? (
+        <span className="ml-1">{context.state.user.username}</span>
+      ) : (
+        ""
+      )}
+    </div>
+  );
+
+  const renderNavAccountContent = () => (
+    <div className="d-flex flex-column">
+      <p className="text-center font-weight-bold">ACCOUNT</p>
+      <div className="form-group">
+        <label>Username</label>
+        <input
+          className="form-control"
+          type="text"
+          id="loginPopupUsernameField"
+        />
+      </div>
+      <div className="form-group">
+        <label>Password</label>
+        <input
+          className="form-control"
+          type="password"
+          id="loginPopupPasswordField"
+        />
+        <label className="ml-auto text-sm text-clickable">
+          Forgot password?
+        </label>
+      </div>
+      <PrimaryButton
+        text="Login"
+        click={login}
+        classes="btn-block"></PrimaryButton>
+      <Link to={registerUrl}>
+        <PrimaryButton
+          text="Create an account"
+          outline={true}
+          classes="btn-block"></PrimaryButton>
+      </Link>
+    </div>
+  );
+
+  const login = () => {
+    const userSvc = context.services.userService;
+    const uiSvc = context.services.uiService;
+    const username = document.getElementById("loginPopupUsernameField").value;
+    const password = document.getElementById("loginPopupPasswordField").value;
+    const messages = {
+      loading: "Hold on, logging you in!",
+      success: "You are logged in!",
+      error: "We couldn't log you in.",
+    };
+    const loginPromise = userSvc.login(username, password);
+    loginPromise
+      .then((u) => {
+        context.setState({ ...context.state, user: u });
+      })
+      .catch((err) => {
+        if (err) {
+          // Couldn't log in
+        }
+      });
+    uiSvc.promiseToast(loginPromise, messages);
+  };
+
   return (
     <nav className="shadow">
       <ul className="d-none d-md-flex nav container">
@@ -40,16 +123,23 @@ export default function Navbar() {
         <li className="nav-item ml-auto">
           <Popup
             trigger={renderNavCartButton()}
-            content={<NavbarCartCard/>}
+            content={<NavbarCartCard />}
             parent="nav"
           />
         </li>
         <li className="nav-item">
-          <Popup
-            trigger={renderNavAccountButton()}
-            content={renderNavAccountContent()}
-            parent="nav"
-          />
+          {context.state.user.username ? (
+            <Link to={userUrl} className="bg-primary-subtle rounded">
+              {renderNavAccountButton()}
+            </Link>
+          ) : (
+            <Popup
+              trigger={renderNavAccountButton()}
+              content={renderNavAccountContent()}
+              position="bottom right"
+              parent="nav"
+            />
+          )}
         </li>
       </ul>
       <ul className="d-flex d-sm-flex d-md-none nav container">
@@ -62,32 +152,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-const renderNavCartButton = () => (
-  <div className={`nav-link text-clickable`}>
-    <Icon dataIcon="mi-shopping-cart" />
-  </div>
-);
-
-const renderNavAccountButton = () => (
-  <div className={`nav-link text-clickable`}>
-    <Icon dataIcon="mi-user" />
-  </div>
-);
-
-const renderNavAccountContent = () => (
-  <div className="d-flex flex-column">
-    <p className="text-center font-weight-bold">ACCOUNT</p>
-    <div className="form-group">
-      <label>Username</label>
-      <input className="form-control" type="text" />
-    </div>
-    <div className="form-group">
-      <label>Password</label>
-      <input className="form-control" type="password" />
-      <label className="ml-auto text-sm text-clickable">Forgot password?</label>
-    </div>
-    <button className="btn btn-primary">Login</button>
-    <button className="btn btn-primary-outline">Create an account</button>
-  </div>
-);
