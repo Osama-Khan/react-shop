@@ -22,29 +22,52 @@ export default class CartState {
     if (!exists) {
       this.products.push(new CartProduct(p, q));
     }
-    // Should inform the user
   }
 
   /**
    * Removes a product from the cart
    * @param id ID of the product to remove
+   * @returns true if removal successful, false otherwise
    */
-  removeProduct = (id: number): void => {
+  removeProduct = (id: number): boolean => {
     const p = this.products.filter((p) => p.id !== id);
     if (p.length !== this.products.length) {
-      // Inform the user that product was removed
-    } else {
-      // There is no such product in cart
+      this.products = p;
+      return true;
     }
-    this.products = p;
+    return false;
   }
 
   /**
-   * Checks if product exists in the cart
+  * Sets quantity of a product
+  * @param id ID of the product to set quantity of
+  * @param quantity new quantity of the product
+  * @returns true if edit successful, false otherwise
+  */
+  setProductQuantity = (id: number, quantity: number): boolean => {
+    if (this.getProduct(id)) {
+      this.products.some((p, i) => {
+        if (p.id === id) this.products[i].quantity = quantity;
+        return true;
+      })
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Gets a product from the cart
    * @param id ID of the product to look for
-   * @returns True or false, depending on if the product is present or not respectively
+   * @returns The product or false, depending on if the product is present or not respectively
    */
-  hasProduct = (id: number): boolean => {
-    return (this.products.some((p) => p.id === id));
+  getProduct = (id: number): CartProduct | false => {
+    let index = -1;
+    const p = this.products.some((p, i) => { index = i; return p.id === id });
+    if (index != -1) {
+      return this.products[index];
+    } else {
+      return false;
+    }
   }
 }
