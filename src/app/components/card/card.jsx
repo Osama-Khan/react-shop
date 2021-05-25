@@ -103,13 +103,28 @@ function ImageCard({ text, image, click, color = "", classes = "", linkTo }) {
   }
 }
 
-function TextCard({ text, image, click, color = "", classes = "" }) {
+function TextCard({
+  text,
+  click,
+  color = "",
+  classes = "",
+  linkTo = undefined,
+}) {
   const cardClasses = `card ${color} m-1 py-3 row ${
     click ? "clickable" : ""
   } ${classes}`;
   const textEl = text ? (
     <p className="text-center m-auto col-12">{text}</p>
   ) : null;
+  if (linkTo) {
+    return (
+      <Link to={linkTo}>
+        <div onClick={click} className={cardClasses}>
+          {textEl}
+        </div>
+      </Link>
+    );
+  }
   return (
     <div onClick={click} className={cardClasses}>
       {textEl}
