@@ -131,12 +131,5 @@ export default function Register(props) {
       dateOfBirth
     );
     uiSvc.promiseToast(promise, msgs);
-    promise
-      .then((o) => {
-        console.log("Created account!");
-      })
-      .catch((e) => {
-        console.log("Failed to create account!");
-      });
   }
 }

@@ -25,7 +25,9 @@ export default class Home extends React.Component {
         this.setState({ categories });
       })
       .catch((err) => {
-        console.log(err);
+        this.context.services.uiService.errorToast(
+          "Failed to fetch categories"
+        );
       });
   }
 
