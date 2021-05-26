@@ -13,4 +13,8 @@ export default class UserService extends ApiService {
     const ret = await axios.post(`${this.domain}/register`, obj, { headers: { "Content-type": "application/json" } });
     return ret.data;
   }
+
+  async getUser(id: number) {
+    return await axios.get(`${this.domain}/users/${id}`);
+  }
 }
