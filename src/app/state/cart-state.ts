@@ -6,6 +6,16 @@ export default class CartState {
   products: CartProduct[] = [];
 
   /**
+   * Get total price of all products in cart
+   * @returns Sum of all product prices
+   */
+  getTotalPrice = () => {
+    let price = 0;
+    this.products.forEach((p) => price += p.price);
+    return price;
+  }
+
+  /**
    * Adds a product to the cart
    * @param p The product to add
    * @param q Number of products to add
@@ -47,12 +57,14 @@ export default class CartState {
   setProductQuantity = (id: number, quantity: number): boolean => {
     if (this.getProduct(id)) {
       this.products.some((p, i) => {
-        if (p.id === id) this.products[i].quantity = quantity;
-        return true;
+        if (p.id === id) {
+          this.products[i].quantity = quantity
+          return true;
+        };
+        return false;
       })
       return true;
     }
-
     return false;
   }
 
@@ -63,8 +75,8 @@ export default class CartState {
    */
   getProduct = (id: number): CartProduct | false => {
     let index = -1;
-    const p = this.products.some((p, i) => { index = i; return p.id === id });
-    if (index != -1) {
+    this.products.some((p, i) => { index = i; return p.id === id });
+    if (index !== -1) {
       return this.products[index];
     } else {
       return false;
