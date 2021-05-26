@@ -3,12 +3,14 @@ import Products from "./products/products";
 import Home from "./home/Home";
 import User from "./user/user";
 import Register from "./user/register";
+import Order from "./order/order";
 
 export const homeUrl = "/";
 export const productsUrl = "/products";
 export const categoriesUrl = `/categories`;
 export const userUrl = "/user";
 export const registerUrl = "/register";
+export const orderUrl = "/order";
 
 export const routes = [
   { path: homeUrl, component: Home },
@@ -18,4 +20,5 @@ export const routes = [
   { path: categoriesUrl + "/:id", component: Categories },
   { path: userUrl, component: User },
   { path: registerUrl, component: Register },
+  { path: orderUrl, component: Order },
 ];
