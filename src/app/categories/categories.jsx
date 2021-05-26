@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { catIconMap } from "../../data/category-icon-map";
 import Icon from "../components/icon/icon";
 import Card from "../components/card/card";
 import { AppContext } from "../context/app.provider";
@@ -25,7 +24,6 @@ export default class Categories extends Component {
     const catPage = this.state.categories
       ? this.renderCategories()
       : this.renderLoadingIcon();
-    console.log(catPage);
     return (
       <>
         <h1 className="mt-5">Categories</h1>
