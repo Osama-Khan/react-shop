@@ -1,6 +1,6 @@
 import { React, Component } from "react";
 import { Link } from "react-router-dom";
-import { productsUrl } from "../../../routes";
+import { orderUrl, productsUrl } from "../../../routes";
 import { IconButton, PrimaryButton } from "../../button/Button";
 import { AppContext } from "../../../context/app.provider";
 
@@ -22,19 +22,21 @@ export default class NavbarCartCard extends Component {
           {items.map((p, i) => (
             <div
               key={i}
-              className="card shadow-sm clickable p-2 my-1 d-flex flex-row text-sm">
+              className="card shadow-sm clickable p-2 my-1 d-flex flex-row text-sm ml-1">
               <div className="col-sm-4 my-auto">
                 <img src={p.img} alt={p.title} />
               </div>
               <div className="col-sm-8 d-flex flex-column">
-                <div className="truncate">{p.title}</div>
+                <Link to={productsUrl + "/" + p.id}>
+                  <div className="truncate">{p.title}</div>
+                </Link>
                 <div>
                   <b> Rs. {p.price}</b>
                   <input
                     type="number"
                     className="form-control"
                     value={p.quantity}
-                    onChange={(e) => this.onQuantityChange(e, i)}
+                    onChange={(e) => this.onQuantityChange(e, p)}
                   />
                 </div>
               </div>
@@ -47,13 +49,9 @@ export default class NavbarCartCard extends Component {
               />
             </div>
           ))}
-          <PrimaryButton
-            text="Checkout"
-            classes="btn-block mt-auto"
-            click={() => {
-              this.context.services.uiService.toast("Under construction");
-            }}
-          />
+          <Link to={orderUrl}>
+            <PrimaryButton text="Checkout" classes="btn-block mt-3" />
+          </Link>
         </>
       ) : (
         <div className="text-center text-muted">
@@ -71,22 +69,36 @@ export default class NavbarCartCard extends Component {
     );
   }
 
-  onQuantityChange(event, index) {
+  onQuantityChange(event, product) {
+    const errorToast = this.context.services.uiService.errorToast;
     const str = event.target.value;
     const val = parseInt(str);
     if (val !== 0 && !val) {
-      this.context.services.uiService.errorToast("Quantity must be a number!");
+      errorToast("Quantity must be a number!");
       return;
     }
     if (val <= 0) {
-      this.context.services.uiService.errorToast("Quantity must be above 0!");
+      errorToast("Quantity must be above 0!");
       return;
     }
-    this.state.products[index].quantity = val;
-    this.setState(this.context.state.cart);
+
+    if (this.context.state.cart.setProductQuantity(product.id, val)) {
+      this.context.setState({
+        ...this.context.state,
+        cart: this.context.state.cart,
+      });
+    } else {
+      errorToast("Some problem occured");
+    }
   }
+
+  // TODO: Fix cart not updating on item removal
   onRemoveCartItem(i) {
-    this.state.removeProduct(i.id);
-    this.setState(this.context.state.cart);
+    this.context.state.cart.removeProduct(i.id);
+    this.context.setState({
+      ...this.context.state,
+      cart: this.context.state.cart,
+    });
+    this.setState(this.context.state);
   }
 }
