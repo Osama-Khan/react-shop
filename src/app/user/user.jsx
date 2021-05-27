@@ -2,14 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { PrimaryButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
-import { registerUrl } from "../routes";
-import "./profile.css";
+import LoadingIcon from "../components/loading/loading";
+import { productsUrl, registerUrl, userUrl } from "../routes";
 
 export default class User extends React.Component {
   static contextType = AppContext;
+  fetching = false;
 
+  constructor(props) {
+    super(props);
+    this.state = { recentProduct: undefined, mostViewedProduct: undefined };
+  }
   render() {
     if (this.context.state.user.username) {
+      if (!this.fetching && !this.state.recentProduct) {
+        this.fetching = true;
+        this.context.services.userService
+          .fetchMostRecentProduct(this.context.state.user.id)
+          .then((product) => {
+            this.setState({ recentProduct: product });
+            this.fetching = false;
+          })
+          .catch((ex) => {
+            this.fetching = false;
+          });
+      }
       return this.profileTemplate(this.context.state.user);
     } else {
       return this.loginTemplate();
@@ -17,99 +34,56 @@ export default class User extends React.Component {
   }
 
   profileTemplate = (user) => (
-    <div className="page-content page-container" id="page-content">
-      <div className="padding">
-        <div className="row container d-flex justify-content-center">
-          <div className="col-xl-6 col-md-12">
-            <div className="card user-card-full">
-              <div className="row m-l-0 m-r-0">
-                <div className="col-sm-4 bg-c-lite-green user-profile">
-                  <div className="card-block text-center text-white">
-                    <div className="m-b-25">
-                      {" "}
-                      <img
-                        src="https://img.icons8.com/bubbles/100/000000/user.png"
-                        className="img-radius"
-                        alt="User-Profile"
-                      />{" "}
-                    </div>
-                    <h6 className="f-w-600">
-                      {user.firstName} {user.lastName}
-                    </h6>
-                    <p>{user.username.toUpperCase()}</p>{" "}
-                    <i className=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
-                  </div>
+    <div className="mt-5 row container d-flex justify-content-center">
+      <div className="col-md-8">
+        <div className="card border border-primary">
+          <div className="row ml-0 mr-0">
+            <div className="col-sm-4 bg-primary d-flex flex-column m-0  ">
+              <div className="text-center text-white my-auto">
+                <img
+                  src={user.profileImage}
+                  className="rounded-circle shadow img-large"
+                  alt="User-Profile"
+                />
+                <h6 className="mt-1 font-weight-bold">
+                  {user.firstName} {user.lastName}
+                </h6>
+                <Link to={`${userUrl}/${user.id}`}>
+                  <p className="badge btn btn-light">@{user.username}</p>
+                </Link>
+                <i className=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+              </div>
+            </div>
+            <div className="col-sm-8">
+              <h6 className="mt-3 font-weight-bold">Information</h6>
+              <div className="row">
+                <div className="col-sm-6">
+                  <p className="mb-0">Email</p>
+                  <h6 className="text-muted">{user.email}</h6>
                 </div>
-                <div className="col-sm-8">
-                  <div className="card-block">
-                    <h6 className="m-b-20 p-b-5 b-b-default f-w-600">
-                      Information
-                    </h6>
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <p className="m-b-10 f-w-600">Email</p>
-                        <h6 className="text-muted f-w-400">{user.email}</h6>
-                      </div>
-                      <div className="col-sm-6">
-                        <p className="m-b-10 f-w-600">Phone</p>
-                        <h6 className="text-muted f-w-400">98979989898</h6>
-                      </div>
-                    </div>
-                    <h6 className="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">
-                      Projects
-                    </h6>
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <p className="m-b-10 f-w-600">Recent</p>
-                        <h6 className="text-muted f-w-400">Sam Disuja</h6>
-                      </div>
-                      <div className="col-sm-6">
-                        <p className="m-b-10 f-w-600">Most Viewed</p>
-                        <h6 className="text-muted f-w-400">Dinoter husainm</h6>
-                      </div>
-                    </div>
-                    <ul className="social-link list-unstyled m-t-40 m-b-10">
-                      <li>
-                        <a
-                          href="#!"
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title=""
-                          data-original-title="facebook"
-                          data-abc="true">
-                          <i
-                            className="mdi mdi-facebook feather icon-facebook facebook"
-                            aria-hidden="true"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#!"
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title=""
-                          data-original-title="twitter"
-                          data-abc="true">
-                          <i
-                            className="mdi mdi-twitter feather icon-twitter twitter"
-                            aria-hidden="true"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#!"
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title=""
-                          data-original-title="instagram"
-                          data-abc="true">
-                          <i
-                            className="mdi mdi-instagram feather icon-instagram instagram"
-                            aria-hidden="true"></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                <div className="col-sm-6">
+                  <p className="mb-0">Phone</p>
+                  <h6 className="text-muted ">98979989898</h6>
+                </div>
+              </div>
+              <hr />
+              <h6 className="mt-2 font-weight-bold">Products</h6>
+              <div className="row">
+                <div className="col-sm-6 mb-3">
+                  <p className="mb-0">Recent</p>
+                  {this.state.recentProduct ? (
+                    <Link
+                      className="text-sm text-muted"
+                      to={`${productsUrl}/${this.state.recentProduct.id}`}>
+                      {this.state.recentProduct.code}
+                    </Link>
+                  ) : (
+                    <LoadingIcon />
+                  )}
+                </div>
+                <div className="col-sm-6">
+                  <p className="mb-0">Most Viewed</p>
+                  <h6 className="text-muted"></h6>
                 </div>
               </div>
             </div>
