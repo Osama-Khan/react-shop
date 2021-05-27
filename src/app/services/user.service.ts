@@ -17,4 +17,10 @@ export default class UserService extends ApiService {
   async getUser(id: number) {
     return await axios.get(`${this.domain}/users/${id}`);
   }
+  async fetchMostRecentProduct(id: number) {
+    const endPoint = `${id}/products/recent`;
+    let p = await fetch(`${this.domain}/users/${endPoint}`)
+      .then(async (r) => await r.json());
+    return p;
+  }
 }
