@@ -5,6 +5,7 @@ import Icon from "../components/icon/icon";
 import { IconButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
+import LoadingSpinner from "../components/loading/loading";
 
 export default class Products extends React.Component {
   static contextType = AppContext;
@@ -114,7 +115,7 @@ export default class Products extends React.Component {
     }
     return (
       <div className="bg-light rounded my-5 shadow">
-        {component ? component : this.renderLoadingIcon()}
+        {component ? component : <LoadingSpinner />}
       </div>
     );
   };
@@ -136,19 +137,11 @@ export default class Products extends React.Component {
       <div className="mt-5">
         <h1>Products</h1>
         <div id="products-list" className="row">
-          {prods ? prods : this.renderLoadingIcon()}
+          {prods ? prods : <LoadingSpinner />}
         </div>
       </div>
     );
   };
-
-  renderLoadingIcon() {
-    return (
-      <div key="loadingIcon" className="col-12 d-flex my-5 py-5">
-        <Icon classes="mx-auto icon-lg spin" dataIcon="fa:spinner" />
-      </div>
-    );
-  }
 
   renderPurchaseBox() {
     const p = this.state.product;

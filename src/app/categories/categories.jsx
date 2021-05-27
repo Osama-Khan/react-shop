@@ -3,6 +3,7 @@ import Icon from "../components/icon/icon";
 import Card from "../components/card/card";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
+import LoadingSpinner from "../components/loading/loading";
 
 export default class Categories extends Component {
   static contextType = AppContext;
@@ -21,9 +22,11 @@ export default class Categories extends Component {
   }
 
   render() {
-    const catPage = this.state.categories
-      ? this.renderCategories()
-      : this.renderLoadingIcon();
+    const catPage = this.state.categories ? (
+      this.renderCategories()
+    ) : (
+      <LoadingSpinner />
+    );
     return (
       <>
         <h1 className="mt-5">Categories</h1>
@@ -44,13 +47,5 @@ export default class Categories extends Component {
       </div>
     ));
     return mainCats;
-  }
-
-  renderLoadingIcon() {
-    return (
-      <div key="loadingIcon" className="col-12 d-flex my-5 py-5">
-        <Icon classes="mx-auto icon-lg spin" dataIcon="fa:spinner" />
-      </div>
-    );
   }
 }

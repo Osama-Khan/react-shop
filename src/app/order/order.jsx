@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { IconButton, PrimaryButton } from "../components/button/Button";
 import Icon from "../components/icon/icon";
+import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
 import { productsUrl } from "../routes";
 
@@ -27,7 +28,7 @@ export default class Order extends Component {
 
   render() {
     if (!this.context.state.cart) {
-      return this.renderLoadingIcon();
+      return <LoadingSpinner />;
     }
     const loggedIn = this.context.state.user.username;
 
@@ -115,7 +116,7 @@ export default class Order extends Component {
           </Link>
         </>
       ) : (
-        this.renderLoadingIcon()
+        <LoadingSpinner />
       )
     ) : (
       <>
@@ -145,14 +146,6 @@ export default class Order extends Component {
             {checkoutEl}
           </div>
         </div>
-      </div>
-    );
-  }
-
-  renderLoadingIcon() {
-    return (
-      <div key="loadingIcon" className="col-12 d-flex my-5 py-5">
-        <Icon classes="mx-auto icon-lg spin" dataIcon="fa:spinner" />
       </div>
     );
   }
