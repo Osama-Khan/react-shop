@@ -130,7 +130,14 @@ export default function Navbar() {
         <li className="nav-item">
           {context.state.user.username ? (
             <Link to={userUrl} className="bg-primary-subtle rounded">
-              {renderNavAccountButton()}
+              <div className={`nav-link text-clickable`}>
+                <img
+                  className="iconify img-tiny rounded-circle shadow"
+                  src={context.state.user.profileImage}
+                  alt={context.state.user.username}
+                />
+                <span className="ml-1">{context.state.user.username}</span>
+              </div>
             </Link>
           ) : (
             <Popup
