@@ -6,6 +6,7 @@ export interface IUser {
   img: string;
   roles: string[];
   token: string;
+  profileImage: string;
 }
 
 export class User implements IUser {
@@ -16,6 +17,7 @@ export class User implements IUser {
   img: string;
   roles: string[];
   token: string;
+  profileImage: string;
 
   constructor(obj: IUser) {
     this.id = obj.id;
@@ -25,5 +27,6 @@ export class User implements IUser {
     this.img = obj.img;
     this.roles = obj.roles;
     this.token = obj.token;
+    this.profileImage = obj.profileImage;
   }
 }
