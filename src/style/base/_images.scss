@@ -1,0 +1,56 @@
+$tiny: 24px;
+$small: 48px;
+$normal: 72px;
+$large: 114px;
+
+.img-tiny {
+  height: $tiny;
+  width: $tiny;
+}
+
+.img-tiny-h {
+  height: $tiny;
+}
+
+.img-tiny-w {
+  width: $tiny;
+}
+
+.img-small {
+  height: $small;
+  width: $small;
+}
+
+.img-small-h {
+  height: $small;
+}
+
+.img-small-w {
+  width: $small;
+}
+
+.img-normal {
+  height: $normal;
+  width: $normal;
+}
+
+.img-normal-h {
+  height: $normal;
+}
+
+.img-normal-w {
+  width: $normal;
+}
+
+.img-large {
+  height: $large;
+  width: $large;
+}
+
+.img-large-h {
+  height: $large;
+}
+
+.img-large-w {
+  width: $large;
+}
