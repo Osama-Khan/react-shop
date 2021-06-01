@@ -11,7 +11,7 @@ export default class CartState {
    */
   getTotalPrice = () => {
     let price = 0;
-    this.products.forEach((p) => price += p.price);
+    this.products.forEach((p) => price += (p.price * p.quantity));
     return price;
   }
 
