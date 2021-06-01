@@ -6,6 +6,7 @@ import { IconButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading";
+import ProductsList from "../components/products-list/products-list";
 
 export default class Products extends React.Component {
   static contextType = AppContext;
@@ -23,7 +24,12 @@ export default class Products extends React.Component {
     if (this.productId) {
       return this.renderProductDetail();
     }
-    return this.renderProductsList();
+    return (
+      <div class="mt-5">
+        <h1>Products</h1>
+        <ProductsList products={this.state.products} />
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -116,29 +122,6 @@ export default class Products extends React.Component {
     return (
       <div className="bg-light rounded my-5 shadow">
         {component ? component : <LoadingSpinner />}
-      </div>
-    );
-  };
-
-  renderProductsList = () => {
-    let prods;
-    const products = this.state.products;
-    if (products.length > 0) {
-      prods = products.map((p, i) => {
-        return (
-          <div key={`product-${i}`} className="col-md-4 col-sm-12">
-            <ProductCard product={p} />
-          </div>
-        );
-      });
-    }
-
-    return (
-      <div className="mt-5">
-        <h1>Products</h1>
-        <div id="products-list" className="row">
-          {prods ? prods : <LoadingSpinner />}
-        </div>
       </div>
     );
   };
