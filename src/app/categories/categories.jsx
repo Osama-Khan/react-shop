@@ -1,36 +1,52 @@
 import { Component } from "react";
-import Icon from "../components/icon/icon";
 import Card from "../components/card/card";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading";
+import ProductsList from "../components/products-list/products-list";
 
 export default class Categories extends Component {
   static contextType = AppContext;
 
+  category;
+
   constructor(props) {
     super(props);
-    this.state = { categories: null };
+    this.state = { categories: null, products: null };
+
+    this.category = props.match.params.name;
   }
 
   componentDidMount() {
-    this.context.services.categoryService
-      .fetchCategories()
-      .then((categories) => {
-        this.setState({ categories });
-      });
+    if (this.category) {
+      this.context.services.categoryService
+        .fetchProductsByCategory(this.category)
+        .then((products) => {
+          this.setState({ ...this.state, products });
+        });
+    } else {
+      this.context.services.categoryService
+        .fetchCategories()
+        .then((categories) => {
+          this.setState({ ...this.state, categories });
+        });
+    }
   }
 
   render() {
-    const catPage = this.state.categories ? (
+    const page = this.state.categories ? (
       this.renderCategories()
+    ) : this.state.products ? (
+      <ProductsList products={this.state.products} />
     ) : (
       <LoadingSpinner />
     );
     return (
       <>
-        <h1 className="mt-5">Categories</h1>
-        <div className="row mt-5">{catPage}</div>
+        <h1 className="mt-5">
+          Categories{this.category ? ` > ${this.category.toUpperCase()}` : ""}
+        </h1>
+        {page}
       </>
     );
   }
@@ -46,6 +62,6 @@ export default class Categories extends Component {
         />
       </div>
     ));
-    return mainCats;
+    return <div className="row mt-5">{mainCats}</div>;
   }
 }
