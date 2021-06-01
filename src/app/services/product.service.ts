@@ -10,8 +10,8 @@ export default class ProductService extends ApiService {
   }
 
   async fetchProduct(id: number) {
-    const params = `/${id}`;
-    let p = await fetch(this.url + params)
+    const endPoint = `/${id}`;
+    let p = await fetch(this.url + endPoint)
       .then(async (r) => await r.json());
     return p;
   }
