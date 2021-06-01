@@ -14,8 +14,20 @@ export default class CategoryService extends ApiService {
     return await axios.get(url).then(async (r) => await r.data);
   }
 
+  async fetchChildrenOf(id: number) {
+    const url = `${this.endpoint}/children/${id}`;
+    return await axios.get(url).then(async (r) => await r.data);
+  }
+
   async fetchRootCategories() {
     const url = this.endpoint + "/root";
     return await axios.get(url).then(async (r) => await r.data);
+  }
+
+  async fetchProductsByCategory(name: string) {
+    const endPoint = `/products/${name}`;
+    let p = await fetch(this.endpoint + endPoint)
+      .then(async (r) => await r.json());
+    return p;
   }
 }
