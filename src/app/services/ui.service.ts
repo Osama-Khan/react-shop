@@ -20,15 +20,43 @@ const defaultStyle = {
   color: "#fff",
 }
 
+/**
+ * Service that provides methods related to UI feedback
+ */
 export default class UiService {
+  /**
+   * Creates a toast with the given parameters
+   * @param text The text to show in the toast
+   * @param options Options for the toast
+   * @returns Count of the total toasts shown
+   */
   toast = (text: string, options?: ToastOptions) => toast(text, { style: defaultStyle, ...options });
 
+  /**
+   * Creates a success toast with the given parameters
+   * @param text The text to show in the toast
+   * @param options Options for the toast
+   * @returns Count of the total toasts shown
+   */
   successToast = (text: string, options?: ToastOptions) =>
     toast.success(text, { style: defaultStyle, ...options });
 
+  /**
+   * Creates an error toast with the given parameters
+   * @param text The text to show in the toast
+   * @param options Options for the toast
+   * @returns Count of the total toasts shown
+   */
   errorToast = (text: string, options?: ToastOptions) =>
     toast.error(text, { style: defaultStyle, ...options });
 
+  /**
+   * Creates a promise toast with the given parameters
+   * @param promise The promise used for loading, failed and success events
+   * @param msgs The messages to show for loading, success and error
+   * @param options Options for the toast
+   * @returns Promise object
+   */
   promiseToast = (
     promise: Promise<any>,
     msgs: { loading: any; success: any; error: any },

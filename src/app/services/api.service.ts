@@ -1,3 +1,3 @@
 export default class ApiService {
-  domain = "http://localhost:3000";
+  protected domain = "http://localhost:3001";
 }
