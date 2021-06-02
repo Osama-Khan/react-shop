@@ -1,16 +1,16 @@
+import axios from "axios";
 import ApiService from "./api.service";
 
 export default class ProductService extends ApiService {
-  private url = `${this.domain}/products`
+  private endpoint = `${this.domain}/products`
 
   /**
    * Gets a list of all the products
    * @returns A list of products
    */
   async fetchProducts() {
-    let p = await fetch(this.url)
-      .then(async (r) => await r.json());
-    return p;
+    const ret = await axios.get(this.endpoint);
+    return ret.data;
   }
 
   /**
@@ -19,9 +19,8 @@ export default class ProductService extends ApiService {
    * @returns Product with the provided id
    */
   async fetchProduct(id: number) {
-    const endPoint = `/${id}`;
-    let p = await fetch(this.url + endPoint)
-      .then(async (r) => await r.json());
-    return p;
+    const url = `${this.endpoint}/${id}`;
+    const ret = await axios.get(url);
+    return ret.data;
   }
 }

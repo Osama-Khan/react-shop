@@ -25,7 +25,7 @@ export default class Products extends React.Component {
       return this.renderProductDetail();
     }
     return (
-      <div class="mt-5">
+      <div className="mt-5">
         <h1>Products</h1>
         <ProductsList products={this.state.products} />
       </div>

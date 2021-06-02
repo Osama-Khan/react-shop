@@ -16,11 +16,11 @@ export default class Order extends Component {
 
   componentDidMount() {
     if (this.context.state.user.id) {
-      this.context.services.userService
+      const u = this.context.services.userService
         .getUser(this.context.state.user.id)
         .then((u) => {
           this.setState({
-            addresses: u.data.addresses.length > 0 ? u.data.addresses : false,
+            addresses: u.addresses.length > 0 ? u.addresses : false,
           });
         });
     }

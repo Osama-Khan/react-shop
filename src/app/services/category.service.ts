@@ -38,7 +38,7 @@ export default class CategoryService extends ApiService {
    * @returns List of categories
    */
   async fetchRootCategories() {
-    const url = this.endpoint + "/root";
+    const url = `${this.endpoint}/root`;
     return await axios.get(url).then(async (r) => await r.data);
   }
 
@@ -48,9 +48,8 @@ export default class CategoryService extends ApiService {
    * @returns List of products that have the provided category
    */
   async fetchProductsByCategory(name: string) {
-    const endPoint = `/products/${name}`;
-    let p = await fetch(this.endpoint + endPoint)
-      .then(async (r) => await r.json());
-    return p;
+    const url = `${this.endpoint}/products/${name}`;
+    const ret = await axios.get(url);
+    return ret.data;
   }
 }
