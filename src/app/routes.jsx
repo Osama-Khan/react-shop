@@ -4,11 +4,14 @@ import Home from "./home/Home";
 import User from "./user/user";
 import Register from "./user/register";
 import Order from "./order/order";
+import UserEdit from "./user/user-edit";
 
 export const homeUrl = "/";
 export const productsUrl = "/products";
 export const categoriesUrl = `/categories`;
 export const userUrl = "/user";
+export const editUserUrl = userUrl + "/edit";
+export const addressesUrl = userUrl + "/addresses";
 export const registerUrl = "/register";
 export const orderUrl = "/order";
 
