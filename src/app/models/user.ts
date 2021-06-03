@@ -6,6 +6,7 @@ export interface IUser {
   img: string;
   roles: string[];
   token: string;
+  dateOfBirth: Date;
   profileImage: string;
 }
 
@@ -17,6 +18,7 @@ export class User implements IUser {
   img: string;
   roles: string[];
   token: string;
+  dateOfBirth: Date;
   profileImage: string;
 
   constructor(obj: IUser) {
@@ -27,6 +29,7 @@ export class User implements IUser {
     this.img = obj.img;
     this.roles = obj.roles;
     this.token = obj.token;
+    this.dateOfBirth = obj.dateOfBirth;
     this.profileImage = obj.profileImage;
   }
 }
