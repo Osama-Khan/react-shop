@@ -25,126 +25,154 @@ body {
 }
 
 .text-sm {
-  font-size:0.75em;
+  font-size: 0.75em;
 }
 
 .text-primary {
-	color: $color-primary!important;
+  color: $color-primary !important;
 }
 
 .text-dark {
-	color: $text-color;
+  color: $text-color;
 }
 
 .text-light {
-	color: $text-color-inverted;
+  color: $text-color-inverted;
 }
 
 .text-green {
-	color: $color-green!important;
+  color: $color-green !important;
 }
 
 .text-yellow {
-	color: $color-yellow!important;
+  color: $color-yellow !important;
 }
 
 .text-blue {
-	color: $color-blue!important;
+  color: $color-blue !important;
 }
 
 .text-red {
-	color: $color-red!important;
+  color: $color-red !important;
 }
 
 .text-orange {
-	color: $color-orange!important;
+  color: $color-orange !important;
 }
 
 .text-purple {
-	color: $color-purple!important;
+  color: $color-purple !important;
 }
 
-[class*=has-zap] strong {
-	position: relative
+.text-transparent-white {
+  color: $color-white-transparent !important;
+  &.clickable:hover {
+    color: $color-white !important;
+  }
 }
 
-[class*=has-zap] strong:after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-01.c848204b3a2e.svg");
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	content: '';
-	display: block;
-	height: .3em;
-	left: -.2em;
-	position: absolute;
-	top: calc(100% - .15em);
-	width: calc(100% + .4em)
+.text-transparent-dark {
+  color: $color-dark-transparent !important;
+  &.clickable:hover {
+    color: $color-dark !important;
+  }
+}
+
+.text-subtle-white {
+  color: $color-white-subtle !important;
+  &.clickable:hover {
+    color: $color-white !important;
+  }
+}
+
+.text-subtle-dark {
+  color: $color-dark-subtle !important;
+  &.clickable:hover {
+    color: $color-dark !important;
+  }
+}
+
+[class*="has-zap"] strong {
+  position: relative;
+}
+
+[class*="has-zap"] strong:after {
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-01.c848204b3a2e.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  content: "";
+  display: block;
+  height: 0.3em;
+  left: -0.2em;
+  position: absolute;
+  top: calc(100% - 0.15em);
+  width: calc(100% + 0.4em);
 }
 
 .has-zap-2 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-02.d3c992ee93ba.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-02.d3c992ee93ba.svg");
 }
 
 .has-zap-3 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-03.cdf846152c1f.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-03.cdf846152c1f.svg");
 }
 
 .has-zap-4 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-04.01f5d0997427.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-04.01f5d0997427.svg");
 }
 
 .has-zap-5 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-05.cfcf18137da5.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-05.cfcf18137da5.svg");
 }
 
 .has-zap-6 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-06.658b5619dad9.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-06.658b5619dad9.svg");
 }
 
 .has-zap-7 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-07.a9ccf3a5e03e.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-07.a9ccf3a5e03e.svg");
 }
 
 .has-zap-8 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-08.fc201d70f76b.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-08.fc201d70f76b.svg");
 }
 
 .has-zap-9 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-09.bc0c0b72fdaf.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-09.bc0c0b72fdaf.svg");
 }
 
 .has-zap-10 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-10.3ec60d019421.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-10.3ec60d019421.svg");
 }
 
 .has-zap-11 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-11.b89f1adfc49b.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-11.b89f1adfc49b.svg");
 }
 
 .has-zap-12 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-12.ca3fd06dc482.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-12.ca3fd06dc482.svg");
 }
 
 .has-zap-13 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-13.4674a1a25000.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-13.4674a1a25000.svg");
 }
 
 .has-zap-14 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-14.59889e9bbc67.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-14.59889e9bbc67.svg");
 }
 
 .has-zap-15 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-15.67c4e24e8ba4.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-15.67c4e24e8ba4.svg");
 }
 
 .has-zap-16 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-16.fe39cc0d310d.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-16.fe39cc0d310d.svg");
 }
 
 .has-zap-17 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-17.d9964f1531bd.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-17.d9964f1531bd.svg");
 }
 
 .has-zap-18 strong::after {
-	background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-18.e2985effb5de.svg")
+  background-image: url("https://www.mozilla.org/media/protocol/img/zaps/zap-18.e2985effb5de.svg");
 }

@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { IconButton, PrimaryButton } from "../components/button/Button";
-import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
 import { productsUrl } from "../routes";
@@ -16,7 +15,7 @@ export default class Order extends Component {
 
   componentDidMount() {
     if (this.context.state.user.id) {
-      const u = this.context.services.userService
+      this.context.services.userService
         .getUser(this.context.state.user.id)
         .then((u) => {
           this.setState({

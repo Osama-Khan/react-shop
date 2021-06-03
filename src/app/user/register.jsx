@@ -56,9 +56,6 @@ export default function Register(props) {
             id="registerPasswordField"
             onChange={validate}
           />
-          <label className="ml-auto text-sm text-clickable">
-            Forgot password?
-          </label>
         </div>
         <div className="form-group">
           <label>Date of Birth</label>

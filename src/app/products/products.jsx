@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ProductCard } from "../components/card/card";
 import Icon from "../components/icon/icon";
 import { IconButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
