@@ -5,6 +5,7 @@ import User from "./user/user";
 import Register from "./user/register";
 import Order from "./order/order";
 import UserEdit from "./user/user-edit";
+import AddressBook from "./user/address";
 
 export const homeUrl = "/";
 export const productsUrl = "/products";
@@ -23,6 +24,7 @@ export const routes = [
   { path: categoriesUrl + "/:name", component: Categories },
   { path: userUrl, component: User },
   { path: editUserUrl, component: UserEdit },
+  { path: addressesUrl, component: AddressBook },
   { path: userUrl, component: User },
   { path: registerUrl, component: Register },
   { path: orderUrl, component: Order },
