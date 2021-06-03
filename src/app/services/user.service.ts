@@ -44,8 +44,24 @@ export default class UserService extends ApiService {
     return ret.data;
   }
 
+  /**
+   * Sends an update request to the server
+   * @param id Id of the user to update
+   * @param data object with properties of user
+   * @returns The new user, after updation
+   */
   async update(id: number, data: Partial<User>) {
     const ret = await axios.patch(`${this.domain}/users/${id}`, data);
+    return ret.data;
+  }
+
+  /**
+   * Fetches addresses of the user provided
+   * @param id Id of the user to fetch addresses of
+   * @returns A list of addresses
+   */
+  async getAddresses(id: number) {
+    const ret = await axios.get(`${this.domain}/users/${id}/addresses`);
     return ret.data;
   }
 }
