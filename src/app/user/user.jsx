@@ -11,28 +11,26 @@ import {
   editUserUrl,
 } from "../routes";
 import Icon from "../components/icon/icon";
+import LoadingSpinner from "../components/loading/loading";
 
 export default class User extends React.Component {
   static contextType = AppContext;
-  fetching = false;
+  loaded = false;
 
   constructor(props) {
     super(props);
-    this.state = { recentProduct: undefined, mostViewedProduct: undefined };
+    this.state = { recentProduct: undefined, addresses: undefined };
   }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
   render() {
     if (this.context.state.user.username) {
-      if (!this.fetching && !this.state.recentProduct) {
-        this.fetching = true;
-        this.context.services.userService
-          .fetchMostRecentProduct(this.context.state.user.id)
-          .then((product) => {
-            this.setState({ recentProduct: product });
-            this.fetching = false;
-          })
-          .catch((ex) => {
-            this.fetching = false;
-          });
+      if (!this.state.recentProduct || !this.state.addresses) {
+        this.fetchData();
+        return <LoadingSpinner />;
       }
       return this.profileTemplate(this.context.state.user);
     } else {
@@ -77,13 +75,20 @@ export default class User extends React.Component {
                 </div>
                 <div className="col-sm-6">
                   <p className="mb-0">
-                    Addresses{" "}
+                    Default Address{" "}
                     <Link to={addressesUrl}>
                       <Icon
-                        dataIcon="bx-bxs-message-square-add"
+                        dataIcon="bx-bxs-message-square-detail"
                         classes="text-transparent-dark clickable"
                       />
                     </Link>
+                  </p>
+                  <p>
+                    <b>{this.state.addresses[0].tag}</b>{" "}
+                    <span className="text-sm text-muted">
+                      {" "}
+                      {this.state.addresses[0].address}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -142,6 +147,20 @@ export default class User extends React.Component {
       </div>
     </div>
   );
+
+  fetchData = () => {
+    const user = this.context.state.user;
+    this.context.services.userService
+      .getAddresses(user.id)
+      .then((addresses) => {
+        this.setState({ ...this.state, addresses });
+      });
+    this.context.services.userService
+      .fetchMostRecentProduct(user.id)
+      .then((recentProduct) => {
+        this.setState({ ...this.state, recentProduct });
+      });
+  };
 
   login = () => {
     const userSvc = this.context.services.userService;
