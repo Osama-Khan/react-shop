@@ -150,7 +150,7 @@ export default class User extends React.Component {
 
   fetchData = () => {
     const user = this.context.state.user;
-    this.context.services.userService
+    this.context.services.addressService
       .getAddresses(user.id)
       .then((addresses) => {
         this.setState({ ...this.state, addresses });

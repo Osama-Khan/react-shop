@@ -15,7 +15,7 @@ export default class AddressBook extends Component {
 
   componentDidMount() {
     const userId = this.context.state.user.id;
-    this.context.services.userService
+    this.context.services.addressService
       .getAddresses(userId)
       .then((addresses) => this.setState({ addresses }));
   }
