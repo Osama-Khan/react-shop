@@ -15,22 +15,22 @@ import LoadingSpinner from "../components/loading/loading";
 
 export default class User extends React.Component {
   static contextType = AppContext;
-  loaded = false;
+  failed = false;
 
   constructor(props) {
     super(props);
     this.state = { recentProduct: undefined, addresses: undefined };
   }
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
   render() {
     if (this.context.state.user.username) {
       if (!this.state.recentProduct || !this.state.addresses) {
-        this.fetchData();
-        return <LoadingSpinner />;
+        if (this.failed) {
+          return <div>Failed to load</div>;
+        } else {
+          this.fetchData();
+          return <LoadingSpinner />;
+        }
       }
       return this.profileTemplate(this.context.state.user);
     } else {
@@ -154,11 +154,21 @@ export default class User extends React.Component {
       .getAddresses(user.id)
       .then((addresses) => {
         this.setState({ ...this.state, addresses });
+      })
+      .catch((err) => {
+        if (err) {
+          this.failed = true;
+        }
       });
     this.context.services.userService
       .fetchMostRecentProduct(user.id)
       .then((recentProduct) => {
         this.setState({ ...this.state, recentProduct });
+      })
+      .catch((err) => {
+        if (err) {
+          this.failed = true;
+        }
       });
   };
 

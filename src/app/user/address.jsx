@@ -33,7 +33,12 @@ export default class AddressBook extends Component {
         key={`address-${a.tag}`}
         className="border border-dark rounded p-2 my-2">
         <b>{a.tag}</b>
-        <p>{a.address}</p>
+        <p>
+          {a.address}{" "}
+          <span className="text-muted">
+            - {a.city}, {a.country}
+          </span>
+        </p>
       </div>
     ));
     addressEls = addressEls || <LoadingSpinner />;
