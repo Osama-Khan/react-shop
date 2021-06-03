@@ -22,6 +22,8 @@ export const routes = [
   { path: categoriesUrl, component: Categories },
   { path: categoriesUrl + "/:name", component: Categories },
   { path: userUrl, component: User },
+  { path: editUserUrl, component: UserEdit },
+  { path: userUrl, component: User },
   { path: registerUrl, component: Register },
   { path: orderUrl, component: Order },
 ];
