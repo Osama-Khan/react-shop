@@ -5,8 +5,7 @@ export default function Icon({ dataIcon, classes, click }) {
     <span
       className={`iconify ${classes ? classes : ""}`}
       data-icon={dataIcon}
-      data-inline="false"
-    ></span>
+      data-inline="false"></span>
   );
 }
 
@@ -16,7 +15,6 @@ function ClickableIcon({ dataIcon, classes, click }) {
       className={`iconify clickable ${classes ? classes : ""}`}
       data-icon={dataIcon}
       data-inline="false"
-      onClick={click?click:""}
-    ></span>
+      onClick={click}></span>
   );
 }
