@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from '../models/user';
 import ApiService from './api.service';
 
 export default class UserService extends ApiService {
@@ -40,6 +41,11 @@ export default class UserService extends ApiService {
   async fetchMostRecentProduct(id: number) {
     const endPoint = `${id}/products/recent`;
     const ret = await axios.get(`${this.domain}/users/${endPoint}`);
+    return ret.data;
+  }
+
+  async update(id: number, data: Partial<User>) {
+    const ret = await axios.patch(`${this.domain}/users/${id}`, data);
     return ret.data;
   }
 }
