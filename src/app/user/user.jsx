@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import { PrimaryButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
 import LoadingIcon from "../components/loading/loading";
-import { productsUrl, registerUrl, userUrl } from "../routes";
+import {
+  productsUrl,
+  registerUrl,
+  userUrl,
+  addressesUrl,
+  editUserUrl,
+} from "../routes";
+import Icon from "../components/icon/icon";
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -39,6 +46,14 @@ export default class User extends React.Component {
         <div className="card border border-primary">
           <div className="row ml-0 mr-0">
             <div className="col-sm-4 bg-primary d-flex flex-column m-0  ">
+              <div className="m-2 top-right">
+                <Link to={editUserUrl}>
+                  <Icon
+                    classes="text-subtle-white clickable"
+                    dataIcon="bx-bxs-message-square-edit"
+                  />
+                </Link>
+              </div>
               <div className="text-center text-white my-auto">
                 <img
                   src={user.profileImage}
@@ -51,7 +66,6 @@ export default class User extends React.Component {
                 <Link to={`${userUrl}/${user.id}`}>
                   <p className="badge btn btn-light">@{user.username}</p>
                 </Link>
-                <i className=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
               </div>
             </div>
             <div className="col-sm-8">
@@ -62,8 +76,15 @@ export default class User extends React.Component {
                   <h6 className="text-muted">{user.email}</h6>
                 </div>
                 <div className="col-sm-6">
-                  <p className="mb-0">Phone</p>
-                  <h6 className="text-muted ">98979989898</h6>
+                  <p className="mb-0">
+                    Addresses{" "}
+                    <Link to={addressesUrl}>
+                      <Icon
+                        dataIcon="bx-bxs-message-square-add"
+                        classes="text-transparent-dark clickable"
+                      />
+                    </Link>
+                  </p>
                 </div>
               </div>
               <hr />
@@ -80,10 +101,6 @@ export default class User extends React.Component {
                   ) : (
                     <LoadingIcon />
                   )}
-                </div>
-                <div className="col-sm-6">
-                  <p className="mb-0">Most Viewed</p>
-                  <h6 className="text-muted"></h6>
                 </div>
               </div>
             </div>
