@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { IconButton, PrimaryButton } from "../components/button/Button";
 import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
@@ -10,7 +11,7 @@ export default class AddressBook extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { addresses: undefined };
+    this.state = { addresses: undefined, defaultId: undefined };
   }
 
   componentDidMount() {
@@ -18,6 +19,11 @@ export default class AddressBook extends Component {
     this.context.services.addressService
       .getAddresses(userId)
       .then((addresses) => this.setState({ addresses }));
+    this.context.services.addressService
+      .getDefaultAddress(this.context.state.user.id)
+      .then((u) => {
+        this.setState({ defaultId: u.id });
+      });
   }
 
   goBack = () => {
@@ -28,20 +34,31 @@ export default class AddressBook extends Component {
     if (!this.context.state.user.token) {
       return <Redirect to={userUrl} />;
     }
-    let addressEls = this.state.addresses?.map((a) => (
-      <div
-        key={`address-${a.tag}`}
-        className="border border-dark rounded p-2 my-2">
-        <b>{a.tag}</b>
-        <p>
-          {a.address}{" "}
-          <span className="text-muted">
-            - {a.city}, {a.country}
-          </span>
-        </p>
-      </div>
-    ));
-    addressEls = addressEls || <LoadingSpinner />;
+    let addressEls;
+    if (!this.state.addresses || this.state.defaultId === undefined) {
+      addressEls = <LoadingSpinner />;
+    } else {
+      addressEls = this.state.addresses?.map((a) => (
+        <div
+          key={`address-${a.tag}`}
+          className="border border-dark rounded p-2 my-2">
+          <div>
+            <b>{a.tag} </b>
+            {this.state.defaultId === a.id ? (
+              <span className="text-muted">(Default)</span>
+            ) : (
+              ""
+            )}
+          </div>
+          <p>
+            {`${a.address}`}
+            <span className="text-muted ml-2">
+              {a.city}, {a.country}
+            </span>
+          </p>
+        </div>
+      ));
+    }
     return (
       <div className="row">
         <div className="col-md-6 mx-auto mt-5 card shadow p-3 d-flex flex-column">
@@ -50,6 +67,11 @@ export default class AddressBook extends Component {
           </div>
           <p className="text-center font-weight-bold">Address Book</p>
           {addressEls}
+          <IconButton
+            dataIcon="fa:plus"
+            classes="btn-primary btn-block m-0 mt-2"
+            text="Add Address"
+          />
         </div>
       </div>
     );

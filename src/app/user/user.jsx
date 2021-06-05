@@ -19,12 +19,12 @@ export default class User extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { recentProduct: undefined, addresses: undefined };
+    this.state = { recentProduct: undefined, address: undefined };
   }
 
   render() {
     if (this.context.state.user.username) {
-      if (!this.state.recentProduct || !this.state.addresses) {
+      if (!this.state.recentProduct || !this.state.address) {
         if (this.failed) {
           return <div>Failed to load</div>;
         } else {
@@ -84,10 +84,10 @@ export default class User extends React.Component {
                     </Link>
                   </p>
                   <p>
-                    <b>{this.state.addresses[0].tag}</b>{" "}
+                    <b>{this.state.address.tag}</b>{" "}
                     <span className="text-sm text-muted">
                       {" "}
-                      {this.state.addresses[0].address}
+                      {this.state.address.address}
                     </span>
                   </p>
                 </div>
@@ -151,9 +151,9 @@ export default class User extends React.Component {
   fetchData = () => {
     const user = this.context.state.user;
     this.context.services.addressService
-      .getAddresses(user.id)
-      .then((addresses) => {
-        this.setState({ ...this.state, addresses });
+      .getDefaultAddress(user.id)
+      .then((address) => {
+        this.setState({ ...this.state, address });
       })
       .catch((err) => {
         if (err) {
