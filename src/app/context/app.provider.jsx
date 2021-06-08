@@ -3,6 +3,7 @@ import AddressService from "../services/address.service";
 import CategoryService from "../services/category.service";
 import OrderService from "../services/order.service";
 import ProductService from "../services/product.service";
+import SettingService from "../services/setting.service";
 import UiService from "../services/ui.service";
 import UserService from "../services/user.service";
 import State from "../state/state";
@@ -17,6 +18,7 @@ export const AppProvider = (props) => {
       categoryService: new CategoryService(),
       orderService: new OrderService(),
       productService: new ProductService(),
+      settingService: new SettingService(),
       uiService: new UiService(),
       userService: new UserService(),
     },
