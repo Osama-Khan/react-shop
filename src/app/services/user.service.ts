@@ -9,8 +9,8 @@ export default class UserService extends ApiService {
    */
   async login(username: string, password: string) {
     const obj = { username, password };
-    const ret = await axios.post(`${this.domain}/login`, obj, { headers: { "Content-type": "application/json" } });
-    return ret.data;
+    const res = await axios.post(`${this.domain}/login`, obj, { headers: { "Content-type": "application/json" } });
+    return res.data;
   }
 
   /**
@@ -19,8 +19,8 @@ export default class UserService extends ApiService {
    */
   async register(username: string, password: string, firstName: string, lastName: string, email: string, dateOfBirth: Date) {
     const obj = { username, password, firstName, lastName, email, dateOfBirth };
-    const ret = await axios.post(`${this.domain}/register`, obj, { headers: { "Content-type": "application/json" } });
-    return ret.data;
+    const res = await axios.post(`${this.domain}/register`, obj, { headers: { "Content-type": "application/json" } });
+    return res.data;
   }
 
   /**
@@ -29,8 +29,8 @@ export default class UserService extends ApiService {
    * @returns user with given id
    */
   async getUser(id: number) {
-    const ret = await axios.get(`${this.domain}/users/${id}`);
-    return ret.data;
+    const res = await axios.get(`${this.domain}/users/${id}`);
+    return res.data;
   }
 
   /**
@@ -40,8 +40,11 @@ export default class UserService extends ApiService {
    */
   async fetchMostRecentProduct(id: number) {
     const endPoint = `${id}/products/recent`;
-    const ret = await axios.get(`${this.domain}/users/${endPoint}`);
-    return ret.data;
+    const res = await axios.get(`${this.domain}/users/${endPoint}`);
+    if (res.status === 404) {
+      return undefined;
+    }
+    return res.data;
   }
 
   /**
@@ -51,7 +54,7 @@ export default class UserService extends ApiService {
    * @returns The new user, after updation
    */
   async update(id: number, data: Partial<User>) {
-    const ret = await axios.patch(`${this.domain}/users/${id}`, data);
-    return ret.data;
+    const res = await axios.patch(`${this.domain}/users/${id}`, data);
+    return res.data;
   }
 }
