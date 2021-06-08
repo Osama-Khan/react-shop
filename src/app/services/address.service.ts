@@ -14,12 +14,22 @@ export default class AddressService extends ApiService {
   }
 
   /**
-   * Fetches default address of a user
-   * @param id Id of the user to fetch address of
-   * @returns The default address of user
+   * Fetches address with given id
+   * @param id Id of the address to fetch
+   * @returns Address object
    */
-  async getDefaultAddress(id: number) {
-    const ret = await axios.get(`${this.endpoint}/default/${id}`)
+  async getAddress(id: number) {
+    const ret = await axios.get(`${this.endpoint}/${id}`);
+    return ret.data;
+  }
+
+  /**
+   * Adds address of the user provided
+   * @param address The address to add
+   * @returns A list of addresses
+   */
+  async addAddress(address: { user: number, tag: string, address: string, city: number }) {
+    const ret = await axios.put(`${this.endpoint}`, address);
     return ret.data;
   }
 }
