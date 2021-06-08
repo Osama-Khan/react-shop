@@ -16,6 +16,7 @@ import LoadingSpinner from "../components/loading/loading";
 export default class User extends React.Component {
   static contextType = AppContext;
   failed = false;
+  fetching = false;
 
   constructor(props) {
     super(props);
@@ -24,11 +25,14 @@ export default class User extends React.Component {
 
   render() {
     if (this.context.state.user.username) {
-      if (!this.state.recentProduct || !this.state.address) {
+      if (
+        this.state.recentProduct === undefined ||
+        this.state.address === undefined
+      ) {
         if (this.failed) {
           return <div>Failed to load</div>;
         } else {
-          this.fetchData();
+          if (!this.fetching) this.fetchData();
           return <LoadingSpinner />;
         }
       }
@@ -42,8 +46,8 @@ export default class User extends React.Component {
     <div className="mt-5 row container d-flex justify-content-center">
       <div className="col-md-8">
         <div className="card border border-primary">
-          <div className="row ml-0 mr-0">
-            <div className="col-sm-4 bg-primary d-flex flex-column m-0  ">
+          <div className="row ml-0 mr-0 bg-light">
+            <div className="col-sm-4 bg-primary d-flex flex-column m-0 card">
               <div className="m-2 top-right">
                 <Link to={editUserUrl}>
                   <Icon
@@ -84,10 +88,12 @@ export default class User extends React.Component {
                     </Link>
                   </p>
                   <p>
-                    <b>{this.state.address.tag}</b>{" "}
+                    <b>{this.state.address ? this.state.address.tag : ""}</b>{" "}
                     <span className="text-sm text-muted">
                       {" "}
-                      {this.state.address.address}
+                      {this.state.address
+                        ? this.state.address.address
+                        : "No default address"}
                     </span>
                   </p>
                 </div>
@@ -97,12 +103,18 @@ export default class User extends React.Component {
               <div className="row">
                 <div className="col-sm-6 mb-3">
                   <p className="mb-0">Recent</p>
-                  {this.state.recentProduct ? (
-                    <Link
-                      className="text-sm text-muted"
-                      to={`${productsUrl}/${this.state.recentProduct.id}`}>
-                      {this.state.recentProduct.code}
-                    </Link>
+                  {this.state.recentProduct !== undefined ? (
+                    this.state.recentProduct ? (
+                      <Link
+                        className="text-sm text-muted"
+                        to={`${productsUrl}/${this.state.recentProduct.id}`}>
+                        {this.state.recentProduct.code}
+                      </Link>
+                    ) : (
+                      <span className="text-sm text-muted">
+                        This user has no products
+                      </span>
+                    )
                   ) : (
                     <LoadingIcon />
                   )}
@@ -149,11 +161,29 @@ export default class User extends React.Component {
   );
 
   fetchData = () => {
+    this.fetching = true;
     const user = this.context.state.user;
-    this.context.services.addressService
+    this.context.services.settingService
       .getDefaultAddress(user.id)
       .then((address) => {
-        this.setState({ ...this.state, address });
+        if (address) {
+          this.setState({ ...this.state, address });
+          this.context.services.addressService
+            .getAddress(address.id)
+            .then((address) => {
+              this.setState({ ...this.state, address });
+            })
+            .catch((err) => {
+              if (err) {
+                this.failed = true;
+              }
+            });
+          return;
+        }
+        this.setState({
+          ...this.state,
+          address: false,
+        });
       })
       .catch((err) => {
         if (err) {
@@ -166,9 +196,11 @@ export default class User extends React.Component {
         this.setState({ ...this.state, recentProduct });
       })
       .catch((err) => {
-        if (err) {
-          this.failed = true;
+        if (err.response.status === 404) {
+          this.setState({ ...this.state, recentProduct: false });
+          return;
         }
+        this.failed = true;
       });
   };
 
