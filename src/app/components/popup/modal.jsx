@@ -32,8 +32,7 @@ export default function Modal({
                 <div
                   className="ml-auto btn btn-secondary"
                   onClick={() => {
-                    secondaryAction();
-                    close();
+                    if (secondaryAction()) close();
                   }}>
                   {secondaryActionText}
                 </div>
@@ -44,8 +43,7 @@ export default function Modal({
                 <div
                   className="btn btn-primary"
                   onClick={() => {
-                    primaryAction();
-                    close();
+                    if (primaryAction()) close();
                   }}>
                   {primaryActionText}
                 </div>
