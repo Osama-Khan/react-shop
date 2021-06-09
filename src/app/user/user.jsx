@@ -47,7 +47,7 @@ export default class User extends React.Component {
       <div className="col-md-8">
         <div className="card border border-primary">
           <div className="row ml-0 mr-0 bg-light">
-            <div className="col-sm-4 bg-primary d-flex flex-column m-0 card">
+            <div className="col-sm-4 bg-primary d-flex flex-column m-0 card rounded-left">
               <div className="m-2 top-right">
                 <Link to={editUserUrl}>
                   <Icon
