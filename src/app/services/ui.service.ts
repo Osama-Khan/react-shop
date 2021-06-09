@@ -4,6 +4,7 @@ import {
   IconTheme,
 } from "react-hot-toast/dist/core/types";
 import SwalDefault, { SweetAlertResult } from "sweetalert2";
+import withReact from "sweetalert2-react-content";
 
 const Swal = SwalDefault.mixin({
   customClass: {
@@ -13,6 +14,7 @@ const Swal = SwalDefault.mixin({
   },
   buttonsStyling: false,
 });
+const SwalWithReact = withReact(Swal);
 
 interface ToastOptions {
   id?: string;
@@ -86,13 +88,13 @@ export default class UiService {
     Swal.fire({ icon, title, text, footer });
 
   htmlModal = (
-    title: string,
-    html: string,
+    title: any,
+    html: any,
     icon: Icon,
     showCancelButton = true,
     confirmButtonText: string
   ): Promise<SweetAlertResult> =>
-    Swal.fire({
+    SwalWithReact.fire({
       title,
       html,
       icon,
