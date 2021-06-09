@@ -63,7 +63,7 @@ export default class AddressBook extends Component {
             className={`${cardClasses} rounded p-2 my-2`}>
             <div
               className="p-1 m-0 float-right text-red text-clickable"
-              onClick={this.deleteAddress(a)}>
+              onClick={() => this.deleteAddress(a)}>
               <Icon dataIcon="fa:trash" />
             </div>
             <div>
@@ -201,6 +201,33 @@ export default class AddressBook extends Component {
   };
 
   deleteAddress = (a) => {
-    // TODO: Add deletion
+    const uiSvc = this.context.services.uiService;
+    uiSvc
+      .confirmModal(
+        `Deleting ${a.tag}`,
+        `Are you sure you want to delete the address ${a.tag}?`,
+        "warning",
+        true,
+        "Delete"
+      )
+      .then((isConfirmed) => {
+        if (isConfirmed) {
+          const promise = this.context.services.addressService
+            .deleteAddress(a.id)
+            .then(() =>
+              this.setState({
+                ...this.state,
+                addresses: this.state.addresses.filter(
+                  (addr) => addr.id !== a.id
+                ),
+              })
+            );
+          uiSvc.promiseToast(promise, {
+            loading: "Deleting address...",
+            success: "Address deleted!",
+            error: "Could not delete address, try again.",
+          });
+        }
+      });
   };
 }
