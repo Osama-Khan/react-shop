@@ -1,6 +1,5 @@
 import { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { renderToString } from "react-dom/server";
 import Icon from "../../components/icon/icon";
 import LoadingSpinner from "../../components/loading/loading";
 import { AppContext } from "../../context/app.provider";
@@ -164,7 +163,7 @@ export default class AddressBook extends Component {
         onClick={() =>
           modal(
             "Change Default Address",
-            renderToString(defAddressForm),
+            defAddressForm,
             "",
             true,
             "Save"
