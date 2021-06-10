@@ -3,26 +3,31 @@ import { Link } from "react-router-dom";
 import { IconButton, PrimaryButton } from "../components/button/Button";
 import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
-import { productsUrl } from "../routes";
+import { addAddressUrl, addressesUrl, productsUrl } from "../routes";
 
 export default class Order extends Component {
   static contextType = AppContext;
+  loading = false;
+  failed = false;
 
   constructor(props) {
     super(props);
-    this.state = { addresses: [], selectedAddressIndex: 0 };
+    this.state = { address: undefined, placingOrder: false };
+  }
+
+  componentDidUpdate() {
+    if (
+      this.context.state.user.id &&
+      !this.loading &&
+      !this.failed &&
+      !this.address
+    ) {
+      this.fetchData();
+    }
   }
 
   componentDidMount() {
-    if (this.context.state.user.id) {
-      this.context.services.userService
-        .getUser(this.context.state.user.id)
-        .then((u) => {
-          this.setState({
-            addresses: u.addresses.length > 0 ? u.addresses : false,
-          });
-        });
-    }
+    if (this.context.state.user.id) this.fetchData();
   }
 
   render() {
@@ -79,38 +84,46 @@ export default class Order extends Component {
         </div>
       </div>
     ));
-    const selectedAddress = this.state.addresses
-      ? this.state.addresses[this.state.selectedAddressIndex]
-      : null;
+
+    const address = this.state.address;
+
     const checkoutEl = loggedIn ? (
-      this.state.addresses?.length > 0 ? (
+      address ? (
         <>
           <IconButton
-            classes="btn-green"
+            classes={"btn-green" + (!this.state.placingOrder ? " d-none" : "")}
+            dataIcon="fa:spinner"
+            iconClasses="spin"
+            text="Placing order"
+          />
+          <IconButton
+            classes={"btn-green" + (this.state.placingOrder ? " d-none" : "")}
             dataIcon="fa-check"
-            text="Place order"
+            text="Place Order"
             click={() => this.placeOrder()}
           />
           <div className="text-muted mt-3">
             Your order will be shipped to{" "}
-            <b data-toggle="tooltip" title={selectedAddress.address}>
-              {selectedAddress.tag}
+            <b
+              data-toggle="tooltip"
+              title={`${address.address} - ${address.city}, ${address.country}`}>
+              {address.tag}
             </b>
           </div>
-          <Link to="change/shipping/address">
+          <Link to={addressesUrl}>
             <IconButton
-              text="Change shipping address"
+              text="Change default address"
               dataIcon="fa:map-marker"
               classes="btn-dark-outline"
             />
           </Link>
         </>
-      ) : this.state.addresses === false ? (
+      ) : address === false ? (
         <>
           <div className="text-muted">
             You don't have any addresses, please add at least one to continue.
           </div>
-          <Link to="/somewhere/to/edit/profile">
+          <Link to={addAddressUrl}>
             <PrimaryButton text="Add address" classes="btn-green" />
           </Link>
         </>
@@ -154,16 +167,55 @@ export default class Order extends Component {
       id: p.id,
       quantity: p.quantity,
     }));
-    if (!this.state.addresses) {
+    if (!this.state.address) {
       this.context.uiService.errorToast("No address available");
       return;
     }
-    const selectedAddress =
-      this.state.addresses[this.state.selectedAddressIndex].address;
-    this.context.services.orderService.placeOrder(
-      selectedAddress,
-      this.context.state.user.id,
-      products
-    );
+    this.setState({ ...this.state, placingOrder: true });
+    this.context.services.orderService
+      .placeOrder(
+        `${this.state.address.address} - ${this.state.address.city}, ${this.state.address.country}`,
+        this.context.state.user.id,
+        products
+      )
+      .then((order) =>
+        this.context.services.uiService.iconModal(
+          "Order Placed",
+          "Your order has been placed successfully!",
+          "success"
+        )
+      )
+      .catch((error) =>
+        this.context.services.uiService.iconModal(
+          "Order Failed",
+          "Failed to place your order, please try again!",
+          "error"
+        )
+      )
+      .finally(() => {
+        this.setState({ ...this.state, placingOrder: false });
+        const cart = this.context.state.cart;
+        console.log(cart);
+        cart.clearCart();
+        this.context.setState({ ...this.context.state, cart });
+      });
+  }
+
+  fetchData() {
+    this.context.services.addressService
+      .getAddresses(this.context.state.user.id)
+      .then((addresses) => {
+        if (!addresses) {
+          this.setState({ address: false });
+        }
+        this.context.services.settingService
+          .getDefaultAddress(this.context.state.user.id)
+          .then((addr) => {
+            const address = addresses.find((a) => a.id === addr.id);
+            this.setState({
+              address,
+            });
+          });
+      });
   }
 }
