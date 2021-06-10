@@ -40,12 +40,16 @@ export function IconButton({
   classes = "btn-primary-outline",
   iconClasses = "",
   text,
+  disabled = false,
 }) {
   const t = text ? <span className="mx-2">{text}</span> : null;
   return (
-    <div className={`btn btn-icon ${classes}`} onClick={click}>
+    <button
+      className={`btn btn-icon ${classes}`}
+      onClick={click}
+      disabled={disabled}>
       <Icon dataIcon={dataIcon} classes={iconClasses} />
       {t}
-    </div>
+    </button>
   );
 }
