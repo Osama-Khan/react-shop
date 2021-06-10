@@ -7,12 +7,14 @@ import Order from "./order/order";
 import UserEdit from "./user/user-edit";
 import AddressBook from "./user/addresses/address";
 import AddAddress from "./user/addresses/add-address";
+import UserProducts from "./user/user-products";
 
 export const homeUrl = "/";
 export const productsUrl = "/products";
 export const categoriesUrl = `/categories`;
 export const userUrl = "/user";
 export const editUserUrl = userUrl + "/edit";
+export const userProductsUrl = userUrl + "/:id/products";
 export const addressesUrl = userUrl + "/addresses";
 export const addAddressUrl = addressesUrl + "/add";
 export const registerUrl = "/register";
@@ -25,10 +27,11 @@ export const routes = [
   { path: categoriesUrl, component: Categories },
   { path: categoriesUrl + "/:name", component: Categories },
   { path: userUrl, component: User },
-  { path: editUserUrl, component: UserEdit },
   { path: addressesUrl, component: AddressBook },
+  { path: editUserUrl, component: UserEdit },
+  { path: userUrl + "/:id", component: User },
+  { path: userProductsUrl, component: UserProducts },
   { path: addAddressUrl, component: AddAddress },
-  { path: userUrl, component: User },
   { path: registerUrl, component: Register },
   { path: orderUrl, component: Order },
 ];
