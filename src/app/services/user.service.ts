@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { User } from '../models/user';
-import ApiService from './api.service';
+import axios from "axios";
+import { User } from "../models/user";
+import ApiService from "./api.service";
 
 export default class UserService extends ApiService {
   /**
@@ -9,7 +9,9 @@ export default class UserService extends ApiService {
    */
   async login(username: string, password: string) {
     const obj = { username, password };
-    const res = await axios.post(`${this.domain}/login`, obj, { headers: { "Content-type": "application/json" } });
+    const res = await axios.post(`${this.domain}/login`, obj, {
+      headers: { "Content-type": "application/json" },
+    });
     return res.data;
   }
 
@@ -17,9 +19,18 @@ export default class UserService extends ApiService {
    * Registers a new user with the given parameters
    * @returns An object with user data
    */
-  async register(username: string, password: string, firstName: string, lastName: string, email: string, dateOfBirth: Date) {
+  async register(
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    dateOfBirth: Date
+  ) {
     const obj = { username, password, firstName, lastName, email, dateOfBirth };
-    const res = await axios.post(`${this.domain}/register`, obj, { headers: { "Content-type": "application/json" } });
+    const res = await axios.post(`${this.domain}/register`, obj, {
+      headers: { "Content-type": "application/json" },
+    });
     return res.data;
   }
 
@@ -45,6 +56,17 @@ export default class UserService extends ApiService {
       return undefined;
     }
     return res.data;
+  }
+
+  /**
+   * Fetches data containing products of the user provided
+   * @param id of the user to fetch products of
+   * @returns An object with products data
+   */
+  async fetchProducts(id: number) {
+    const endPoint = `products?filters=user=${id}`;
+    const res = await axios.get(`${this.domain}/${endPoint}`);
+    return res;
   }
 
   /**
