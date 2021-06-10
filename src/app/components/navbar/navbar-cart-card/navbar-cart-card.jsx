@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { orderUrl, productsUrl } from "../../../routes";
 import { IconButton, PrimaryButton } from "../../button/Button";
 import { AppContext } from "../../../context/app.provider";
+import Icon from "../../icon/icon";
 
 export default class NavbarCartCard extends Component {
   static contextType = AppContext;
@@ -40,13 +41,13 @@ export default class NavbarCartCard extends Component {
                   />
                 </div>
               </div>
-              <IconButton
-                classes="top-right text-sm text-red"
-                dataIcon="akar-icons:cross"
-                click={() => {
+              <div
+                className="top-right text-sm m-1 p-1 text-clickable"
+                onClick={() => {
                   this.onRemoveCartItem(p);
-                }}
-              />
+                }}>
+                <Icon dataIcon="fa:times" />
+              </div>
             </div>
           ))}
           <Link to={orderUrl}>
