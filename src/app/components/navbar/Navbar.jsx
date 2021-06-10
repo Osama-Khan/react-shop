@@ -35,7 +35,7 @@ export default function Navbar() {
 
   const renderNavAccountContent = () => (
     <div className="d-flex flex-column">
-      <p className="text-center font-weight-bold">ACCOUNT</p>
+      <p className="text-center font-weight-bold border-bottom">ACCOUNT</p>
       <div className="form-group">
         <label>Username</label>
         <input
