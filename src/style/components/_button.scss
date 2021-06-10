@@ -2,171 +2,157 @@
 // This file contains all styles related to the button component.
 // -----------------------------------------------------------------------------
 .btn {
-    transition: 0.25s all;
-    margin: 0.2em;
+  transition: 0.25s all;
+  margin: 0.2em;
+}
+
+.btn:hover {
+  color: white !important;
+  cursor: default;
 }
 
 .btn:not(:disabled):hover {
-    box-shadow: 0 4px 8px 1px #0002;
-    transform: translateY(-1px);
-    filter: brightness(1.1);
+  box-shadow: 0 4px 8px 1px #0002;
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 .btn:not(:disabled):active {
-    box-shadow: none!important;
-    transform: none!important;
-    filter: brightness(0.8);
+  box-shadow: none !important;
+  transform: none !important;
+  filter: brightness(0.8);
 }
 
 .btn-primary {
-    background-color: $color-primary!important;
-    border-color: $color-primary-light!important;
+  background-color: $color-primary !important;
+  border-color: $color-primary-light !important;
 }
 
 .btn-primary-outline {
-    background-color: #0000;
-    color: $color-primary!important;
-    border-color: $color-primary-light!important;
+  background-color: #0000;
+  color: $color-primary !important;
+  border-color: $color-primary-light !important;
 }
 
 .btn-primary-outline:not(:disabled):hover {
-    background-color: $color-primary!important;
-    color: white!important;
-    border-color: $color-primary-light!important;
+  background-color: $color-primary !important;
+  color: white !important;
+  border-color: $color-primary-light !important;
 }
 
 .btn-light {
-    background-color: $color-light;
-    color: $color-dark!important;
+  background-color: $color-light;
+  color: $color-dark !important;
+
+  &:not(:disabled):hover {
+    color: $color-dark !important;
+  }
 }
 
 .btn-light-outline {
-    background-color: #0000;
-    color: $color-dark!important;
-    border: 1px solid $color-gray;
-}
+  background-color: #0000;
+  color: $color-dark !important;
+  border: 1px solid $color-gray;
 
-.btn-light-outline:not(:disabled):hover {
-    background-color: $color-light!important;
-    border-color: $color-gray!important;
+  &:not(:disabled):hover {
+    background-color: $color-light !important;
+    border-color: $color-gray !important;
+    color: $color-dark !important;
+  }
 }
 
 .btn-green {
-    background-color: $color-green!important;
-    border-color: $color-green-transparent!important;
-
-    &:not(:disabled):hover {
-        color: white!important;
-    }
+  background-color: $color-green !important;
+  border-color: $color-green-transparent !important;
 }
 
 .btn-green-outline {
-    background-color: #0000;
-    color: $color-green!important;
-    border-color: $color-green-transparent!important;
-    &:not(:disabled):hover {
-        background-color: $color-green!important;
-        color: white!important;
-        border-color: $color-green-transparent!important;
-    }
+  background-color: #0000;
+  color: $color-green !important;
+  border-color: $color-green-transparent !important;
+  &:not(:disabled):hover {
+    background-color: $color-green !important;
+    color: white !important;
+    border-color: $color-green-transparent !important;
+  }
 }
 
 .btn-yellow {
-    background-color: $color-yellow!important;
-    border-color: $color-yellow-transparent!important;
-
-    &:not(:disabled):hover {
-        color: white!important;
-    }
+  background-color: $color-yellow !important;
+  border-color: $color-yellow-transparent !important;
 }
 
 .btn-yellow-outline {
-    background-color: #0000;
-    color: $color-yellow!important;
-    border-color: $color-yellow-transparent!important;
-    &:not(:disabled):hover {
-        background-color: $color-yellow!important;
-        color: white!important;
-        border-color: $color-yellow-transparent!important;
-    }
+  background-color: #0000;
+  color: $color-yellow !important;
+  border-color: $color-yellow-transparent !important;
+  &:not(:disabled):hover {
+    background-color: $color-yellow !important;
+    color: white !important;
+    border-color: $color-yellow-transparent !important;
+  }
 }
 
 .btn-red {
-    background-color: $color-red!important;
-    border-color: $color-red-transparent!important;
-
-    &:not(:disabled):hover {
-        color: white!important;
-    }
+  background-color: $color-red !important;
+  border-color: $color-red-transparent !important;
 }
 
 .btn-red-outline {
-    background-color: #0000;
-    color: $color-red!important;
-    border-color: $color-red-transparent!important;
-    &:not(:disabled):hover {
-        background-color: $color-red!important;
-        color: white!important;
-        border-color: $color-red-transparent!important;
-    }
+  background-color: #0000;
+  color: $color-red !important;
+  border-color: $color-red-transparent !important;
+  &:not(:disabled):hover {
+    background-color: $color-red !important;
+    color: white !important;
+    border-color: $color-red-transparent !important;
+  }
 }
 
 .btn-blue {
-    background-color: $color-blue!important;
-    border-color: $color-blue-transparent!important;
-
-    &:not(:disabled):hover {
-        color: white!important;
-    }
+  background-color: $color-blue !important;
+  border-color: $color-blue-transparent !important;
 }
 
 .btn-blue-outline {
-    background-color: #0000;
-    color: $color-blue!important;
-    border-color: $color-blue-transparent!important;
-    &:not(:disabled):hover {
-        background-color: $color-blue!important;
-        color: white!important;
-        border-color: $color-blue-transparent!important;
-    }
+  background-color: #0000;
+  color: $color-blue !important;
+  border-color: $color-blue-transparent !important;
+  &:not(:disabled):hover {
+    background-color: $color-blue !important;
+    color: white !important;
+    border-color: $color-blue-transparent !important;
+  }
 }
 
 .btn-orange {
-    background-color: $color-orange!important;
-    border-color: $color-orange-transparent!important;
-
-    &:not(:disabled):hover {
-        color: white!important;
-    }
+  background-color: $color-orange !important;
+  border-color: $color-orange-transparent !important;
 }
 
 .btn-orange-outline {
-    background-color: #0000;
-    color: $color-orange!important;
-    border-color: $color-orange-transparent!important;
-    &:not(:disabled):hover {
-        background-color: $color-orange!important;
-        color: white!important;
-        border-color: $color-orange-transparent!important;
-    }
+  background-color: #0000;
+  color: $color-orange !important;
+  border-color: $color-orange-transparent !important;
+  &:not(:disabled):hover {
+    background-color: $color-orange !important;
+    color: white !important;
+    border-color: $color-orange-transparent !important;
+  }
 }
 
 .btn-dark {
-    background-color: $color-dark!important;
-    border-color: $color-dark-transparent!important;
-
-    &:not(:disabled):hover {
-        color: white!important;
-    }
+  background-color: $color-dark !important;
+  border-color: $color-dark-transparent !important;
 }
 
 .btn-dark-outline {
-    background-color: #0000;
-    color: $color-dark!important;
-    border-color: $color-dark-transparent!important;
-    &:not(:disabled):hover {
-        background-color: $color-dark!important;
-        color: white!important;
-        border-color: $color-dark-transparent!important;
-    }
+  background-color: #0000;
+  color: $color-dark !important;
+  border-color: $color-dark-transparent !important;
+  &:not(:disabled):hover {
+    background-color: $color-dark !important;
+    color: white !important;
+    border-color: $color-dark-transparent !important;
+  }
 }
