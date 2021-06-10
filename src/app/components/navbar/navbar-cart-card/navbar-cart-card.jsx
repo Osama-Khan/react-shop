@@ -92,13 +92,12 @@ export default class NavbarCartCard extends Component {
     }
   }
 
-  // TODO: Fix cart not updating on item removal
   onRemoveCartItem(i) {
     this.context.state.cart.removeProduct(i.id);
     this.context.setState({
       ...this.context.state,
       cart: this.context.state.cart,
     });
-    this.setState(this.context.state);
+    this.setState(this.context.state.cart);
   }
 }
