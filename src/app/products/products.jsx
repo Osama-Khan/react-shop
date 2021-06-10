@@ -168,9 +168,10 @@ export default class Products extends React.Component {
           </div>
           <div className="mt-3 d-flex">
             <IconButton
-              dataIcon="fa:eye"
-              text="watch"
-              classes="btn-dark-outline ml-auto"
+              dataIcon="fa:plus"
+              text="Add to cart"
+              classes="btn-green ml-auto"
+              disabled={true}
             />
             <IconButton dataIcon="fa:heart" classes="btn-dark-outline" />
           </div>
