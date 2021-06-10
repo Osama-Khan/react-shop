@@ -34,8 +34,9 @@ export default function Navbar() {
   );
 
   const renderNavAccountContent = () => (
-    <div className="d-flex flex-column">
-      <p className="text-center font-weight-bold border-bottom">ACCOUNT</p>
+    <div>
+      <p className="text-center font-weight-bold">ACCOUNT</p>
+      <hr />
       <div className="form-group">
         <label>Username</label>
         <input
@@ -132,7 +133,7 @@ export default function Navbar() {
             <Link to={userUrl} className="bg-primary-subtle rounded">
               <div className={`nav-link text-clickable`}>
                 <img
-                  className="iconify img-tiny rounded-circle shadow"
+                  className="iconify img-tiny rounded-circle shadow-sm"
                   src={context.state.user.profileImage}
                   alt={context.state.user.username}
                 />

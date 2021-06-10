@@ -64,7 +64,8 @@ export default class NavbarCartCard extends Component {
       );
     return (
       <div>
-        <p className="text-center font-weight-bold border-bottom">CART</p>
+        <p className="text-center font-weight-bold">CART</p>
+        <hr />
         {p}
       </div>
     );
