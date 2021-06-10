@@ -152,6 +152,7 @@ export default class Products extends React.Component {
               dataIcon="fa:plus"
               text="Add to cart"
               classes="btn-green ml-auto"
+              click={() => this.context.state.cart.addProduct(p)}
             />
             <IconButton dataIcon="fa:heart" classes="btn-dark-outline" />
           </div>
