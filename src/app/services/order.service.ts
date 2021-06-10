@@ -9,9 +9,23 @@ export default class OrderService extends ApiService {
    * @param products Products to include in the order
    * @returns An object containing the order details
    */
-  async placeOrder(address: string, userId: number, products: [{ id: number, quantity: number }]) {
+  async placeOrder(
+    address: string,
+    userId: number,
+    products: [{ id: number; quantity: number }]
+  ) {
     const url = `${this.domain}/orders`;
-    const ret = await axios.put(url, { address, user: userId, products }, { headers: { "Content-type": "application/json" } });
+    const ret = await axios.put(
+      url,
+      { address, user: userId, products },
+      { headers: { "Content-type": "application/json" } }
+    );
     return ret.data;
+  }
+
+  async getOrders(userId: number) {
+    const url = `${this.domain}/orders?include=orderProducts;orderState&filters=user=${userId}`;
+    const res = await axios.get(url);
+    return res;
   }
 }
