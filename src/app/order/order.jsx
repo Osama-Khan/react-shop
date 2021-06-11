@@ -195,7 +195,6 @@ export default class Order extends Component {
       .finally(() => {
         this.setState({ ...this.state, placingOrder: false });
         const cart = this.context.state.cart;
-        console.log(cart);
         cart.clearCart();
         this.context.setState({ ...this.context.state, cart });
       });

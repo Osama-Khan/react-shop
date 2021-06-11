@@ -203,7 +203,6 @@ export default class User extends React.Component {
     this.setState({ ...this.state, fetching: true });
     const id = this.props.match.params.id;
     if (id) {
-      console.log("ID" + id);
       this.context.services.userService
         .getUser(parseInt(id))
         .then((user) => {
