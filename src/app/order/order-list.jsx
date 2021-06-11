@@ -40,51 +40,53 @@ export default class OrderList extends Component {
   }
 
   renderOrders = (orders) => {
-    let total = 0;
     const orderEls =
       orders.length > 0 ? (
-        orders.map((o) => (
-          <div className="col-md-8 card mb-4 mx-auto p-0">
-            <div className="card-header bg-dark text-light row">
-              <h1 className="m-0 ml-2">Order #{o.id} </h1>
-              {this.renderStateBadge(o.orderState)}
+        orders.map((o) => {
+          let total = 0;
+          return (
+            <div className="col-md-8 card mb-4 mx-auto p-0">
+              <div className="card-header bg-dark text-light row">
+                <h1 className="m-0 ml-2">Order #{o.id} </h1>
+                {this.renderStateBadge(o.orderState)}
+              </div>
+              <div className="mb-2 p-2">
+                {this.state.detailLoaded ? (
+                  o.orderProducts.map((op) => {
+                    total += op.price * op.quantity;
+                    return (
+                      <>
+                        <br />
+                        <span className="ml-2">
+                          {" "}
+                          {op.quantity} &times;{" "}
+                          <Link
+                            to={`${productsUrl}/${op.product.id}`}
+                            title={op.product.title}>
+                            {op.product.title.substring(0, 16) + "..."}
+                          </Link>
+                        </span>{" "}
+                        = <b>{op.price} Rs.</b>
+                      </>
+                    );
+                  })
+                ) : (
+                  <LoadingSpinner />
+                )}
+              </div>
+              <div className="row m-0 px-2">
+                <span className="my-auto text-muted">
+                  Placed on: {new Date(o.createdAt).toLocaleString()}
+                  <br />
+                  Last Update: {new Date(o.updatedAt).toLocaleString()}
+                </span>
+                <span className="bg-green-subtle badge-pill m-3 ml-auto p-2 text-green">
+                  <b>{total}</b> Rs.
+                </span>
+              </div>
             </div>
-            <div className="mb-2 p-2">
-              {this.state.detailLoaded ? (
-                o.orderProducts.map((op) => {
-                  total += op.price * op.quantity;
-                  return (
-                    <>
-                      <br />
-                      <span className="ml-2">
-                        {" "}
-                        {op.quantity} &times;{" "}
-                        <Link
-                          to={`${productsUrl}/${op.product.id}`}
-                          title={op.product.title}>
-                          {op.product.title.substring(0, 16) + "..."}
-                        </Link>
-                      </span>{" "}
-                      = <b>{op.price} Rs.</b>
-                    </>
-                  );
-                })
-              ) : (
-                <LoadingSpinner />
-              )}
-            </div>
-            <div className="row m-0 px-2">
-              <span className="my-auto text-muted">
-                Placed on: {new Date(o.createdAt).toLocaleString()}
-                <br />
-                Last Update: {new Date(o.updatedAt).toLocaleString()}
-              </span>
-              <span className="bg-green-subtle badge-pill m-3 ml-auto p-2 text-green">
-                <b>{total}</b> Rs.
-              </span>
-            </div>
-          </div>
-        ))
+          );
+        })
       ) : (
         <>
           <div className="text-center text-muted font-weight-bold mt-5">
