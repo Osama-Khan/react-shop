@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { productsUrl } from "../../routes";
 import { ProductCard } from "../card/card";
 import LoadingSpinner from "../loading/loading";
 
@@ -14,8 +16,11 @@ export default function ProductsList(props) {
     });
   } else {
     return (
-      <div className="col-md-12 text-center">
+      <div className="col-md-12 text-center mt-5">
         <p className="font-weight-bold text-muted">No products found</p>
+        <Link to={productsUrl}>
+          <button className="btn btn-dark mt-2">View All Products</button>
+        </Link>
       </div>
     );
   }
