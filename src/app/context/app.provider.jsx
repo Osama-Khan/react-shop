@@ -1,6 +1,7 @@
 import { useState, createContext } from "react";
 import AddressService from "../services/address.service";
 import CategoryService from "../services/category.service";
+import FavoriteService from "../services/favorite.service";
 import LocationService from "../services/location.service";
 import OrderService from "../services/order.service";
 import ProductService from "../services/product.service";
@@ -17,6 +18,7 @@ export const AppProvider = (props) => {
     services: {
       addressService: new AddressService(),
       categoryService: new CategoryService(),
+      favoriteService: new FavoriteService(),
       locationService: new LocationService(),
       orderService: new OrderService(),
       productService: new ProductService(),
