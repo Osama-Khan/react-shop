@@ -1,10 +1,8 @@
 import { Component } from "react";
-import { Redirect } from "react-router-dom";
 import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading";
 import ProductsList from "../components/products-list/products-list";
 import { AppContext } from "../context/app.provider";
-import { userUrl } from "../routes";
 
 export default class UserProducts extends Component {
   static contextType = AppContext;
@@ -16,9 +14,6 @@ export default class UserProducts extends Component {
   }
 
   render() {
-    if (!this.context.state.user.username) {
-      return <Redirect to={userUrl} />;
-    }
     if (!this.state.products && !this.state.fetching && !this.state.failed) {
       this.setState({ ...this.state, fetching: true });
       this.fetchData();
@@ -28,7 +23,7 @@ export default class UserProducts extends Component {
     } else if (this.state.products && !this.state.failed) {
       return (
         <div className="mt-5">
-          <h1>{this.context.state.user.username}'s Products</h1>
+          <h1>{this.state.user.username}'s Products</h1>
           <ProductsList products={this.state.products} />
         </div>
       );
@@ -50,10 +45,23 @@ export default class UserProducts extends Component {
 
   fetchData = () => {
     this.context.services.userService
-      .fetchProducts(parseInt(this.props.match.params.id))
-      .then((p) => {
-        const products = p.data;
-        this.setState({ ...this.state, products });
+      .getUser(parseInt(this.props.match.params.id))
+      .then((user) => {
+        this.setState({ user });
+        this.context.services.userService
+          .fetchProducts(parseInt(this.props.match.params.id))
+          .then((p) => {
+            const products = p.data;
+            this.setState({ ...this.state, products });
+          })
+          .catch((err) => {
+            this.context.services.uiService.iconModal(
+              `Error ${err.status}`,
+              `Failed to get products. ${err.statusText}`,
+              "error"
+            );
+            this.setState({ ...this.state, failed: true });
+          });
       })
       .catch((err) => {
         if (err.response.status === 404) {
