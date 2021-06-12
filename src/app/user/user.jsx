@@ -163,6 +163,15 @@ export default class User extends React.Component {
           </Link>
         </div>
       </div>
+      <div className="col-sm-4 mt-3 mx-auto">
+        <Card
+          text="Products"
+          icon="bx-bxs-box"
+          color="primary"
+          iconClasses="icon-sm"
+          linkTo={`${userUrl}/${user.id}/products`}
+        />
+      </div>
     </div>
   );
 
