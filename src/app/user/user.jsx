@@ -8,6 +8,7 @@ import {
   addressesUrl,
   editUserUrl,
   ordersUrl,
+  userFavoritesUrl,
 } from "../routes";
 import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading";
@@ -137,6 +138,15 @@ export default class User extends React.Component {
                   color="primary"
                   iconClasses="icon-sm"
                   linkTo={ordersUrl}
+                />
+              </div>
+              <div className="col-sm-6 mb-3 mx-auto">
+                <Card
+                  text="My Favorites"
+                  icon="fa:heart"
+                  color="primary"
+                  iconClasses="icon-sm"
+                  linkTo={userFavoritesUrl}
                 />
               </div>
             </div>
