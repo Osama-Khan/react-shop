@@ -173,8 +173,8 @@ export default function Navbar() {
           </button>
         </li>
       </ul>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
