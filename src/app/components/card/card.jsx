@@ -31,10 +31,18 @@ export function ProductCard({ product, classes = "" }) {
         />
         <b>{product.title}</b>
         <ProductRating rating={product.rating} classes="text-warning" />
-        <div className="text-right my-3">
-          <span className="p-3 badge-pill bg-green-subtle text-green">
+        <hr />
+        <div className="d-flex">
+          {product.favoriteCount !== undefined ? (
+            <div className="p-3 badge-pill bg-light">
+              <Icon dataIcon="fa:heart" /> {product.favoriteCount}
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="ml-auto p-3 badge-pill bg-green-subtle text-green">
             Rs. <b>{product.price}</b>
-          </span>
+          </div>
         </div>
       </Link>
       <IconButton
