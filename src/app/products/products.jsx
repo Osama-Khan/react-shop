@@ -6,6 +6,7 @@ import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading";
 import ProductsList from "../components/products-list/products-list";
+import ProductRating from "../components/product-rating/product-rating";
 
 export default class Products extends React.Component {
   static contextType = AppContext;
@@ -14,58 +15,48 @@ export default class Products extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { products: [], product: undefined, categories: undefined };
+    this.state = {
+      products: undefined,
+      product: undefined,
+      categories: undefined,
+      isFavorite: undefined,
+      fetching: false,
+      failed: false,
+    };
 
     this.productId = props.match.params.id;
   }
 
   render() {
-    if (this.productId) {
+    if (
+      !this.state.products &&
+      !this.state.product &&
+      !this.state.fetching &&
+      !this.state.failed
+    ) {
+      this.setState({ ...this.state, fetching: true });
+      this.fetchData();
+      return <LoadingSpinner />;
+    } else if (this.state.fetching) {
+      return <LoadingSpinner />;
+    } else if (this.state.products && !this.state.failed) {
+      return (
+        <div className="mt-5">
+          <h1>Products</h1>
+          <ProductsList products={this.state.products} />
+        </div>
+      );
+    } else if (this.state.product && !this.state.failed) {
       return this.renderProductDetail();
-    }
-    return (
-      <div className="mt-5">
-        <h1>Products</h1>
-        <ProductsList products={this.state.products} />
-      </div>
-    );
-  }
-
-  componentDidMount() {
-    const svc = this.context.services;
-    if (this.productId) {
-      svc.productService
-        .fetchProduct(this.productId)
-        .then((product) => {
-          this.setState({ ...this.state, product });
-          svc.categoryService
-            .fetchParentsOf(product.category.id)
-            .then((categories) => {
-              this.setState({ ...this.state, categories });
-            })
-            .catch((err) =>
-              console.error("[products.jsx] - Failed to get category parents!")
-            );
-        })
-        .catch((err) =>
-          console.error("[products.jsx] - Failed to get product!")
-        );
     } else {
-      svc.productService
-        .fetchProducts()
-        .then((products) => {
-          this.setState({ ...this.state, products });
-        })
-        .catch((err) =>
-          console.error("[products.jsx] - Failed to get products!")
-        );
+      return this.failedTemplate();
     }
   }
 
   renderProductDetail = () => {
     let component;
     const product = this.state.product;
-    let categoryList = this.state.categories?.map((c, i) => {
+    let categoryList = this.state.categories?.map((c) => {
       return (
         <span key={c.id}>
           <Link
@@ -73,7 +64,7 @@ export default class Products extends React.Component {
             className="badge bg-primary-subtle">
             {c.name}
           </Link>
-          &gt;
+          <Icon dataIcon="akar-icons:chevron-right" />
         </span>
       );
     });
@@ -92,23 +83,28 @@ export default class Products extends React.Component {
           </div>
           <div className="col-md-8">
             <div className="m-3">
-              <p>
+              <h3>
                 <b>{product.title}</b>
-              </p>
-              <p>Code: {product.code}</p>
+              </h3>
+              <p className="text-muted">Code: {product.code}</p>
               <p>
                 {categoryList}
-                <Link
-                  to={`/categories/${product.category.name}`}
-                  className="badge bg-primary shadow text-white m-1">
-                  {product.category.name.toUpperCase()}
-                </Link>
+                <span className="badge bg-primary shadow-sm m-1">
+                  <Link
+                    to={`/categories/${product.category.name}`}
+                    className="text-light">
+                    {product.category.name.toUpperCase()}
+                  </Link>
+                </span>
               </p>
-              <br />
+              <ProductRating rating={product.rating} />
+              <hr />
               <p>{product.description}</p>
               <div className="row">
                 <div className="col-md-6">
-                  <b>Highlights</b>
+                  <b>
+                    <Icon dataIcon="bi-star-fill" /> Highlights
+                  </b>
                   <ul>{highlights}</ul>
                 </div>
                 <div className="col-md-6">{this.renderPurchaseBox()}</div>
@@ -119,7 +115,7 @@ export default class Products extends React.Component {
       );
     }
     return (
-      <div className="bg-light rounded my-5 shadow">
+      <div className="bg-white rounded my-5 shadow">
         {component ? component : <LoadingSpinner />}
       </div>
     );
@@ -154,7 +150,7 @@ export default class Products extends React.Component {
               classes="btn-green ml-auto"
               click={() => this.context.state.cart.addProduct(p)}
             />
-            <IconButton dataIcon="fa:heart" classes="btn-dark-outline" />
+            {this.renderFavoriteButton(p)}
           </div>
         </div>
       );
@@ -174,7 +170,7 @@ export default class Products extends React.Component {
               classes="btn-green ml-auto"
               disabled={true}
             />
-            <IconButton dataIcon="fa:heart" classes="btn-dark-outline" />
+            {this.renderFavoriteButton(p)}
           </div>
         </div>
       );
@@ -182,4 +178,120 @@ export default class Products extends React.Component {
 
     return component;
   }
+
+  renderFavoriteButton = (product) => {
+    const favCount = product.favoriteCount === 0 ? "0" : product.favoriteCount;
+    if (!this.context.state.user.token) {
+      return (
+        <div className="bg-white-subtle text-dark p-3 badge-pill">
+          <Icon dataIcon="fa-regular:heart" /> {favCount}
+        </div>
+      );
+    }
+    if (this.state.isFavorite !== undefined)
+      return this.state.isFavorite ? (
+        <IconButton
+          dataIcon="fa:heart"
+          classes="btn-primary"
+          text={favCount}
+          click={() => this.unsetFavorite(product)}
+        />
+      ) : (
+        <IconButton
+          dataIcon="fa-regular:heart"
+          classes="btn-dark-outline text-dark"
+          text={favCount}
+          click={() => this.setFavorite(product)}
+        />
+      );
+    return <LoadingSpinner size="md" inline="true" />;
+  };
+
+  setFavorite = (product) => {
+    this.setState({ ...this.state, isFavorite: undefined });
+    this.context.services.favoriteService
+      .setFavorite(this.context.state.user.id, product.id)
+      .then((r) => {
+        product.favoriteCount++;
+        this.setState({ ...this.state, isFavorite: true });
+      })
+      .catch((e) => {
+        this.context.services.uiService.iconModal(
+          `Error ${e.response?.status || ""}`,
+          e.response?.statusText || e,
+          "error"
+        );
+        this.setState({ ...this.state, isFavorite: false });
+      });
+  };
+
+  unsetFavorite = (product) => {
+    this.setState({ ...this.state, isFavorite: undefined });
+    this.context.services.favoriteService
+      .unsetFavorite(this.context.state.user.id, product.id)
+      .then((r) => {
+        product.favoriteCount--;
+        this.setState({ ...this.state, isFavorite: false });
+      })
+      .catch((e) => {
+        this.context.services.uiService.iconModal(
+          `Error ${e.response?.status || ""}`,
+          e.response?.statusText || e,
+          "error"
+        );
+        this.setState({ ...this.state, isFavorite: true });
+      });
+  };
+
+  fetchData = () => {
+    const svc = this.context.services;
+    this.setState({ ...this.state, fetching: true });
+    if (this.productId) {
+      svc.productService
+        .fetchProduct(this.productId)
+        .then((product) => {
+          this.setState({ ...this.state, product });
+          svc.categoryService
+            .fetchParentsOf(product.category.id)
+            .then((categories) => {
+              this.setState({ ...this.state, categories });
+            })
+            .catch((err) => {
+              console.error("[products.jsx] - Failed to get category parents!");
+              this.setState({ ...this.state, failed: true });
+            });
+          if (this.context.state.user.token) {
+            svc.favoriteService
+              .isProductFavoriteOfUser(
+                this.productId,
+                this.context.state.user.id
+              )
+              .then((res) => {
+                if (res.data?.length > 0)
+                  this.setState({ ...this.state, isFavorite: true });
+                else throw new Error();
+              })
+              .catch((err) => {
+                this.setState({ ...this.state, isFavorite: false });
+              });
+          }
+        })
+        .catch((err) => {
+          console.error("[products.jsx] - Failed to get product!");
+          this.setState({ ...this.state, failed: true });
+        })
+        .finally(() => this.setState({ ...this.state, fetching: false }));
+    } else {
+      svc.productService
+        .fetchProducts()
+        .then((products) => {
+          this.setState({ ...this.state, products });
+        })
+        .catch((err) => {
+          console.error("[products.jsx] - Failed to get products!");
+          this.setState({ ...this.state, failed: true });
+        })
+        .finally(() => this.setState({ ...this.state, fetching: false }));
+    }
+  };
 }
