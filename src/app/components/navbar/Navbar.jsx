@@ -26,7 +26,7 @@ export default function Navbar() {
   const renderNavAccountButton = () => (
     <div className={`nav-link text-clickable`}>
       <Icon dataIcon="mi-user" />
-      {context.state.user.username ? (
+      {context.state.user.token ? (
         <span className="ml-1">{context.state.user.username}</span>
       ) : (
         ""
@@ -129,7 +129,7 @@ export default function Navbar() {
         />
       </li>
       <li className="nav-item">
-        {context.state.user.username ? (
+        {context.state.user.token ? (
           <Link to={userUrl} className="bg-primary-subtle rounded">
             <div className={`nav-link text-clickable`}>
               <img
