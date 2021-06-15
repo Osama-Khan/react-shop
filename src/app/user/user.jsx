@@ -29,7 +29,7 @@ export default class User extends React.Component {
   }
 
   render() {
-    if (this.context.state.user.username || this.props.match.params.id) {
+    if (this.context.state.user.token || this.props.match.params.id) {
       if (this.state.address === undefined && this.state.user === undefined) {
         if (this.state.failed) {
           return this.failedTemplate();
@@ -147,6 +147,24 @@ export default class User extends React.Component {
                   color="primary"
                   iconClasses="icon-sm"
                   linkTo={userFavoritesUrl}
+                />
+              </div>
+              <div className="col-sm-6 mb-3 mx-auto">
+                <Card
+                  text="Logout"
+                  icon="fa:sign-out"
+                  color="red"
+                  classes="border border-red"
+                  iconClasses="icon-sm"
+                  click={() =>
+                    this.context.setState({
+                      ...this.context.state,
+                      user: {
+                        ...this.context.state.user,
+                        token: undefined,
+                      },
+                    })
+                  }
                 />
               </div>
             </div>
