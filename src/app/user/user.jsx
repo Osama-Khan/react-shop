@@ -68,7 +68,7 @@ export default class User extends React.Component {
   profileTemplateOwn = (user) => (
     <div className="mt-5">
       <div className="card border border-primary m-auto col-md-8 p-0">
-        <div className="row ml-0 mr-0 bg-light">
+        <div className="row ml-0 mr-0 bg-white">
           <div className="col-sm-4 bg-primary d-flex flex-column m-0 card rounded-left">
             <div className="m-2 top-right">
               <Link to={editUserUrl}>

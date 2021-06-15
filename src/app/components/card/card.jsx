@@ -34,7 +34,7 @@ export function ProductCard({ product, classes = "" }) {
         <hr />
         <div className="d-flex">
           {product.favoriteCount !== undefined ? (
-            <div className="p-3 badge-pill bg-light">
+            <div className="p-3 badge-pill bg-white-subtle">
               <Icon dataIcon="fa:heart" /> {product.favoriteCount}
             </div>
           ) : (
