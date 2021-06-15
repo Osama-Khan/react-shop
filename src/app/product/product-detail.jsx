@@ -5,10 +5,9 @@ import { IconButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading";
-import ProductsList from "../components/products-list/products-list";
 import ProductRating from "../components/product-rating/product-rating";
 
-export default class Products extends React.Component {
+export default class ProductDetail extends React.Component {
   static contextType = AppContext;
 
   productId;
@@ -16,42 +15,50 @@ export default class Products extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: undefined,
       product: undefined,
       categories: undefined,
-      isFavorite: undefined,
       fetching: false,
       failed: false,
+      isFavorite: undefined,
+      fetchingFav: false,
+      favFetchedFor: undefined,
     };
-
     this.productId = props.match.params.id;
   }
 
   render() {
-    if (
-      !this.state.products &&
-      !this.state.product &&
-      !this.state.fetching &&
-      !this.state.failed
-    ) {
+    if (this.context.state.user.token) {
+      // Fetches favorite data if user updates
+      const cur = this.context.state.user.id;
+      const prev = this.state.favFetchedFor;
+
+      if ((prev === undefined || cur !== prev) && !this.state.fetchingFav)
+        this.fetchIsFav();
+    }
+
+    if (!this.state.product && !this.state.fetching && !this.state.failed) {
       this.setState({ ...this.state, fetching: true });
       this.fetchData();
       return <LoadingSpinner />;
     } else if (this.state.fetching) {
       return <LoadingSpinner />;
-    } else if (this.state.products && !this.state.failed) {
-      return (
-        <div className="mt-5">
-          <h1>Products</h1>
-          <ProductsList products={this.state.products} />
-        </div>
-      );
     } else if (this.state.product && !this.state.failed) {
       return this.renderProductDetail();
     } else {
       return this.failedTemplate();
     }
   }
+
+  failedTemplate = () => {
+    return (
+      <div className="mt-5 row container d-flex justify-content-center">
+        <div className="alert alert-danger">
+          <Icon dataIcon="fa:times-circle" />
+          <span className="ml-2">Failed to load</span>
+        </div>
+      </div>
+    );
+  };
 
   renderProductDetail = () => {
     let component;
@@ -188,110 +195,90 @@ export default class Products extends React.Component {
         </div>
       );
     }
-    if (this.state.isFavorite !== undefined)
-      return this.state.isFavorite ? (
-        <IconButton
-          dataIcon="fa:heart"
-          classes="btn-primary"
-          text={favCount}
-          click={() => this.unsetFavorite(product)}
-        />
-      ) : (
-        <IconButton
-          dataIcon="fa-regular:heart"
-          classes="btn-dark-outline text-dark"
-          text={favCount}
-          click={() => this.setFavorite(product)}
-        />
-      );
-    return <LoadingSpinner size="md" inline="true" />;
+
+    const isFav = this.state.isFavorite;
+    const noFav = isFav === undefined;
+    return (
+      <IconButton
+        key={isFav ? "btn-favorited" : "btn-not-favorited"}
+        dataIcon={isFav ? "fa:heart" : "fa-regular:heart"}
+        classes={isFav ? "btn-primary" : "btn-dark-outline text-dark"}
+        text={favCount}
+        click={() => this.toggleFavorite(product)}
+        disabled={noFav}
+      />
+    );
   };
 
-  setFavorite = (product) => {
+  toggleFavorite = (product) => {
+    const isFav = this.state.isFavorite;
+    const svc = this.context.services.favoriteService;
+    const userId = this.context.state.user.id;
     this.setState({ ...this.state, isFavorite: undefined });
-    this.context.services.favoriteService
-      .setFavorite(this.context.state.user.id, product.id)
+    const promise = isFav
+      ? svc.unsetFavorite(userId, product.id)
+      : svc.setFavorite(userId, product.id);
+    promise
       .then((r) => {
-        product.favoriteCount++;
-        this.setState({ ...this.state, isFavorite: true });
+        product.favoriteCount += isFav ? -1 : +1;
+        this.setState({ ...this.state, isFavorite: !isFav });
       })
       .catch((e) => {
         this.context.services.uiService.iconModal(
           `Error ${e.response?.status || ""}`,
-          e.response?.statusText || e,
+          e.response?.statusText || e.message,
           "error"
         );
-        this.setState({ ...this.state, isFavorite: false });
-      });
-  };
-
-  unsetFavorite = (product) => {
-    this.setState({ ...this.state, isFavorite: undefined });
-    this.context.services.favoriteService
-      .unsetFavorite(this.context.state.user.id, product.id)
-      .then((r) => {
-        product.favoriteCount--;
-        this.setState({ ...this.state, isFavorite: false });
-      })
-      .catch((e) => {
-        this.context.services.uiService.iconModal(
-          `Error ${e.response?.status || ""}`,
-          e.response?.statusText || e,
-          "error"
-        );
-        this.setState({ ...this.state, isFavorite: true });
+        this.setState({ ...this.state, isFavorite: isFav });
       });
   };
 
   fetchData = () => {
     const svc = this.context.services;
     this.setState({ ...this.state, fetching: true });
-    if (this.productId) {
-      svc.productService
-        .fetchProduct(this.productId)
-        .then((product) => {
-          this.setState({ ...this.state, product });
-          svc.categoryService
-            .fetchParentsOf(product.category.id)
-            .then((categories) => {
-              this.setState({ ...this.state, categories });
-            })
-            .catch((err) => {
-              console.error("[products.jsx] - Failed to get category parents!");
-              this.setState({ ...this.state, failed: true });
-            });
-          if (this.context.state.user.token) {
-            svc.favoriteService
-              .isProductFavoriteOfUser(
-                this.productId,
-                this.context.state.user.id
-              )
-              .then((res) => {
-                if (res.data?.length > 0)
-                  this.setState({ ...this.state, isFavorite: true });
-                else throw new Error();
-              })
-              .catch((err) => {
-                this.setState({ ...this.state, isFavorite: false });
-              });
-          }
+    svc.productService
+      .fetchProduct(this.productId)
+      .then((product) => {
+        this.setState({ ...this.state, product });
+        svc.categoryService
+          .fetchParentsOf(product.category.id)
+          .then((categories) => {
+            this.setState({ ...this.state, categories });
+          })
+          .catch((err) => {
+            this.setState({ ...this.state, failed: true });
+          });
+        if (this.context.state.user.token) {
+        }
+      })
+      .catch((err) => {
+        this.setState({ ...this.state, failed: true });
+      })
+      .finally(() => this.setState({ ...this.state, fetching: false }));
+  };
+
+  fetchIsFav = () => {
+    const curUserId = this.context.state.user.id;
+    this.setState({ ...this.state, isFavorite: undefined, fetchingFav: true });
+    this.context.services.favoriteService
+      .isProductFavoriteOfUser(this.productId, curUserId)
+      .then((res) => {
+        if (res.data?.length > 0)
+          this.setState({
+            ...this.state,
+            isFavorite: true,
+          });
+        else throw new Error();
+      })
+      .catch((err) => {
+        this.setState({ ...this.state, isFavorite: false });
+      })
+      .finally(() =>
+        this.setState({
+          ...this.state,
+          fetchingFav: false,
+          favFetchedFor: curUserId,
         })
-        .catch((err) => {
-          console.error("[products.jsx] - Failed to get product!");
-          this.setState({ ...this.state, failed: true });
-        })
-        .finally(() => this.setState({ ...this.state, fetching: false }));
-    } else {
-      svc.productService
-        .fetchProducts()
-        .then((products) => {
-          this.setState({ ...this.state, products });
-        })
-        .catch((err) => {
-          console.error("[products.jsx] - Failed to get products!");
-          this.setState({ ...this.state, failed: true });
-        })
-        .finally(() => this.setState({ ...this.state, fetching: false }));
-    }
+      );
   };
 }

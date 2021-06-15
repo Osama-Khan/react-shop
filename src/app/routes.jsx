@@ -1,5 +1,5 @@
 import Categories from "./categories/categories";
-import Products from "./products/products";
+import ProductList from "./product/product-list";
 import Home from "./home/Home";
 import User from "./user/user";
 import Register from "./user/register";
@@ -10,6 +10,7 @@ import AddressBook from "./user/addresses/address";
 import AddAddress from "./user/addresses/add-address";
 import UserProducts from "./user/user-products";
 import UserFavorites from "./user/user-favorites";
+import ProductDetail from "./product/product-detail";
 
 export const homeUrl = "/";
 export const productsUrl = "/products";
@@ -26,8 +27,8 @@ export const ordersUrl = "/orders";
 
 export const routes = [
   { path: homeUrl, component: Home },
-  { path: productsUrl, component: Products },
-  { path: productsUrl + "/:id", component: Products },
+  { path: productsUrl, component: ProductList },
+  { path: productsUrl + "/:id", component: ProductDetail },
   { path: categoriesUrl, component: Categories },
   { path: categoriesUrl + "/:name", component: Categories },
   { path: userUrl, component: User },
