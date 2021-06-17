@@ -1,15 +1,18 @@
 import axios from "axios";
+import Criteria from "../models/criteria";
+import Product from "../models/product/product";
 import ApiService from "./api.service";
 
 export default class ProductService extends ApiService {
-  private endpoint = `${this.domain}/products`
+  private endpoint = `${this.domain}/products`;
 
   /**
    * Gets a list of all the products
    * @returns A list of products
    */
-  async fetchProducts() {
-    const ret = await axios.get(this.endpoint);
+  async fetchProducts(criteria?: Criteria<Product>) {
+    const critStr = criteria?.getUrlParameters() || "";
+    const ret = await axios.get(this.endpoint + critStr);
     return ret.data;
   }
 
