@@ -25,7 +25,10 @@ export default class ProductList extends React.Component {
       return (
         <div className="mt-5">
           <h1>Products</h1>
-          <ProductsList products={this.state.products} />
+          <ProductsList
+            products={this.state.products}
+            onFilter={this.onFilter}
+          />
         </div>
       );
     } else if (this.state.fetching) {
@@ -46,11 +49,16 @@ export default class ProductList extends React.Component {
     );
   };
 
-  fetchData = () => {
+  onFilter = (criteria) => {
+    this.setState({ ...this.state, products: undefined });
+    this.fetchData(criteria);
+  };
+
+  fetchData = (criteria) => {
     const svc = this.context.services;
     this.setState({ ...this.state, fetching: true });
     svc.productService
-      .fetchProducts()
+      .fetchProducts(criteria)
       .then((products) => {
         this.setState({ ...this.state, products });
       })
