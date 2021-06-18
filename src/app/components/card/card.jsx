@@ -30,7 +30,7 @@ export function ProductCard({ product, classes = "" }) {
           alt=""
         />
         <b>{product.title}</b>
-        <ProductRating rating={product.rating} classes="text-warning" />
+        <ProductRating key={`p-${product.id}-rating`} rating={product.rating} />
         <hr />
         <div className="d-flex">
           {product.favoriteCount !== undefined ? (
