@@ -26,7 +26,7 @@ export default function ProductRating({ rating, classes }) {
 
   let textClass = rating ? "text-dark" : "text-muted";
   textClass += " ml-1 border-left";
-  const divClass = rating ? "text-warning" : "text-muted";
+  const divClass = rating ? "text-yellow" : "text-muted";
 
   return (
     <div className={`p-1 ${divClass} ${classes ? classes : ""}`}>

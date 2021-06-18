@@ -63,7 +63,7 @@ export default class ProductList extends React.Component {
         this.setState({ ...this.state, products });
       })
       .catch((err) => {
-        console.error("[products.jsx] - Failed to get products!");
+        svc.uiService.errorToast("Could not fetch products!");
         this.setState({ ...this.state, failed: true });
       })
       .finally(() => this.setState({ ...this.state, fetching: false }));
