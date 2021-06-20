@@ -14,17 +14,23 @@ export default class UserProducts extends Component {
   }
 
   render() {
-    if (!this.state.products && !this.state.fetching && !this.state.failed) {
+    if (!this.state.user && !this.state.fetching && !this.state.failed) {
       this.setState({ ...this.state, fetching: true });
       this.fetchData();
       return <LoadingSpinner />;
     } else if (this.state.fetching) {
       return <LoadingSpinner />;
-    } else if (this.state.products && !this.state.failed) {
+    } else if (this.state.user && !this.state.failed) {
       return (
         <div className="mt-5">
           <h1>{this.state.user.username}'s Products</h1>
-          <ProductsList products={this.state.products} />
+          <ProductsList
+            requestMethod={() =>
+              this.context.services.userService.fetchProducts(
+                parseInt(this.props.match.params.id)
+              )
+            }
+          />
         </div>
       );
     } else {
@@ -48,20 +54,6 @@ export default class UserProducts extends Component {
       .getUser(parseInt(this.props.match.params.id))
       .then((user) => {
         this.setState({ user });
-        this.context.services.userService
-          .fetchProducts(parseInt(this.props.match.params.id))
-          .then((p) => {
-            const products = p.data;
-            this.setState({ ...this.state, products });
-          })
-          .catch((err) => {
-            this.context.services.uiService.iconModal(
-              `Error ${err.status}`,
-              `Failed to get products. ${err.statusText}`,
-              "error"
-            );
-            this.setState({ ...this.state, failed: true });
-          });
       })
       .catch((err) => {
         if (err.response.status === 404) {
