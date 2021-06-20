@@ -1,4 +1,5 @@
 import axios from "axios";
+import Criteria from "../models/criteria";
 import ApiService from "./api.service";
 
 export default class FavoriteService extends ApiService {
@@ -29,9 +30,15 @@ export default class FavoriteService extends ApiService {
    * @param userId ID of the user
    */
   getFavoritesOfUser(userId: number) {
-    const url = `${this.endpoint}?filters=user=${userId}&include=product`;
-    const res = axios.get(url);
-    return res;
+    const criteria = new Criteria<any>();
+    criteria.addFilter("user", userId);
+    criteria.addRelation("product");
+    const url = this.endpoint + criteria.getUrlParameters();
+    return axios.get(url).then((res) => {
+      const data = res.data.data.map((d: any) => d.product);
+      res.data = { data, meta: res.data.meta };
+      return res;
+    });
   }
 
   /**
@@ -41,7 +48,12 @@ export default class FavoriteService extends ApiService {
    * @returns Response with favorite data
    */
   isProductFavoriteOfUser(productId: number, userId: number) {
-    const url = `${this.endpoint}?filters=user=${userId};product=${productId}&include=product;user`;
+    const criteria = new Criteria<any>();
+    criteria.addFilter("user", userId);
+    criteria.addFilter("product", productId);
+    criteria.addRelation("product");
+    criteria.addRelation("user");
+    const url = this.endpoint + criteria.getUrlParameters();
     const res = axios.get(url);
     return res;
   }

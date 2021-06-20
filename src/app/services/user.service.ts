@@ -1,4 +1,5 @@
 import axios from "axios";
+import Criteria from "../models/criteria";
 import { User } from "../models/user";
 import ApiService from "./api.service";
 
@@ -63,8 +64,12 @@ export default class UserService extends ApiService {
    * @param id of the user to fetch products of
    * @returns An object with products data
    */
-  async fetchProducts(id: number) {
-    const endPoint = `products?filters=user=${id}`;
+  async fetchProducts(id: number, criteria?: Criteria<any>) {
+    if (!criteria) {
+      criteria = new Criteria();
+    }
+    criteria.addFilter("user", id);
+    const endPoint = `products${criteria.getUrlParameters()}`;
     const res = await axios.get(`${this.domain}/${endPoint}`);
     return res;
   }

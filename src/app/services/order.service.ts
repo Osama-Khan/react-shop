@@ -1,4 +1,5 @@
 import axios from "axios";
+import Criteria from "../models/criteria";
 import ApiService from "./api.service";
 
 export default class OrderService extends ApiService {
@@ -30,8 +31,14 @@ export default class OrderService extends ApiService {
    * @param userId ID of the user to fetch orders of
    * @returns A list of orders
    */
-  async getOrders(userId: number) {
-    const url = `${this.endpoint}?include=orderProducts;orderState&filters=user=${userId}`;
+  async getOrders(userId: number, criteria?: Criteria<any>) {
+    if (!criteria) {
+      criteria = new Criteria();
+      criteria.addRelation("orderProducts");
+      criteria.addRelation("orderState");
+    }
+    criteria.addFilter("user", userId);
+    const url = this.endpoint + criteria.getUrlParameters();
     const res = await axios.get(url);
     return res;
   }

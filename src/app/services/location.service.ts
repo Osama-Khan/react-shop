@@ -1,23 +1,42 @@
 import axios from "axios";
+import Criteria from "../models/criteria";
 import ApiService from "./api.service";
 
 export default class LocationService extends ApiService {
-  endpoint = `${this.domain}`
+  endpoint = this.domain;
 
-  async getCountries() {
-    const res = await axios.get(`${this.endpoint}/countries?limit=1000000`);
+  async getCountries(criteria?: Criteria<any>) {
+    if (!criteria) {
+      criteria = new Criteria();
+      criteria.setLimit(1000000);
+    }
+    const res = await axios.get(
+      `${this.endpoint}/countries${criteria.getUrlParameters()}`
+    );
     return res.data;
   }
 
-  async getStates(countryId?: number) {
-    const filter = countryId ? `&filters=country=${countryId}` : undefined;
-    const res = await axios.get(`${this.endpoint}/states?limit=1000000${filter || ""}`);
+  async getStates(countryId?: number, criteria?: Criteria<any>) {
+    if (!criteria) {
+      criteria = new Criteria();
+      criteria.setLimit(1000000);
+    }
+    criteria.addFilter("country", countryId);
+    const res = await axios.get(
+      `${this.endpoint}/states${criteria.getUrlParameters()}`
+    );
     return res.data;
   }
 
-  async getCities(stateId?: number) {
-    const filter = stateId ? `&filters=state=${stateId}` : undefined;
-    const res = await axios.get(`${this.endpoint}/cities?limit=1000000${filter || ""}`);
+  async getCities(stateId?: number, criteria?: Criteria<any>) {
+    if (!criteria) {
+      criteria = new Criteria();
+      criteria.setLimit(1000000);
+    }
+    criteria.addFilter("state", stateId);
+    const res = await axios.get(
+      `${this.endpoint}/cities${criteria.getUrlParameters()}`
+    );
     return res.data;
   }
 }
