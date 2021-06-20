@@ -1,6 +1,6 @@
-export default abstract class Criteria<T extends Object> {
+export default class Criteria<T extends Object> {
   private limit?: number;
-  private includes: string[] = [];
+  private relations: string[] = [];
   private orderBy?: string;
   private orderDir?: "ASC" | "DESC";
   private filters: Partial<T> = {};
@@ -13,9 +13,9 @@ export default abstract class Criteria<T extends Object> {
     if (this.limit) {
       params.push(`limit=${this.limit}`);
     }
-    if (this.includes.length > 0) {
-      const incs = this.includes.join(";");
-      params.push(`include=${incs}`);
+    if (this.relations.length > 0) {
+      const incs = this.relations.join(";");
+      params.push(`relations=${incs}`);
     }
     if (this.orderBy) {
       params.push(`orderBy=${this.orderBy}`);
@@ -36,7 +36,7 @@ export default abstract class Criteria<T extends Object> {
       params.push(`filters=${filtString}`);
     }
 
-    return `?${params.join("&")}`;
+    return params.length > 0 ? `?${params.join("&")}` : "";
   }
 
   setLimit(lim: number) {
@@ -45,12 +45,12 @@ export default abstract class Criteria<T extends Object> {
     }
   }
 
-  addInclude(include: string) {
-    this.includes.push(include);
+  addRelation(include: string) {
+    this.relations.push(include);
   }
 
-  removeInclude(include: string) {
-    this.includes = this.includes.filter((i) => i !== include);
+  removeRelation(include: string) {
+    this.relations = this.relations.filter((i) => i !== include);
   }
 
   setOrderBy(orderBy: Extract<keyof T, string>) {
