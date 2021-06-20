@@ -1,4 +1,5 @@
 import axios from "axios";
+import Criteria from "../models/criteria";
 import ApiService from "./api.service";
 
 export default class CategoryService extends ApiService {
@@ -8,8 +9,9 @@ export default class CategoryService extends ApiService {
    * Get a list of all categories
    * @returns All categories
    */
-  async fetchCategories() {
-    const url = this.endpoint;
+  async fetchCategories(criteria?: Criteria<{ id: number; name: string }>) {
+    if (!criteria) criteria = new Criteria();
+    const url = this.endpoint + criteria.getUrlParameters();
     return await axios.get(url).then(async (r) => await r.data);
   }
 
