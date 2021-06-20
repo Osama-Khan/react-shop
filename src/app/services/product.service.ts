@@ -26,4 +26,15 @@ export default class ProductService extends ApiService {
     const ret = await axios.get(url);
     return ret;
   }
+
+  /**
+   * Gets a list of products matching the given category
+   * @param name of the category to fetch products of
+   * @returns List of products that have the provided category
+   */
+  async fetchFromCategory(name: string) {
+    const url = `${this.domain}/categories/products/${name}`;
+    const ret = await axios.get(url);
+    return ret;
+  }
 }
