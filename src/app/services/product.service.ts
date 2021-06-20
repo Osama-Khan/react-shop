@@ -13,7 +13,7 @@ export default class ProductService extends ApiService {
   async fetchProducts(criteria?: Criteria<Product>) {
     const critStr = criteria?.getUrlParameters() || "";
     const ret = await axios.get(this.endpoint + critStr);
-    return ret.data;
+    return ret;
   }
 
   /**
@@ -24,6 +24,6 @@ export default class ProductService extends ApiService {
   async fetchProduct(id: number) {
     const url = `${this.endpoint}/${id}`;
     const ret = await axios.get(url);
-    return ret.data;
+    return ret;
   }
 }
