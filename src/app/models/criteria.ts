@@ -1,5 +1,6 @@
 export default class Criteria<T extends Object> {
   private limit?: number;
+  private page?: number;
   private relations: string[] = [];
   private orderBy?: string;
   private orderDir?: "ASC" | "DESC";
@@ -12,6 +13,9 @@ export default class Criteria<T extends Object> {
 
     if (this.limit) {
       params.push(`limit=${this.limit}`);
+    }
+    if (this.page) {
+      params.push(`page=${this.page}`);
     }
     if (this.relations.length > 0) {
       const incs = this.relations.join(";");
@@ -42,6 +46,12 @@ export default class Criteria<T extends Object> {
   setLimit(lim: number) {
     if (lim > 0) {
       this.limit = lim;
+    }
+  }
+
+  setPage(page: number) {
+    if (page > 0) {
+      this.page = page;
     }
   }
 
