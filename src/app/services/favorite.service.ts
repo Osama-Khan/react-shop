@@ -84,7 +84,7 @@ export default class FavoriteService extends ApiService {
     if (fav.data.length === 0) {
       throw new Error("Product not favorited");
     }
-    const res = axios.delete(`${this.endpoint}/${fav.data[0].id}`);
+    const res = axios.delete(`${this.endpoint}/${fav.data.data[0].id}`);
     return res;
   }
 }

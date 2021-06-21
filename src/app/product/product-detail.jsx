@@ -238,20 +238,26 @@ export default class ProductDetail extends React.Component {
     this.setState({ ...this.state, fetching: true });
     svc.productService
       .fetchProduct(this.productId)
-      .then((product) => {
-        this.setState({ ...this.state, product });
+      .then((res) => {
+        this.setState({ ...this.state, product: res.data });
         svc.categoryService
-          .fetchParentsOf(product.category.id)
+          .fetchParentsOf(res.data.category.id)
           .then((categories) => {
             this.setState({ ...this.state, categories });
           })
           .catch((err) => {
+            svc.uiService.iconModal(
+              "Error",
+              "Failed to fetch categories of product!",
+              "error"
+            );
             this.setState({ ...this.state, failed: true });
           });
         if (this.context.state.user.token) {
         }
       })
       .catch((err) => {
+        svc.uiService.iconModal("Error", "Failed to fetch products!", "error");
         this.setState({ ...this.state, failed: true });
       })
       .finally(() => this.setState({ ...this.state, fetching: false }));
@@ -263,7 +269,7 @@ export default class ProductDetail extends React.Component {
     this.context.services.favoriteService
       .isProductFavoriteOfUser(this.productId, curUserId)
       .then((res) => {
-        if (res.data?.length > 0)
+        if (res.data?.data.length > 0)
           this.setState({
             ...this.state,
             isFavorite: true,

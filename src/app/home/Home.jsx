@@ -21,8 +21,8 @@ export default class Home extends React.Component {
   componentDidMount() {
     this.context.services.categoryService
       .fetchRootCategories()
-      .then((categories) => {
-        this.setState({ categories });
+      .then((data) => {
+        this.setState({ categories: data.data });
       })
       .catch((err) => {
         this.context.services.uiService.errorToast(
