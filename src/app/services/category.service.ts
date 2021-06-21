@@ -7,6 +7,7 @@ export default class CategoryService extends ApiService {
 
   /**
    * Get a list of all categories
+   * @param criteria filters for the categories
    * @returns All categories
    */
   async fetchCategories(criteria?: Criteria<{ id: number; name: string }>) {

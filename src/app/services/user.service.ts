@@ -62,6 +62,7 @@ export default class UserService extends ApiService {
   /**
    * Fetches data containing products of the user provided
    * @param id of the user to fetch products of
+   * @param criteria filters for the products
    * @returns An object with products data
    */
   async fetchProducts(id: number, criteria?: Criteria<any>) {

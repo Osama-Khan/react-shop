@@ -15,9 +15,10 @@ export default class UserFavorites extends Component {
       <div className="mt-5">
         <h1>Your Favorites</h1>
         <ProductsList
-          requestMethod={() =>
+          requestMethod={(criteria) =>
             this.context.services.favoriteService.getFavoritesOfUser(
-              this.context.state.user.id
+              this.context.state.user.id,
+              criteria
             )
           }
         />

@@ -29,6 +29,7 @@ export default class OrderService extends ApiService {
   /**
    * Sends a request to get the orders of the given user
    * @param userId ID of the user to fetch orders of
+   * @param criteria filters for the orders
    * @returns A list of orders
    */
   async getOrders(userId: number, criteria?: Criteria<any>) {

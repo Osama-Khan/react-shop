@@ -32,7 +32,8 @@ export default class Categories extends Component {
       <ProductsList
         requestMethod={(criteria) =>
           this.context.services.productService.fetchFromCategory(
-            this.categoryName
+            this.categoryName,
+            criteria
           )
         }
       />

@@ -8,6 +8,7 @@ export default class ProductService extends ApiService {
 
   /**
    * Gets a list of all the products
+   * @param criteria filters for the products
    * @returns A list of products
    */
   async fetchProducts(criteria?: Criteria<Product>) {
@@ -30,10 +31,12 @@ export default class ProductService extends ApiService {
   /**
    * Gets a list of products matching the given category
    * @param name of the category to fetch products of
+   * @param criteria filters for the products
    * @returns List of products that have the provided category
    */
-  async fetchFromCategory(name: string) {
-    const url = `${this.domain}/categories/products/${name}`;
+  async fetchFromCategory(name: string, criteria?: Criteria<any>) {
+    const params = criteria?.getUrlParameters() || "";
+    const url = `${this.domain}/categories/products/${name}${params}`;
     const ret = await axios.get(url);
     return ret;
   }

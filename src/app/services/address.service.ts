@@ -7,6 +7,7 @@ export default class AddressService extends ApiService {
   /**
    * Fetches addresses of the user provided
    * @param id Id of the user to fetch addresses of
+   * @param criteria filters for the addresses
    * @returns A list of addresses
    */
   async getAddresses(id: number, criteria?: Criteria<any>) {

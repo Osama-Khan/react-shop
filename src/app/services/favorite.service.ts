@@ -28,9 +28,10 @@ export default class FavoriteService extends ApiService {
   /**
    * Gets the favorites of a user
    * @param userId ID of the user
+   * @param criteria Filters for the list
    */
-  getFavoritesOfUser(userId: number) {
-    const criteria = new Criteria<any>();
+  getFavoritesOfUser(userId: number, criteria?: Criteria<any>) {
+    if (!criteria) criteria = new Criteria<any>();
     criteria.addFilter("user", userId);
     criteria.addRelation("product");
     const url = this.endpoint + criteria.getUrlParameters();
