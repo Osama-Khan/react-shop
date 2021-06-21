@@ -152,11 +152,11 @@ export default class OrderList extends Component {
         this.setState({
           ...this.state,
           loading: false,
-          orders: res.data,
+          orders: res.data.data,
         });
         if (res.data.length === 0) return;
         let promises = [];
-        res.data.forEach((o, i) => {
+        res.data.data.forEach((o, i) => {
           const promise = this.context.services.orderService.getOrderDetail(
             o.id
           );
