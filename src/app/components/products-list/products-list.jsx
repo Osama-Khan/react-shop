@@ -22,10 +22,6 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
   const [state, setState] = useState(initialState);
   const context = useContext(AppContext);
 
-  if (!state.fetching && !state.products && !state.failed) {
-    doFetch(state, setState, requestMethod, context);
-  }
-
   const filterDiv = showFilters ? (
     <form
       className="col-12 row align-items-center m-0"
@@ -94,8 +90,10 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
     <></>
   );
 
-  if (!state.products) {
+  if (state.fetching) {
     return <LoadingSpinner />;
+  } else if (!state.fetching && !state.products && !state.failed) {
+    doFetch(state, setState, requestMethod, context);
   } else if (state.products.length > 0) {
     prods = state.products.map((p, i) => {
       return (
@@ -174,11 +172,14 @@ const doFetch = (state, setState, method, context) => {
   const promise = method
     ? method(criteria)
     : context.services.productService.fetchProducts(criteria);
-  promise.then((res) => {
-    setState({
-      ...state,
-      products: res.data,
-      fetching: false,
-    });
-  });
+  promise
+    .then((res) => {
+      setState({
+        ...state,
+        products: res.data.data,
+        meta: res.data.meta,
+        fetching: false,
+      });
+    })
+    .catch((e) => setState({ ...state, failed: true, fetching: false }));
 };
