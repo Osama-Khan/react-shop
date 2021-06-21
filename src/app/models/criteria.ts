@@ -46,7 +46,7 @@ export default class Criteria<T extends Object> {
   }
 
   addRelation(include: string) {
-    this.relations.push(include);
+    if (!this.relations.includes(include)) this.relations.push(include);
   }
 
   removeRelation(include: string) {
