@@ -2,7 +2,6 @@ import { Component } from "react";
 import Card from "../components/card/card";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
-import Criteria from "../models/criteria";
 import LoadingSpinner from "../components/loading/loading";
 import ProductsList from "../components/products-list/products-list";
 
