@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../context/app.provider";
 import Criteria from "../../models/criteria";
 import { productsUrl } from "../../routes";
@@ -7,19 +7,21 @@ import { ProductCard } from "../card/card";
 import Icon from "../icon/icon";
 import LoadingSpinner from "../loading/loading";
 import FilterForm from "./filter-form";
+import Pagination from "../pagination/pagination";
 
 const initialState = {
   search: "",
+  limit: 1,
   orderBy: "",
   orderDir: "ASC",
   products: undefined,
+  meta: undefined,
   fetching: false,
   failed: false,
 };
 
 export default function ProductsList({ requestMethod, showFilters = true }) {
   let prods;
-  const location = useLocation().pathname;
   const [state, setState] = useState(initialState);
   const context = useContext(AppContext);
 
@@ -29,6 +31,22 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
       setState={setState}
       onFilter={() => doFetch(state, setState, requestMethod, context)}
     />
+  ) : (
+    <></>
+  );
+
+  const pagination = state.meta ? (
+    <div className="mt-3 d-flex">
+      <div className="ml-auto">
+        <Pagination
+          currentPage={state.meta.currentPage}
+          totalPages={state.meta.totalPages}
+          gotoPage={(p) => {
+            doFetch({ ...state, page: p }, setState, requestMethod, context);
+          }}
+        />
+      </div>
+    </div>
   ) : (
     <></>
   );
@@ -50,13 +68,13 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
   } else {
     return (
       <>
-        {location === productsUrl ? filterDiv : <></>}
+        {showFilters ? filterDiv : <></>}
         <div className="col-md-12 text-center mt-5">
           <p className="font-weight-bold text-muted">
             No products found...{" "}
-            {location === productsUrl ? "Try changing the filters!" : ""}
+            {showFilters ? "Try changing the filters!" : ""}
           </p>
-          {location === productsUrl ? (
+          {showFilters ? (
             <button
               className="btn btn-dark mt-2"
               onClick={() => {
@@ -81,6 +99,7 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
       <div id="products-list" className="row">
         {prods ? prods : <LoadingSpinner />}
       </div>
+      {pagination}
     </>
   );
 }
@@ -101,6 +120,12 @@ const generateCriteria = (state) => {
   const criteria = new Criteria(Product);
   if (state?.search) {
     criteria.addFilter("title", state.search);
+  }
+  if (state?.page) {
+    criteria.setPage(state.page);
+  }
+  if (state?.limit) {
+    criteria.setLimit(state.limit);
   }
   if (state?.orderBy) {
     criteria.setOrderBy(state.orderBy);

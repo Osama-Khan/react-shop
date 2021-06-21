@@ -1,11 +1,15 @@
 import Icon from "../icon/icon";
 
 export default function FilterForm({ state, setState, onFilter }) {
+  const recordOptions = [10, 20, 30, 40, 50];
+  const recordOptionsEl = recordOptions.map((r) => (
+    <option value={r}>{r}</option>
+  ));
   return (
     <form
-      className="col-12 row align-items-center m-0"
+      className="col-12 row align-items-center m-0 row"
       onSubmit={(e) => e.preventDefault()}>
-      <div className="form-group ml-auto mr-1">
+      <div className="form-group ml-md-auto">
         <input
           type="text"
           value={state.search}
@@ -15,6 +19,19 @@ export default function FilterForm({ state, setState, onFilter }) {
         />
       </div>
       <div className="form-group mx-1">
+        <select
+          className="form-control"
+          value={state.limit}
+          onChange={(e) =>
+            setState({ ...state, limit: parseInt(e.target.value) })
+          }>
+          <option value="" disabled>
+            Max Records...
+          </option>
+          {recordOptionsEl}
+        </select>
+      </div>
+      <div className="form-group">
         <select
           className="form-control"
           value={state.orderBy}
