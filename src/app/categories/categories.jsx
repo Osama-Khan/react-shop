@@ -4,6 +4,7 @@ import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading";
 import ProductsList from "../components/products-list/products-list";
+import Icon from "../components/icon/icon";
 
 export default class Categories extends Component {
   static contextType = AppContext;
@@ -43,7 +44,15 @@ export default class Categories extends Component {
     return (
       <>
         <h1 className="mt-5">
-          Categories{this.category ? ` > ${this.category.toUpperCase()}` : ""}
+          Categories
+          {this.categoryName ? (
+            <>
+              <Icon dataIcon="akar-icons:chevron-right" />
+              {this.categoryName.toUpperCase()}
+            </>
+          ) : (
+            ""
+          )}
         </h1>
         {page}
       </>
