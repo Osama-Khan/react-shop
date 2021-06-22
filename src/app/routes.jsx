@@ -3,8 +3,8 @@ import ProductList from "./product/product-list";
 import Home from "./home/Home";
 import User from "./user/user";
 import Register from "./user/register";
-import OrderList from "./order/order-list";
 import Checkout from "./order/checkout";
+import Orders from "./order/orders";
 import UserEdit from "./user/user-edit";
 import AddressBook from "./user/addresses/address";
 import AddAddress from "./user/addresses/add-address";
@@ -39,6 +39,6 @@ export const routes = [
   { path: userProductsUrl, component: UserProducts },
   { path: addAddressUrl, component: AddAddress },
   { path: registerUrl, component: Register },
-  { path: ordersUrl, component: OrderList },
   { path: checkoutUrl, component: Checkout },
+  { path: ordersUrl, component: Orders },
 ];
