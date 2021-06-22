@@ -36,7 +36,7 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
   if (trimForward && !isLast) {
     numEls.push(
       <li className="page-item">
-        <span className="page-link">...</span>
+        <span className="page-link text-dark">...</span>
       </li>
     );
   }
