@@ -4,8 +4,9 @@ import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
 import { productsUrl, userUrl } from "../routes";
-import { OrderStateEnum } from "./order-state.enum";
+import Criteria from "../models/criteria";
 import OrderStateBadge from "./order-state-badge";
+import Pagination from "../components/pagination/pagination";
 
 export default class OrderList extends Component {
   static contextType = AppContext;
@@ -13,10 +14,11 @@ export default class OrderList extends Component {
   constructor() {
     super();
     this.state = {
-      loading: false,
       detailLoaded: false,
+      fetching: false,
       failed: false,
       orders: undefined,
+      meta: undefined,
     };
   }
 
@@ -24,15 +26,32 @@ export default class OrderList extends Component {
     if (!this.context.state.user.id) {
       return <Redirect to={userUrl} />;
     }
-    if (!this.state.loading && !this.state.orders) {
-      this.setState({ ...this.state, loading: true });
+    if (!this.state.fetching && !this.state.orders) {
       this.fetchData();
     }
-    if (this.state.loading) {
+    if (this.state.fetching) {
       return <LoadingSpinner />;
     }
-    if (this.state.orders) {
-      return this.renderOrders(this.state.orders);
+    if (this.state.orders && this.state.meta) {
+      const pagination = (
+        <div className="mt-3 d-flex">
+          <div className="ml-auto">
+            <Pagination
+              currentPage={this.state.meta.currentPage}
+              totalPages={this.state.meta.totalPages}
+              gotoPage={(p) => {
+                this.fetchData(p);
+              }}
+            />
+          </div>
+        </div>
+      );
+      return (
+        <>
+          {this.renderOrders(this.state.orders)}
+          {pagination}
+        </>
+      );
     }
     if (this.state.failed) {
       return this.failedTemplate();
@@ -120,14 +139,19 @@ export default class OrderList extends Component {
     );
   };
 
-  fetchData = () => {
+  fetchData = (page = 1) => {
+    this.setState({ ...this.state, fetching: true, detailLoaded: false });
+    const criteria = new Criteria();
+    criteria.setLimit(5);
+    criteria.setPage(page);
     this.context.services.orderService
-      .getOrders(this.context.state.user.id)
+      .getOrders(this.context.state.user.id, criteria)
       .then((res) => {
         this.setState({
           ...this.state,
-          loading: false,
+          fetching: false,
           orders: res.data.data,
+          meta: res.data.meta,
         });
         if (res.data.length === 0) return;
         let promises = [];
