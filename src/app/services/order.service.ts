@@ -35,9 +35,9 @@ export default class OrderService extends ApiService {
   async getOrders(userId: number, criteria?: Criteria<any>) {
     if (!criteria) {
       criteria = new Criteria();
-      criteria.addRelation("orderProducts");
-      criteria.addRelation("orderState");
     }
+    criteria.addRelation("orderProducts");
+    criteria.addRelation("orderState");
     criteria.addFilter("user", userId);
     const url = this.endpoint + criteria.getUrlParameters();
     const res = await axios.get(url);
