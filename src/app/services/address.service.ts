@@ -17,7 +17,7 @@ export default class AddressService extends ApiService {
       criteria.addRelation("city");
     }
     const ret = await axios.get(this.endpoint + criteria.getUrlParameters());
-    return ret.data;
+    return ret;
   }
 
   /**

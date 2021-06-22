@@ -203,7 +203,8 @@ export default class Checkout extends Component {
   fetchData() {
     this.context.services.addressService
       .getAddresses(this.context.state.user.id)
-      .then((addresses) => {
+      .then((res) => {
+        const addresses = res.data?.data;
         if (!addresses) {
           this.setState({ address: false });
         }

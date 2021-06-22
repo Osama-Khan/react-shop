@@ -20,9 +20,10 @@ export default class AddressBook extends Component {
   componentDidMount() {
     const userId = this.context.state.user.id;
     if (userId) {
-      this.context.services.addressService
-        .getAddresses(userId)
-        .then((addresses) => this.setState({ ...this.state, addresses }));
+      this.context.services.addressService.getAddresses(userId).then((res) => {
+        const addresses = res.data?.data;
+        this.setState({ ...this.state, addresses });
+      });
       this.context.services.settingService
         .getDefaultAddress(this.context.state.user.id)
         .then((defaultAddress) => {
@@ -181,8 +182,12 @@ export default class AddressBook extends Component {
         this.context.state.user.id,
         this.state.selectedAddress.id
       )
-      .then((defaultAddress) => {
-        this.setState({ ...this.state, defaultAddress });
+      .then((setting) => {
+        svc
+          .getDefaultAddress(this.context.state.user.id)
+          .then((defaultAddress) =>
+            this.setState({ ...this.state, defaultAddress })
+          );
       });
     return true;
   };

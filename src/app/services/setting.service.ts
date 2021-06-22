@@ -11,9 +11,8 @@ export default class SettingService extends ApiService {
   async getDefaultAddress(userId: string) {
     const endpoint = `${this.endpoint}/${userId}`;
     const res = await axios.get(endpoint);
-    return res.data ? res.data.defaultAddress : undefined;
+    return res.data ? res.data.defaultAddress : res;
   }
-
 
   /**
    * Sets an address as default for user
@@ -22,7 +21,9 @@ export default class SettingService extends ApiService {
    * @returns The new setting
    */
   async setDefaultAddress(userId: number, addressId: number) {
-    const res = await axios.patch(`${this.endpoint}/${userId}`, { defaultAddress: addressId });
-    return res.data.defaultAddress;
+    const res = await axios.patch(`${this.endpoint}/${userId}`, {
+      defaultAddress: addressId,
+    });
+    return res.data ? res.data.defaultAddress : res;
   }
 }
