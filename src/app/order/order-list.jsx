@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
 import { productsUrl, userUrl } from "../routes";
 import { OrderStateEnum } from "./order-state.enum";
+import OrderStateBadge from "./order-state-badge";
 
 export default class OrderList extends Component {
   static contextType = AppContext;
@@ -48,7 +49,7 @@ export default class OrderList extends Component {
             <div className="col-md-8 card mb-4 mx-auto p-0">
               <div className="card-header bg-dark text-light row">
                 <h1 className="m-0 ml-2">Order #{o.id} </h1>
-                {this.renderStateBadge(o.orderState)}
+                <OrderStateBadge orderState={o.orderState} />
               </div>
               <div className="mb-2 p-2">
                 {this.state.detailLoaded ? (
@@ -105,32 +106,6 @@ export default class OrderList extends Component {
         <h2>Your Orders</h2>
         <div className="p-3">{orderEls}</div>
       </div>
-    );
-  };
-
-  renderStateBadge = (orderState) => {
-    const stateId = orderState.id;
-    const stateMap = OrderStateEnum;
-    return stateId === stateMap.Processing ? (
-      <span className="badge badge-secondary my-auto ml-auto mr-2 shadow">
-        <Icon dataIcon="fa:refresh" classes="my-auto mx-1" />
-        Processing
-      </span>
-    ) : stateId === stateMap.Shipped ? (
-      <span className="badge badge-primary my-auto ml-auto mr-2 shadow">
-        <Icon dataIcon="fa:truck" classes="my-auto mx-1" />
-        Shipped
-      </span>
-    ) : stateId === stateMap.Delivered ? (
-      <span className="badge badge-success my-auto ml-auto mr-2 shadow">
-        <Icon dataIcon="fa:check" classes="my-auto mx-1" />
-        Delivered
-      </span>
-    ) : (
-      <span className="badge badge-danger my-auto ml-auto mr-2 shadow">
-        <Icon dataIcon="fa:times" classes="my-auto mx-1" />
-        Cancelled
-      </span>
     );
   };
 
