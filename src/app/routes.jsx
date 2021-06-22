@@ -3,8 +3,8 @@ import ProductList from "./product/product-list";
 import Home from "./home/Home";
 import User from "./user/user";
 import Register from "./user/register";
-import Order from "./order/order";
 import OrderList from "./order/order-list";
+import Checkout from "./order/checkout";
 import UserEdit from "./user/user-edit";
 import AddressBook from "./user/addresses/address";
 import AddAddress from "./user/addresses/add-address";
@@ -22,7 +22,7 @@ export const userFavoritesUrl = userUrl + "/favorites";
 export const addressesUrl = userUrl + "/addresses";
 export const addAddressUrl = addressesUrl + "/add";
 export const registerUrl = "/register";
-export const orderUrl = "/order";
+export const checkoutUrl = "/checkout";
 export const ordersUrl = "/orders";
 
 export const routes = [
@@ -39,6 +39,6 @@ export const routes = [
   { path: userProductsUrl, component: UserProducts },
   { path: addAddressUrl, component: AddAddress },
   { path: registerUrl, component: Register },
-  { path: orderUrl, component: Order },
   { path: ordersUrl, component: OrderList },
+  { path: checkoutUrl, component: Checkout },
 ];

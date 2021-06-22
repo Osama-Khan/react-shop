@@ -5,7 +5,7 @@ import LoadingSpinner from "../components/loading/loading";
 import { AppContext } from "../context/app.provider";
 import { addAddressUrl, addressesUrl, productsUrl } from "../routes";
 
-export default class Order extends Component {
+export default class Checkout extends Component {
   static contextType = AppContext;
   loading = false;
   failed = false;

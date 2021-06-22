@@ -6,7 +6,7 @@ import {
   homeUrl,
   userUrl,
   registerUrl,
-  orderUrl,
+  checkoutUrl,
 } from "../../routes";
 import { Link, useLocation } from "react-router-dom";
 import Popup from "../popup/popup";
@@ -215,9 +215,9 @@ export default function Navbar() {
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
-                loc === orderUrl ? "active" : ""
+                loc === checkoutUrl ? "active" : ""
               }`}
-              to={orderUrl}>
+              to={checkoutUrl}>
               <Icon dataIcon="mi-shopping-cart" /> Cart
             </Link>
           </li>

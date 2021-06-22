@@ -1,6 +1,6 @@
 import { React, Component } from "react";
 import { Link } from "react-router-dom";
-import { orderUrl, productsUrl } from "../../../routes";
+import { checkoutUrl, productsUrl } from "../../../routes";
 import { IconButton, PrimaryButton } from "../../button/Button";
 import { AppContext } from "../../../context/app.provider";
 import Icon from "../../icon/icon";
@@ -50,7 +50,7 @@ export default class NavbarCartCard extends Component {
               </div>
             </div>
           ))}
-          <Link to={orderUrl}>
+          <Link to={checkoutUrl}>
             <PrimaryButton text="Checkout" classes="btn-block mt-3" />
           </Link>
         </>
