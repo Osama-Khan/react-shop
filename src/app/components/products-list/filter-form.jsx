@@ -49,7 +49,8 @@ export default function FilterForm({ state, setState, onFilter }) {
               state.orderDir === "ASC" ? "btn-primary" : "btn-light"
             }`}
             disabled={state.orderDir === "ASC"}
-            onClick={(e) => setState({ ...state, orderDir: "ASC" })}>
+            onClick={(e) => setState({ ...state, orderDir: "ASC" })}
+            title="Sort in ascending order: A-Z, 0-9">
             <Icon
               key="filter-sort-icon-asc"
               dataIcon="mdi-sort-alphabetical-ascending"
@@ -60,7 +61,8 @@ export default function FilterForm({ state, setState, onFilter }) {
               state.orderDir === "DESC" ? "btn-primary" : "btn-light"
             }`}
             disabled={state.orderDir === "DESC"}
-            onClick={(e) => setState({ ...state, orderDir: "DESC" })}>
+            onClick={(e) => setState({ ...state, orderDir: "DESC" })}
+            title="Sort in descending order: Z-A, 9-0">
             <Icon
               key="filter-sort-icon-desc"
               dataIcon="mdi-sort-alphabetical-descending"
