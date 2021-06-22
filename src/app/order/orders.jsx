@@ -19,17 +19,19 @@ export default class Orders extends Component {
       failed: false,
       orders: undefined,
       orderStates: undefined,
-      selectedOrderState: "",
+      selectedOrderState: -1,
       meta: undefined,
     };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+    this.fetchStates();
   }
 
   render() {
     if (!this.context.state.user.id) {
       return <Redirect to={userUrl} />;
-    }
-    if (!this.state.fetching && !this.state.orders) {
-      this.fetchData();
     }
     if (this.state.fetching) {
       return <LoadingSpinner />;
@@ -48,11 +50,31 @@ export default class Orders extends Component {
           </div>
         </div>
       );
+      const filters = this.state.orderStates ? (
+        <select
+          value={this.state.selectedOrderState}
+          className="form-control"
+          onChange={(e) => {
+            this.state.selectedOrderState = parseInt(e.target.value);
+            this.fetchData();
+          }}>
+          <option value={-1}>All</option>
+          {this.state.orderStates.map((os) => (
+            <option value={os.id}>{os.state}</option>
+          ))}
+        </select>
+      ) : (
+        <LoadingSpinner inline={true} />
+      );
       return (
-        <>
-          <OrderList state={this.state} />
+        <div className="mt-5 d-flex flex-column">
+          <h2>Your Orders</h2>
+          <div className="mx-auto col-sm-12 col-md-3 col-lg-2">{filters}</div>
+          <div className="p-3">
+            <OrderList state={this.state} />
+          </div>
           {pagination}
-        </>
+        </div>
       );
     }
     if (this.state.failed) {
@@ -77,6 +99,9 @@ export default class Orders extends Component {
     const criteria = new Criteria();
     criteria.setLimit(5);
     criteria.setPage(page);
+    if (this.state.selectedOrderState >= 0) {
+      criteria.addFilter("orderState", this.state.selectedOrderState);
+    }
     this.context.services.orderService
       .getOrders(this.context.state.user.id, criteria)
       .then((res) => {
@@ -107,6 +132,22 @@ export default class Orders extends Component {
         this.context.services.uiService.iconModal(
           `Error ${err.status}`,
           err.statusText,
+          "error"
+        );
+      });
+  };
+
+  fetchStates = () => {
+    this.context.services.orderService
+      .getOrderStates()
+      .then((res) => {
+        const orderStates = res.data;
+        this.setState({ ...this.state, orderStates });
+      })
+      .catch((err) => {
+        this.context.services.uiService.iconModal(
+          `Error ${err?.status ?? ""}`,
+          err?.statusText ?? "Something went wrong!",
           "error"
         );
       });
