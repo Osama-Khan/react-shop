@@ -151,13 +151,35 @@ export default class ProductDetail extends React.Component {
           </div>
           <div className="text-right my-4">{stock}</div>
           <div className="mt-3 d-flex">
-            <IconButton
-              dataIcon="fa:plus"
-              text="Add to cart"
-              classes="btn-green ml-auto"
-              click={() => this.context.state.cart.addProduct(p)}
-            />
-            {this.renderFavoriteButton(p)}
+            {this.context.state.cart.getProduct(p.id) ? (
+              <div className="form-group ml-auto my-auto col-lg-4 mr-1">
+                <input
+                  type="number"
+                  className="form-control"
+                  value={this.context.state.cart.getProduct(p.id).quantity}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (this.context.state.cart.setProductQuantity(p.id, val)) {
+                      this.context.setState({
+                        ...this.context.state,
+                        cart: this.context.state.cart,
+                      });
+                    }
+                  }}
+                />
+              </div>
+            ) : (
+              <IconButton
+                dataIcon="fa:plus"
+                text="Add to cart"
+                classes="btn-green ml-auto my-auto"
+                click={() => {
+                  this.context.state.cart.addProduct(p);
+                  this.context.setState({ ...this.context.state });
+                }}
+              />
+            )}
+            <div className="mr-3">{this.renderFavoriteButton(p)}</div>
           </div>
         </div>
       );
