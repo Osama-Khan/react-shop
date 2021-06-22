@@ -54,4 +54,14 @@ export default class OrderService extends ApiService {
     const res = await axios.get(url);
     return res;
   }
+
+  /**
+   * Sends a request to get the OrderStates list
+   * @returns list of OrderState objects
+   */
+  async getOrderStates() {
+    const url = `${this.endpoint}/states`;
+    const res = await axios.get(url);
+    return res;
+  }
 }
