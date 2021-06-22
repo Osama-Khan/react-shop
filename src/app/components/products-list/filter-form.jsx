@@ -22,9 +22,7 @@ export default function FilterForm({ state, setState, onFilter }) {
         <select
           className="form-control"
           value={state.limit}
-          onChange={(e) =>
-            setState({ ...state, limit: parseInt(e.target.value) })
-          }>
+          onChange={(e) => setState({ ...state, limit: e.target.value })}>
           <option value="" disabled>
             Max Records...
           </option>

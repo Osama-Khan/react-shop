@@ -11,7 +11,7 @@ import Pagination from "../pagination/pagination";
 
 const initialState = {
   search: "",
-  limit: 1,
+  limit: "",
   orderBy: "",
   orderDir: "ASC",
   products: undefined,
