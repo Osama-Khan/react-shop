@@ -81,15 +81,7 @@ export default class CartState {
    * @returns The product or false, depending on if the product is present or not respectively
    */
   getProduct = (id: number): CartProduct | false => {
-    let index = -1;
-    this.products.some((p, i) => {
-      index = i;
-      return p.id === id;
-    });
-    if (index !== -1) {
-      return this.products[index];
-    } else {
-      return false;
-    }
+    let prods = this.products.filter((p) => p.id === id);
+    return prods.length > 0 ? prods[0] : false;
   };
 }
