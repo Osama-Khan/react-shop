@@ -13,6 +13,7 @@ import {
 import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading-spinner";
 import Card from "../components/card/card";
+import LoadingFailed from "../components/loading/loading-failed";
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -32,7 +33,7 @@ export default class User extends React.Component {
     if (this.context.state.user.token || this.props.match.params.id) {
       if (this.state.address === undefined && this.state.user === undefined) {
         if (this.state.failed) {
-          return this.failedTemplate();
+          return <LoadingFailed />;
         } else {
           if (!this.state.fetching) this.fetchData();
           return <LoadingSpinner />;
@@ -47,23 +48,12 @@ export default class User extends React.Component {
       } else {
         if (this.state.user) return this.profileTemplateOther(this.state.user);
         else if (this.state.fetching) return <LoadingSpinner />;
-        else return this.failedTemplate();
+        else return <LoadingFailed />;
       }
     } else {
       return this.loginTemplate();
     }
   }
-
-  failedTemplate = () => {
-    return (
-      <div className="mt-5">
-        <div className="alert alert-danger m-auto">
-          <Icon dataIcon="fa:times-circle" />
-          <span className="ml-2">Failed to load</span>
-        </div>
-      </div>
-    );
-  };
 
   profileTemplateOwn = (user) => (
     <div className="mt-5">

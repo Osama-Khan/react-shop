@@ -7,6 +7,7 @@ import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading-spinner";
 import ProductRating from "../components/product-rating/product-rating";
 import CartProduct from "../models/product/cart-product";
+import LoadingFailed from "../components/loading/loading-failed";
 
 export default class ProductDetail extends React.Component {
   static contextType = AppContext;
@@ -46,18 +47,9 @@ export default class ProductDetail extends React.Component {
     } else if (this.state.product && !this.state.failed) {
       return <this.ProductDetail />;
     } else {
-      return <this.FailedTemplate />;
+      return <LoadingFailed />;
     }
   }
-
-  FailedTemplate = () => (
-    <div className="mt-5 row container d-flex justify-content-center">
-      <div className="alert alert-danger">
-        <Icon dataIcon="fa:times-circle" />
-        <span className="ml-2">Failed to load</span>
-      </div>
-    </div>
-  );
 
   ProductDetail = () => {
     let component;

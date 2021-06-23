@@ -1,12 +1,12 @@
 import { Component } from "react";
 import { Redirect } from "react-router-dom";
-import Icon from "../components/icon/icon";
 import LoadingSpinner from "../components/loading/loading-spinner";
 import { AppContext } from "../context/app.provider";
 import { userUrl } from "../routes";
 import Criteria from "../models/criteria";
 import Pagination from "../components/pagination/pagination";
 import OrderList from "./order-list";
+import LoadingFailed from "../components/loading/loading-failed";
 
 export default class Orders extends Component {
   static contextType = AppContext;
@@ -80,21 +80,10 @@ export default class Orders extends Component {
       );
     }
     if (this.state.failed) {
-      return this.failedTemplate();
+      return <LoadingFailed />;
     }
     return <></>;
   }
-
-  failedTemplate = () => {
-    return (
-      <div className="mt-5 row container d-flex justify-content-center">
-        <div className="alert alert-danger">
-          <Icon dataIcon="fa:times-circle" />
-          <span className="ml-2">Failed to load</span>
-        </div>
-      </div>
-    );
-  };
 
   fetchData = (page = 1) => {
     this.setState({ ...this.state, fetching: true, detailLoaded: false });

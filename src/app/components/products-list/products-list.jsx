@@ -4,10 +4,10 @@ import { AppContext } from "../../context/app.provider";
 import Criteria from "../../models/criteria";
 import { productsUrl } from "../../routes";
 import { ProductCard } from "../card/card";
-import Icon from "../icon/icon";
 import LoadingSpinner from "../loading/loading-spinner";
 import FilterForm from "./filter-form";
 import Pagination from "../pagination/pagination";
+import LoadingFailed from "../loading/loading-failed";
 
 const initialState = {
   search: "",
@@ -64,7 +64,7 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
       );
     });
   } else if (state.failed) {
-    prods = failedTemplate();
+    prods = <LoadingFailed />;
   } else {
     return (
       <>
@@ -103,17 +103,6 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
     </>
   );
 }
-
-const failedTemplate = () => {
-  return (
-    <div className="mt-5 row container d-flex justify-content-center">
-      <div className="alert alert-danger">
-        <Icon dataIcon="fa:times-circle" />
-        <span className="ml-2">Failed to load</span>
-      </div>
-    </div>
-  );
-};
 
 const generateCriteria = (state) => {
   const Product = require("../../models/product/product");

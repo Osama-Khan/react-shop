@@ -1,5 +1,5 @@
 import { Component } from "react";
-import Icon from "../components/icon/icon";
+import LoadingFailed from "../components/loading/loading-failed";
 import LoadingSpinner from "../components/loading/loading-spinner";
 import ProductsList from "../components/products-list/products-list";
 import { AppContext } from "../context/app.provider";
@@ -35,20 +35,9 @@ export default class UserProducts extends Component {
         </div>
       );
     } else {
-      return this.failedTemplate();
+      return <LoadingFailed />;
     }
   }
-
-  failedTemplate = () => {
-    return (
-      <div className="mt-5 row container d-flex justify-content-center">
-        <div className="alert alert-danger">
-          <Icon dataIcon="fa:times-circle" />
-          <span className="ml-2">Failed to load</span>
-        </div>
-      </div>
-    );
-  };
 
   fetchData = () => {
     this.context.services.userService
