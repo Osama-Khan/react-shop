@@ -21,7 +21,7 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
   let numEls = [];
 
   if (trimBackward && !isFirst) {
-    numEls.push(<MoreIndicator />);
+    numEls.push(<MoreIndicator key="pagination-el-more-1" />);
   }
 
   const iStart = !isFirst
@@ -33,6 +33,7 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
   for (let i = iStart; i < maxPages; i++) {
     numEls.push(
       <PaginationElement
+        key={`pagination-el-${i}`}
         className={currentPage === i ? " active" : ""}
         onClick={() => {
           if (currentPage !== i) gotoPage(i);
@@ -43,13 +44,14 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
   }
 
   if (trimForward && !isLast) {
-    numEls.push(<MoreIndicator />);
+    numEls.push(<MoreIndicator key="pagination-el-more-2" />);
   }
 
   return (
     <div className="shadow">
-      <ul class="pagination">
+      <ul className="pagination">
         <PaginationElement
+          key="pagination-el-first"
           className={isFirst ? " disabled" : ""}
           text="First"
           onClick={() => {
@@ -58,6 +60,7 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
         />
         {numEls}
         <PaginationElement
+          key="pagination-el-last"
           className={isLast ? " disabled" : ""}
           text="Last"
           onClick={() => {

@@ -8,7 +8,9 @@ export default function OrderList({ state }) {
     state.orders.map((o) => {
       let total = 0;
       return (
-        <div className="col-md-8 card mb-4 mx-auto p-0">
+        <div
+          className="col-md-8 card mb-4 mx-auto p-0"
+          key={`order-card-${o.id}`}>
           <div className="card-header bg-dark text-light row">
             <h1 className="m-0 ml-2">Order #{o.id} </h1>
             <OrderStateBadge orderState={o.orderState} />

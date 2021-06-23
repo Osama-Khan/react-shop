@@ -60,7 +60,9 @@ export default class Orders extends Component {
           }}>
           <option value={-1}>All</option>
           {this.state.orderStates.map((os) => (
-            <option value={os.id}>{os.state}</option>
+            <option key={`dropdown-state-${os.id}`} value={os.id}>
+              {os.state}
+            </option>
           ))}
         </select>
       ) : (
