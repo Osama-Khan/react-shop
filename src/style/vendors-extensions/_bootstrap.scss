@@ -3,3 +3,10 @@
   border-color: #0000;
   color: #fff !important;
 }
+
+.form-control {
+  &.dark {
+    background-color: $color-dark;
+    color: $color-white;
+  }
+}
