@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import { IconButton, PrimaryButton } from "../components/button/Button";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import { AppContext } from "../context/app.provider";
 import { addAddressUrl, addressesUrl, productsUrl } from "../routes";
 

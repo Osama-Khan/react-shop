@@ -5,7 +5,7 @@ import Criteria from "../../models/criteria";
 import { productsUrl } from "../../routes";
 import { ProductCard } from "../card/card";
 import Icon from "../icon/icon";
-import LoadingSpinner from "../loading/loading";
+import LoadingSpinner from "../loading/loading-spinner";
 import FilterForm from "./filter-form";
 import Pagination from "../pagination/pagination";
 

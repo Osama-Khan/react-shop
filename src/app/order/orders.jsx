@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Icon from "../components/icon/icon";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import { AppContext } from "../context/app.provider";
 import { userUrl } from "../routes";
 import Criteria from "../models/criteria";

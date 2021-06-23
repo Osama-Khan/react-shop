@@ -4,7 +4,7 @@ import Icon from "../components/icon/icon";
 import { IconButton } from "../components/button/Button";
 import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import ProductRating from "../components/product-rating/product-rating";
 import CartProduct from "../models/product/cart-product";
 

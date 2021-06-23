@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Icon from "../components/icon/icon";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import ProductsList from "../components/products-list/products-list";
 import { AppContext } from "../context/app.provider";
 

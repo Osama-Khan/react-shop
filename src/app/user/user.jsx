@@ -11,7 +11,7 @@ import {
   userFavoritesUrl,
 } from "../routes";
 import Icon from "../components/icon/icon";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import Card from "../components/card/card";
 
 export default class User extends React.Component {

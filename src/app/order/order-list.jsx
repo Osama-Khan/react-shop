@@ -1,5 +1,5 @@
 import { productsUrl } from "../routes";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import OrderStateBadge from "./order-state-badge";
 import { Link } from "react-router-dom";
 

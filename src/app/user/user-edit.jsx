@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Form from "../components/form/form";
 import Icon from "../components/icon/icon";
-import LoadingSpinner from "../components/loading/loading";
+import LoadingSpinner from "../components/loading/loading-spinner";
 import { AppContext } from "../context/app.provider";
 import { userUrl } from "../routes";
 
