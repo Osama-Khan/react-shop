@@ -154,10 +154,14 @@ export default class ProductDetail extends React.Component {
           <div className="text-right my-4">{stock}</div>
           <div className="mt-3 d-flex">
             {this.context.state.cart.getProduct(p.id) ? (
-              <div className="form-group ml-auto my-auto col-lg-4 mr-1">
+              <div className="d-flex flex-row ml-auto my-auto col-lg-6 mr-1">
+                <Icon
+                  dataIcon="mi-shopping-cart-add"
+                  classes="my-auto icon-md mx-1"
+                />
                 <input
                   type="number"
-                  className="form-control"
+                  className="form-control dark"
                   value={this.context.state.cart.getProduct(p.id).quantity}
                   onChange={(e) => {
                     const val = e.target.value;
