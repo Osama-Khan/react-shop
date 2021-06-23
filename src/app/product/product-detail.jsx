@@ -44,24 +44,22 @@ export default class ProductDetail extends React.Component {
     } else if (this.state.fetching) {
       return <LoadingSpinner />;
     } else if (this.state.product && !this.state.failed) {
-      return this.renderProductDetail();
+      return <this.ProductDetail />;
     } else {
-      return this.failedTemplate();
+      return <this.FailedTemplate />;
     }
   }
 
-  failedTemplate = () => {
-    return (
-      <div className="mt-5 row container d-flex justify-content-center">
-        <div className="alert alert-danger">
-          <Icon dataIcon="fa:times-circle" />
-          <span className="ml-2">Failed to load</span>
-        </div>
+  FailedTemplate = () => (
+    <div className="mt-5 row container d-flex justify-content-center">
+      <div className="alert alert-danger">
+        <Icon dataIcon="fa:times-circle" />
+        <span className="ml-2">Failed to load</span>
       </div>
-    );
-  };
+    </div>
+  );
 
-  renderProductDetail = () => {
+  ProductDetail = () => {
     let component;
     const product = this.state.product;
     let categoryList = this.state.categories?.map((c) => {
@@ -115,7 +113,9 @@ export default class ProductDetail extends React.Component {
                   </b>
                   <ul>{highlights}</ul>
                 </div>
-                <div className="col-md-6">{this.renderPurchaseBox()}</div>
+                <div className="col-md-6">
+                  <this.PurchaseBox />
+                </div>
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default class ProductDetail extends React.Component {
     );
   };
 
-  renderPurchaseBox = () => {
+  PurchaseBox = () => {
     const p = this.state.product;
     const errorToast = this.context.services.uiService.errorToast;
     let component;
@@ -190,7 +190,9 @@ export default class ProductDetail extends React.Component {
                 }}
               />
             )}
-            <div className="mr-3">{this.renderFavoriteButton(p)}</div>
+            <div className="mr-3">
+              <this.FavoriteButton product={p} />
+            </div>
           </div>
         </div>
       );
@@ -210,7 +212,7 @@ export default class ProductDetail extends React.Component {
               classes="btn-green ml-auto"
               disabled={true}
             />
-            {this.renderFavoriteButton(p)}
+            <this.FavoriteButton product={p} />
           </div>
         </div>
       );
@@ -219,7 +221,7 @@ export default class ProductDetail extends React.Component {
     return component;
   };
 
-  renderFavoriteButton = (product) => {
+  FavoriteButton = ({ product }) => {
     const favCount = product.favoriteCount === 0 ? "0" : product.favoriteCount;
     if (!this.context.state.user.token) {
       return (

@@ -28,7 +28,7 @@ export default class Categories extends Component {
 
   render() {
     const page = this.state.categories ? (
-      this.renderCategories()
+      <this.CategoriesList />
     ) : this.categoryName ? (
       <ProductsList
         requestMethod={(criteria) =>
@@ -59,7 +59,7 @@ export default class Categories extends Component {
     );
   }
 
-  renderCategories() {
+  CategoriesList = () => {
     const categories = this.state.categories;
     const mainCats = categories.map((c) => (
       <div key={c.id} className="col-6 col-md-4 col-lg-2">
@@ -71,5 +71,5 @@ export default class Categories extends Component {
       </div>
     ));
     return <div className="row mt-5">{mainCats}</div>;
-  }
+  };
 }
