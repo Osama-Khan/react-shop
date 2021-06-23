@@ -4,6 +4,7 @@ import { checkoutUrl, productsUrl } from "../../../routes";
 import { IconButton, PrimaryButton } from "../../button/Button";
 import { AppContext } from "../../../context/app.provider";
 import Icon from "../../icon/icon";
+import CartProduct from "../../../models/product/cart-product";
 
 export default class NavbarCartCard extends Component {
   static contextType = AppContext;
@@ -75,12 +76,9 @@ export default class NavbarCartCard extends Component {
     const errorToast = this.context.services.uiService.errorToast;
     const str = event.target.value;
     const val = parseInt(str);
-    if (val !== 0 && !val) {
-      errorToast("Quantity must be a number!");
-      return;
-    }
-    if (val <= 0) {
-      errorToast("Quantity must be above 0!");
+    const invalid = CartProduct.isQuantityInvalid(val);
+    if (invalid) {
+      errorToast(invalid);
       return;
     }
 

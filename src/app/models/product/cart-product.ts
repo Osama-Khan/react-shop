@@ -16,4 +16,23 @@ export default class CartProduct {
     this.price = p.price;
     this.img = p.img;
   }
+
+  /**
+   * Validates quantity of a product
+   * @param qty Quantity to validate
+   * @param max Maximum quantity to allow
+   * @returns A message with error or false if quantity is valid
+   */
+  static isQuantityInvalid(qty: number, max: number): string | false {
+    if (qty !== 0 && !qty) {
+      return "Quantity must be a number!";
+    }
+    if (qty <= 0) {
+      return "Quantity must be above 0!";
+    }
+    if (qty > max) {
+      return `Max quantity available is ${max}!`;
+    }
+    return false;
+  }
 }

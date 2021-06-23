@@ -6,6 +6,7 @@ import { AppContext } from "../context/app.provider";
 import { categoriesUrl } from "../routes";
 import LoadingSpinner from "../components/loading/loading";
 import ProductRating from "../components/product-rating/product-rating";
+import CartProduct from "../models/product/cart-product";
 
 export default class ProductDetail extends React.Component {
   static contextType = AppContext;
@@ -128,8 +129,9 @@ export default class ProductDetail extends React.Component {
     );
   };
 
-  renderPurchaseBox() {
+  renderPurchaseBox = () => {
     const p = this.state.product;
+    const errorToast = this.context.services.uiService.errorToast;
     let component;
     if (p.stock && p.stock > 0) {
       const stock =
@@ -159,6 +161,11 @@ export default class ProductDetail extends React.Component {
                   value={this.context.state.cart.getProduct(p.id).quantity}
                   onChange={(e) => {
                     const val = e.target.value;
+                    const invalid = CartProduct.isQuantityInvalid(val, p.stock);
+                    if (invalid) {
+                      errorToast(invalid);
+                      return;
+                    }
                     if (this.context.state.cart.setProductQuantity(p.id, val)) {
                       this.context.setState({
                         ...this.context.state,
@@ -206,7 +213,7 @@ export default class ProductDetail extends React.Component {
     }
 
     return component;
-  }
+  };
 
   renderFavoriteButton = (product) => {
     const favCount = product.favoriteCount === 0 ? "0" : product.favoriteCount;
