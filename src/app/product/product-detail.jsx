@@ -131,94 +131,105 @@ export default class ProductDetail extends React.Component {
 
   PurchaseBox = () => {
     const p = this.state.product;
-    const errorToast = this.context.services.uiService.errorToast;
-    let component;
-    if (p.stock && p.stock > 0) {
-      const stock =
-        p.stock === "1" ? (
-          <b className="p-3 badge-pill bg-yellow-subtle text-yellow">
-            <Icon dataIcon="fluent-emoji-meh-24-filled" classes="icon-sm" />{" "}
-            Last in stock
-          </b>
-        ) : (
-          <b className="p-3 badge-pill bg-green-subtle text-green">
-            <Icon dataIcon="fluent-emoji-laugh-24-filled" classes="icon-sm" />{" "}
-            In stock
-          </b>
-        );
-      component = (
-        <div className="mt-3">
-          <div className="text-right my-4">
-            <b className="p-3 text-dark">Rs. {p.price}</b>
-          </div>
-          <div className="text-right my-4">{stock}</div>
-          <div className="mt-3 d-flex">
-            {this.context.state.cart.getProduct(p.id) ? (
-              <div className="d-flex flex-row ml-auto my-auto col-lg-6 mr-1">
-                <Icon
-                  dataIcon="mi-shopping-cart-add"
-                  classes="my-auto icon-md mx-1"
-                />
-                <input
-                  type="number"
-                  className="form-control dark"
-                  value={this.context.state.cart.getProduct(p.id).quantity}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const invalid = CartProduct.isQuantityInvalid(val, p.stock);
-                    if (invalid) {
-                      errorToast(invalid);
-                      return;
-                    }
-                    if (this.context.state.cart.setProductQuantity(p.id, val)) {
-                      this.context.setState({
-                        ...this.context.state,
-                        cart: this.context.state.cart,
-                      });
-                    }
-                  }}
-                />
-              </div>
-            ) : (
-              <IconButton
-                dataIcon="fa:plus"
-                text="Add to cart"
-                classes="btn-green ml-auto my-auto"
-                click={() => {
-                  this.context.state.cart.addProduct(p);
-                  this.context.setState({ ...this.context.state });
-                }}
-              />
-            )}
-            <div className="mr-3">
-              <this.FavoriteButton product={p} />
-            </div>
-          </div>
+    return (
+      <div className="mt-3">
+        <div className="text-right">
+          <this.Stock stock={p.stock} />
         </div>
-      );
-    } else {
-      component = (
-        <div className="mt-3">
-          <div className="text-right">
-            <b className="p-3 badge-pill bg-red-subtle text-danger">
-              <Icon dataIcon="fluent-emoji-sad-24-filled" classes="icon-sm" />{" "}
-              Out of Stock
-            </b>
-          </div>
-          <div className="mt-3 d-flex">
-            <IconButton
-              dataIcon="fa:plus"
-              text="Add to cart"
-              classes="btn-green ml-auto"
-              disabled={true}
-            />
-            <this.FavoriteButton product={p} />
-          </div>
+        <div className="mt-3 d-flex">
+          <this.CartButton product={p} />
+          <this.FavoriteButton product={p} />
         </div>
+      </div>
+    );
+  };
+
+  Stock = ({ stock }) =>
+    stock > 0 ? (
+      stock === 1 ? (
+        <b className="p-3 badge-pill bg-yellow-subtle text-yellow">
+          <Icon
+            dataIcon="fluent-emoji-meh-24-filled"
+            classes="icon-sm"
+            inline={false}
+          />{" "}
+          Last in stock
+        </b>
+      ) : (
+        <b className="p-3 badge-pill bg-green-subtle text-green">
+          <Icon
+            dataIcon="fluent-emoji-laugh-24-filled"
+            classes="icon-sm"
+            inline={false}
+          />{" "}
+          In stock
+        </b>
+      )
+    ) : (
+      <b className="p-3 badge-pill bg-red-subtle text-danger">
+        <Icon
+          dataIcon="fluent-emoji-sad-24-filled"
+          classes="icon-sm"
+          inline={false}
+        />{" "}
+        Out of Stock
+      </b>
+    );
+
+  CartButton = ({ product }) => {
+    if (product.stock === 0) {
+      return (
+        <IconButton
+          dataIcon="fa:plus"
+          text="Add to cart"
+          classes="btn-green ml-auto"
+          disabled={true}
+        />
       );
     }
-
-    return component;
+    const errorToast = this.context.services.uiService.errorToast;
+    return this.context.state.cart.getProduct(product.id) ? (
+      <div className="d-flex flex-row ml-auto my-auto col-lg-6 mr-1">
+        <input
+          type="number"
+          className="form-control dark"
+          value={this.context.state.cart.getProduct(product.id).quantity}
+          onChange={(e) => {
+            const val = e.target.value;
+            const invalid = CartProduct.isQuantityInvalid(val, product.stock);
+            if (invalid) {
+              errorToast(invalid);
+              return;
+            }
+            if (this.context.state.cart.setProductQuantity(product.id, val)) {
+              this.context.setState({
+                ...this.context.state,
+                cart: this.context.state.cart,
+              });
+            }
+          }}
+        />
+        <span
+          title="Remove from cart"
+          className="my-auto icon-sm mx-1 text-clickable"
+          onClick={() => {
+            this.context.state.cart.removeProduct(product.id);
+            this.context.setState({ ...this.context.state });
+          }}>
+          <Icon dataIcon="fa:times" />
+        </span>
+      </div>
+    ) : (
+      <IconButton
+        dataIcon="fa:plus"
+        text="Add to cart"
+        classes="btn-green ml-auto my-auto"
+        click={() => {
+          this.context.state.cart.addProduct(product);
+          this.context.setState({ ...this.context.state });
+        }}
+      />
+    );
   };
 
   FavoriteButton = ({ product }) => {
