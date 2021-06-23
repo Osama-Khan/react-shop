@@ -13,7 +13,7 @@ export default class CategoryService extends ApiService {
   async fetchCategories(criteria?: Criteria<{ id: number; name: string }>) {
     if (!criteria) criteria = new Criteria();
     const url = this.endpoint + criteria.getUrlParameters();
-    return await axios.get(url).then(async (r) => await r.data);
+    return await axios.get(url);
   }
 
   /**
@@ -23,7 +23,7 @@ export default class CategoryService extends ApiService {
    */
   async fetchParentsOf(id: number) {
     const url = `${this.endpoint}/parents/${id}`;
-    return await axios.get(url).then(async (r) => await r.data);
+    return await axios.get(url);
   }
 
   /**
@@ -33,7 +33,7 @@ export default class CategoryService extends ApiService {
    */
   async fetchChildrenOf(id: number) {
     const url = `${this.endpoint}/children/${id}`;
-    return await axios.get(url).then(async (r) => await r.data);
+    return await axios.get(url);
   }
 
   /**
@@ -42,6 +42,6 @@ export default class CategoryService extends ApiService {
    */
   async fetchRootCategories() {
     const url = `${this.endpoint}/root`;
-    return await axios.get(url).then(async (r) => await r.data);
+    return await axios.get(url);
   }
 }

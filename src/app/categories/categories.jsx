@@ -20,8 +20,8 @@ export default class Categories extends Component {
 
   componentDidMount() {
     if (!this.categoryName) {
-      this.context.services.categoryService.fetchCategories().then((data) => {
-        this.setState({ ...this.state, categories: data.data });
+      this.context.services.categoryService.fetchCategories().then((res) => {
+        this.setState({ ...this.state, categories: res.data.data });
       });
     }
   }

@@ -288,7 +288,8 @@ export default class ProductDetail extends React.Component {
         this.setState({ ...this.state, product: res.data });
         svc.categoryService
           .fetchParentsOf(res.data.category.id)
-          .then((categories) => {
+          .then((res) => {
+            const categories = res.data;
             this.setState({ ...this.state, categories });
           })
           .catch((err) => {
