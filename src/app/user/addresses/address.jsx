@@ -26,8 +26,8 @@ export default class AddressBook extends Component {
       });
       this.context.services.settingService
         .getDefaultAddress(this.context.state.user.id)
-        .then((defaultAddress) => {
-          defaultAddress = defaultAddress || {};
+        .then((res) => {
+          const defaultAddress = res.data || {};
           this.setState({
             ...this.state,
             defaultAddress,
@@ -35,7 +35,8 @@ export default class AddressBook extends Component {
           });
         })
         .catch((e) => {});
-      this.context.services.locationService.getCountries().then((countries) => {
+      this.context.services.locationService.getCountries().then((res) => {
+        const countries = res.data.data;
         this.setState({ ...this.state, countries });
       });
     }
@@ -183,11 +184,10 @@ export default class AddressBook extends Component {
         this.state.selectedAddress.id
       )
       .then((setting) => {
-        svc
-          .getDefaultAddress(this.context.state.user.id)
-          .then((defaultAddress) =>
-            this.setState({ ...this.state, defaultAddress })
-          );
+        svc.getDefaultAddress(this.context.state.user.id).then((res) => {
+          const defaultAddress = res.data;
+          this.setState({ ...this.state, defaultAddress });
+        });
       });
     return true;
   };

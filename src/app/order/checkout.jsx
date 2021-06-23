@@ -178,13 +178,13 @@ export default class Checkout extends Component {
         this.context.state.user.id,
         products
       )
-      .then((order) =>
+      .then((res) => {
         this.context.services.uiService.iconModal(
           "Order Placed",
           "Your order has been placed successfully!",
           "success"
-        )
-      )
+        );
+      })
       .catch((error) =>
         this.context.services.uiService.iconModal(
           "Order Failed",
@@ -210,7 +210,8 @@ export default class Checkout extends Component {
         }
         this.context.services.settingService
           .getDefaultAddress(this.context.state.user.id)
-          .then((addr) => {
+          .then((res) => {
+            const addr = res.data;
             const address = addresses.find((a) => a.id === addr.id);
             this.setState({
               address,

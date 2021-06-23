@@ -23,7 +23,7 @@ export default class OrderService extends ApiService {
       { address, user: userId, products },
       { headers: { "Content-type": "application/json" } }
     );
-    return ret.data;
+    return ret;
   }
 
   /**

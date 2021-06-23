@@ -70,8 +70,8 @@ export default class UserEdit extends Component {
       error: "Failed to update account!",
     };
     const promise = userSvc.update(this.state.user.id, u);
-    uiSvc.promiseToast(promise, msgs).then((u) => {
-      const user = Object.assign(this.context.state.user, u);
+    uiSvc.promiseToast(promise, msgs).then((res) => {
+      const user = Object.assign(this.context.state.user, res.data);
       this.context.setState({
         ...this.context.state,
         user,

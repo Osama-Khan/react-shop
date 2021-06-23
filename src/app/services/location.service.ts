@@ -13,7 +13,7 @@ export default class LocationService extends ApiService {
     const res = await axios.get(
       `${this.endpoint}/countries${criteria.getUrlParameters()}`
     );
-    return res.data;
+    return res;
   }
 
   async getStates(countryId?: number, criteria?: Criteria<any>) {
@@ -25,7 +25,7 @@ export default class LocationService extends ApiService {
     const res = await axios.get(
       `${this.endpoint}/states${criteria.getUrlParameters()}`
     );
-    return res.data;
+    return res;
   }
 
   async getCities(stateId?: number, criteria?: Criteria<any>) {
@@ -37,6 +37,6 @@ export default class LocationService extends ApiService {
     const res = await axios.get(
       `${this.endpoint}/cities${criteria.getUrlParameters()}`
     );
-    return res.data;
+    return res;
   }
 }

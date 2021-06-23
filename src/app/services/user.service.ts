@@ -13,7 +13,7 @@ export default class UserService extends ApiService {
     const res = await axios.post(`${this.domain}/login`, obj, {
       headers: { "Content-type": "application/json" },
     });
-    return res.data;
+    return res;
   }
 
   /**
@@ -32,7 +32,7 @@ export default class UserService extends ApiService {
     const res = await axios.post(`${this.domain}/register`, obj, {
       headers: { "Content-type": "application/json" },
     });
-    return res.data;
+    return res;
   }
 
   /**
@@ -42,7 +42,7 @@ export default class UserService extends ApiService {
    */
   async getUser(id: number) {
     const res = await axios.get(`${this.domain}/users/${id}`);
-    return res.data;
+    return res;
   }
 
   /**
@@ -56,7 +56,7 @@ export default class UserService extends ApiService {
     if (res.status === 404) {
       return undefined;
     }
-    return res.data;
+    return res;
   }
 
   /**
@@ -83,6 +83,6 @@ export default class UserService extends ApiService {
    */
   async update(id: number, data: Partial<User>) {
     const res = await axios.patch(`${this.domain}/users/${id}`, data);
-    return res.data;
+    return res;
   }
 }

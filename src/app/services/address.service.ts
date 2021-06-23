@@ -27,7 +27,7 @@ export default class AddressService extends ApiService {
    */
   async getAddress(id: number) {
     const ret = await axios.get(`${this.endpoint}/${id}`);
-    return ret.data;
+    return ret;
   }
 
   /**
@@ -42,7 +42,7 @@ export default class AddressService extends ApiService {
     city: number;
   }) {
     const ret = await axios.put(`${this.endpoint}`, address);
-    return ret.data;
+    return ret;
   }
 
   /**

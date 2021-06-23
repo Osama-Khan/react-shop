@@ -22,7 +22,8 @@ export default class AddAddress extends Component {
   }
 
   componentDidMount() {
-    this.context.services.locationService.getCountries().then((countries) => {
+    this.context.services.locationService.getCountries().then((res) => {
+      const countries = res.data.data;
       this.setState({ ...this.state, countries });
     });
   }
@@ -232,9 +233,10 @@ export default class AddAddress extends Component {
         cities: undefined,
         addData: { ...this.state.addData, city: undefined, country: id },
       });
-      this.context.services.locationService
-        .getStates(id)
-        .then((states) => this.setState({ ...this.state, states }));
+      this.context.services.locationService.getStates(id).then((res) => {
+        const states = res.data.data;
+        this.setState({ ...this.state, states });
+      });
     }
   };
 
@@ -249,7 +251,8 @@ export default class AddAddress extends Component {
         cities: undefined,
         addData: { ...this.state.addData, city: undefined, state: id },
       });
-      this.context.services.locationService.getCities(id).then((cities) => {
+      this.context.services.locationService.getCities(id).then((res) => {
+        const cities = res.data.data;
         this.setState({
           ...this.state,
           cities,

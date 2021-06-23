@@ -242,7 +242,8 @@ export default class User extends React.Component {
     if (id) {
       this.context.services.userService
         .getUser(parseInt(id))
-        .then((user) => {
+        .then((res) => {
+          const user = res.data;
           this.setState({ ...this.state, user });
         })
         .catch((err) => {
@@ -262,12 +263,14 @@ export default class User extends React.Component {
       const user = this.context.state.user;
       this.context.services.settingService
         .getDefaultAddress(user.id)
-        .then((address) => {
+        .then((res) => {
+          const address = res.data;
           if (address) {
             this.setState({ ...this.state, address });
             this.context.services.addressService
               .getAddress(address.id)
-              .then((address) => {
+              .then((res) => {
+                const address = res.data;
                 this.setState({ ...this.state, address });
               })
               .catch((err) => {
@@ -303,8 +306,9 @@ export default class User extends React.Component {
     };
     const loginPromise = userSvc.login(username, password);
     loginPromise
-      .then((u) => {
-        this.context.setState({ ...this.context.state, user: u });
+      .then((res) => {
+        const user = res.data;
+        this.context.setState({ ...this.context.state, user });
       })
       .catch((err) => {
         if (err) {

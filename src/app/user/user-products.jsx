@@ -53,7 +53,8 @@ export default class UserProducts extends Component {
   fetchData = () => {
     this.context.services.userService
       .getUser(parseInt(this.props.match.params.id))
-      .then((user) => {
+      .then((res) => {
+        const user = res.data;
         this.setState({ user });
       })
       .catch((err) => {

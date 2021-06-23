@@ -82,8 +82,9 @@ export default function Navbar() {
     };
     const loginPromise = userSvc.login(username, password);
     loginPromise
-      .then((u) => {
-        context.setState({ ...context.state, user: u });
+      .then((res) => {
+        const user = res.data;
+        context.setState({ ...context.state, user });
       })
       .catch((err) => {
         if (err) {

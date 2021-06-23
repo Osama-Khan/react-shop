@@ -11,7 +11,7 @@ export default class SettingService extends ApiService {
   async getDefaultAddress(userId: string) {
     const endpoint = `${this.endpoint}/${userId}`;
     const res = await axios.get(endpoint);
-    return res.data ? res.data.defaultAddress : res;
+    return res.data ? { ...res, data: res.data.defaultAddress } : res;
   }
 
   /**
@@ -24,6 +24,6 @@ export default class SettingService extends ApiService {
     const res = await axios.patch(`${this.endpoint}/${userId}`, {
       defaultAddress: addressId,
     });
-    return res.data ? res.data.defaultAddress : res;
+    return res.data ? { ...res, data: res.data.defaultAddress } : res;
   }
 }
