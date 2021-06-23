@@ -13,6 +13,9 @@ const MoreIndicator = () => (
 );
 
 export default function Pagination({ currentPage, totalPages, gotoPage }) {
+  if (totalPages <= 1) {
+    return <></>;
+  }
   const trimForward = totalPages > 3 && totalPages - currentPage + 1 > 3;
   const trimBackward = totalPages > 3 && totalPages - currentPage + 1 < 3;
   const isFirst = currentPage === 1;
