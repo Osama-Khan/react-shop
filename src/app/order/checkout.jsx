@@ -179,6 +179,9 @@ export default class Checkout extends Component {
         products
       )
       .then((res) => {
+        const cart = this.context.state.cart;
+        cart.clearCart();
+        this.context.setState({ ...this.context.state, cart });
         this.context.services.uiService.iconModal(
           "Order Placed",
           "Your order has been placed successfully!",
@@ -194,9 +197,6 @@ export default class Checkout extends Component {
       )
       .finally(() => {
         this.setState({ ...this.state, placingOrder: false });
-        const cart = this.context.state.cart;
-        cart.clearCart();
-        this.context.setState({ ...this.context.state, cart });
       });
   }
 
