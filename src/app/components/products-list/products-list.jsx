@@ -78,7 +78,6 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
             <button
               className="btn btn-dark mt-2"
               onClick={() => {
-                setState({ ...initialState, fetching: true });
                 doFetch(initialState, setState, requestMethod, context);
               }}>
               Reset Filters
@@ -124,7 +123,7 @@ const generateCriteria = (state) => {
 };
 
 const doFetch = (state, setState, method, context) => {
-  setState({ fetching: true });
+  setState({ ...state, fetching: true });
   const criteria = generateCriteria(state);
   const promise = method
     ? method(criteria)
