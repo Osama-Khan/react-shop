@@ -3,7 +3,9 @@ import Icon from "../icon/icon";
 export default function FilterForm({ state, setState, onFilter }) {
   const recordOptions = [10, 20, 30, 40, 50];
   const recordOptionsEl = recordOptions.map((r) => (
-    <option value={r}>{r}</option>
+    <option key={`limit-option-${r}`} value={r}>
+      {r}
+    </option>
   ));
   return (
     <form
