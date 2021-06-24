@@ -55,7 +55,7 @@ export default function ProductsList({ requestMethod, showFilters = true }) {
     return <LoadingSpinner />;
   } else if (!state.fetching && !state.products && !state.failed) {
     doFetch(state, setState, requestMethod, context);
-  } else if (state.products.length > 0) {
+  } else if (state.products?.length > 0) {
     prods = state.products.map((p, i) => {
       return (
         <div key={`product-${i}`} className="col-md-4 col-sm-12">
