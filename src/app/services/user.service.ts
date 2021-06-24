@@ -6,12 +6,32 @@ import ApiService from "./api.service";
 export default class UserService extends ApiService {
   /**
    * Logs in the user with given parameters
+   * @param username The username of the login user
+   * @param password The password of the login user
+   * @param context The context object containing user state
    * @returns An object with user data along with token
    */
-  async login(username: string, password: string) {
+  async login(username: string, password: string, context?: any) {
     const obj = { username, password };
     const res = await axios.post(`${this.domain}/login`, obj, {
       headers: { "Content-type": "application/json" },
+    });
+    if (context) {
+      const user = res.data;
+      context.setState({ ...context.state, user });
+      context.services.storageService.saveUserToken(user.token);
+    }
+    return res;
+  }
+
+  /**
+   * Logs in the user using the jwt token in storage
+   * @param token The token to use for login
+   * @returns Response of the request
+   */
+  async loginWithToken(token: string) {
+    const res = await axios.post(`${this.domain}/login/token`, undefined, {
+      headers: { Authorization: `Bearer ${token}` },
     });
     return res;
   }
