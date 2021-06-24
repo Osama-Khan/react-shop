@@ -146,15 +146,7 @@ export default class User extends React.Component {
                   color="red"
                   classes="border border-red"
                   iconClasses="icon-sm"
-                  click={() =>
-                    this.context.setState({
-                      ...this.context.state,
-                      user: {
-                        ...this.context.state.user,
-                        token: undefined,
-                      },
-                    })
-                  }
+                  click={this.logout}
                 />
               </div>
             </div>
@@ -296,5 +288,16 @@ export default class User extends React.Component {
     };
     const loginPromise = userSvc.login(username, password, this.context);
     uiSvc.promiseToast(loginPromise, messages);
+  };
+
+  logout = () => {
+    this.context.services.storageService.clearUserToken();
+    this.context.setState({
+      ...this.context.state,
+      user: {
+        ...this.context.state.user,
+        token: undefined,
+      },
+    });
   };
 }

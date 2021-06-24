@@ -6,6 +6,7 @@ import { routes as r } from "./routes";
 import { Toaster } from "react-hot-toast";
 import { AppProvider } from "./context/app.provider";
 import InterceptorInitializer from "./interceptors/interceptor.initializer";
+import SessionRestore from "./session/session-restore";
 
 export default class App extends React.Component {
   render() {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
     return (
       <AppProvider>
         <InterceptorInitializer />
+        <SessionRestore />
         <Toaster position="bottom-right" reverseOrder={true} />
         <div className="app">
           <Router>
