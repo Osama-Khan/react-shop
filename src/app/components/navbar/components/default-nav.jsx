@@ -129,16 +129,6 @@ const login = (context) => {
     success: "You are logged in!",
     error: "We couldn't log you in.",
   };
-  const loginPromise = userSvc.login(username, password);
-  loginPromise
-    .then((res) => {
-      const user = res.data;
-      context.setState({ ...context.state, user });
-    })
-    .catch((err) => {
-      if (err) {
-        // Couldn't log in
-      }
-    });
+  const loginPromise = userSvc.login(username, password, context);
   uiSvc.promiseToast(loginPromise, messages);
 };

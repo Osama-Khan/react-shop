@@ -294,17 +294,7 @@ export default class User extends React.Component {
       success: "You are logged in!",
       error: "We couldn't log you in.",
     };
-    const loginPromise = userSvc.login(username, password);
-    loginPromise
-      .then((res) => {
-        const user = res.data;
-        this.context.setState({ ...this.context.state, user });
-      })
-      .catch((err) => {
-        if (err) {
-          // Couldn't log in
-        }
-      });
+    const loginPromise = userSvc.login(username, password, this.context);
     uiSvc.promiseToast(loginPromise, messages);
   };
 }
