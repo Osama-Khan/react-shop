@@ -6,6 +6,7 @@ import { IconButton } from "../button/Button";
 import ProductRating from "../product-rating/product-rating";
 import { AppContext } from "../../context/app.provider";
 import PricePill from "../pills/price-pill";
+import Pill from "../pills/pill";
 
 export default function ProductCard({ product, classes = "" }) {
   const cardClasses = `card clickable m-1 p-3 row anchor-color-remover ${classes}`;
@@ -31,7 +32,13 @@ export default function ProductCard({ product, classes = "" }) {
           ) : (
             ""
           )}
-          <PricePill price={product.price} className="ml-auto" />
+          <div className="ml-auto">
+            {product.stock > 0 ? (
+              <PricePill price={product.price} />
+            ) : (
+              <Pill text="Out of Stock" color="red" />
+            )}
+          </div>
         </div>
       </Link>
       {product.stock > 0 ? (
