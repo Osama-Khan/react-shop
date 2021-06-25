@@ -76,7 +76,7 @@ export default class NavbarCartCard extends Component {
     const errorToast = this.context.services.uiService.errorToast;
     const str = event.target.value;
     const val = parseInt(str);
-    const invalid = CartProduct.isQuantityInvalid(val);
+    const invalid = CartProduct.isQuantityInvalid(val, product.stock);
     if (invalid) {
       errorToast(invalid);
       return;

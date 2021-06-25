@@ -26,6 +26,9 @@ export default class CartProduct {
    * @returns A message with error or false if quantity is valid
    */
   static isQuantityInvalid(qty: number, max: number): string | false {
+    if (max === 0) {
+      return "This product is not available anymore!";
+    }
     if (qty !== 0 && !qty) {
       return "Quantity must be a number!";
     }
