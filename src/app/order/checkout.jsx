@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { IconButton, PrimaryButton } from "../components/button/Button";
 import LoadingSpinner from "../components/loading/loading-spinner";
+import PricePill from "../components/pills/price-pill";
 import { AppContext } from "../context/app.provider";
 import { addAddressUrl, addressesUrl, productsUrl } from "../routes";
 
@@ -74,9 +75,11 @@ export default class Checkout extends Component {
           </Link>
           <p>
             {p.quantity} x {p.price} ={" "}
-            <span className="p-2 badge-pill bg-green-subtle text-green">
-              <b>Rs.{p.quantity * p.price}</b>
-            </span>
+            <PricePill
+              price={p.quantity * p.price}
+              className="d-inline"
+              padding={2}
+            />
           </p>
         </div>
       </div>
@@ -148,9 +151,10 @@ export default class Checkout extends Component {
               Your total for this order is:
             </p>
             <div className="my-3">
-              <span className="p-3 badge-pill bg-green-subtle text-green">
-                Rs. <b>{this.context.state.cart.getTotalPrice()}</b>
-              </span>
+              <PricePill
+                price={this.context.state.cart.getTotalPrice()}
+                className="d-inline"
+              />
             </div>
             {checkoutEl}
           </div>
