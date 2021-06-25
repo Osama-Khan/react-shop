@@ -18,7 +18,7 @@ export default function Card(props) {
 
 export function ProductCard({ product, classes = "" }) {
   const cardClasses = `card clickable m-1 p-3 row anchor-color-remover ${classes}`;
-  const cartState = useContext(AppContext).state.cart;
+  const context = useContext(AppContext);
 
   return (
     <>
@@ -49,7 +49,10 @@ export function ProductCard({ product, classes = "" }) {
         classes="btn-primary-outline top-right mr-4 mt-3"
         iconClasses="icon-sm"
         dataIcon="mi-shopping-cart-add"
-        click={() => cartState.addProduct(product)}
+        click={() => {
+          context.state.cart.addProduct(product);
+          context.setState({ ...context.state });
+        }}
       />
     </>
   );
