@@ -48,7 +48,7 @@ export function ProductCard({ product, classes = "" }) {
       <IconButton
         classes="btn-primary-outline top-right mr-4 mt-3"
         iconClasses="icon-sm"
-        dataIcon="mi-shopping-cart-add"
+        dataIcon="bi-cart-plus"
         click={() => {
           context.state.cart.addProduct(product);
           context.setState({ ...context.state });

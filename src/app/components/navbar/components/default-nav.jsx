@@ -78,7 +78,7 @@ export default function DefaultNav({ context, loc }) {
         <Popup
           trigger={
             <div className={`nav-link text-clickable`}>
-              <Icon dataIcon="mi-shopping-cart" />
+              <Icon dataIcon="bi-cart" />
             </div>
           }
           content={<NavbarCartCard />}

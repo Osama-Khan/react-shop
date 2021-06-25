@@ -208,7 +208,7 @@ export default class ProductDetail extends React.Component {
             this.context.state.cart.removeProduct(product.id);
             this.context.setState({ ...this.context.state });
           }}>
-          <Icon dataIcon="fa:times" />
+          <Icon dataIcon="bi-cart-dash" />
         </span>
       </div>
     ) : (

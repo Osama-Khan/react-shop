@@ -59,7 +59,7 @@ export default class NavbarCartCard extends Component {
         <div className="text-center text-muted">
           <p>Your cart is empty!</p>
           <Link to={productsUrl}>
-            <IconButton dataIcon="mi-shopping-cart-add" text="Add items" />
+            <IconButton dataIcon="bi-cart-add" text="Add items" />
           </Link>
         </div>
       );

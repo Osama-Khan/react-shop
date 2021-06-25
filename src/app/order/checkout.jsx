@@ -48,10 +48,7 @@ export default class Checkout extends Component {
               You haven't added anything to your cart yet!
             </span>
             <Link to={productsUrl} className="mx-auto mt-5">
-              <IconButton
-                text="Add something"
-                dataIcon="mi-shopping-cart-add"
-              />
+              <IconButton text="Add something" dataIcon="bi-cart-add" />
             </Link>
           </div>
         </div>

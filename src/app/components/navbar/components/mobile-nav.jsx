@@ -75,7 +75,7 @@ export default function MobileNav({ loc }) {
                 loc === checkoutUrl ? "active" : ""
               }`}
               to={checkoutUrl}>
-              <Icon dataIcon="mi-shopping-cart" /> Cart
+              <Icon dataIcon="bi-cart" /> Cart
             </Link>
           </li>
         </ul>
