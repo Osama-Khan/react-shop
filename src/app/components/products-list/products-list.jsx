@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../context/app.provider";
 import Criteria from "../../models/criteria";
 import { productsUrl } from "../../routes";
-import { ProductCard } from "../card/card";
+import ProductCard from "./product-card";
 import LoadingSpinner from "../loading/loading-spinner";
 import FilterForm from "./filter-form";
 import Pagination from "../pagination/pagination";
