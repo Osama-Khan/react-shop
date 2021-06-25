@@ -49,7 +49,7 @@ export default class Checkout extends Component {
               You haven't added anything to your cart yet!
             </span>
             <Link to={productsUrl} className="mx-auto mt-5">
-              <IconButton text="Add something" dataIcon="bi-cart-add" />
+              <IconButton text="Add something" dataIcon="bi-cart-plus" />
             </Link>
           </div>
         </div>
@@ -57,37 +57,52 @@ export default class Checkout extends Component {
     }
 
     const products = this.context.state.cart.products;
-    const productsEl = products.map((p) => (
-      <div key={`product-${p.id}`} className="row">
-        <div>
-          <img
-            src={p.img}
-            style={{ height: "4em" }}
-            className="mx-3"
-            alt={p.title}
-          />
-        </div>
-        <div>
-          <Link to={productsUrl + "/" + p.id}>
-            <p>
-              <b>{p.title}</b>
-            </p>
-          </Link>
-          <p>
-            {p.quantity} x {p.price} ={" "}
-            <PricePill
-              price={p.quantity * p.price}
-              className="d-inline"
-              padding={2}
+    let hasError = false;
+    const productsEl = products.map((p) => {
+      const errorMessage =
+        p.stock === 0
+          ? "This product is no longer available!"
+          : p.stock < p.quantity
+          ? `Max quantity available for this product is ${p.stock} but cart has ${p.quantity}!`
+          : undefined;
+      hasError = hasError || errorMessage;
+      return (
+        <div key={`product-${p.id}`} className="row">
+          <div>
+            <img
+              src={p.img}
+              style={{ height: "4em" }}
+              className="mx-3"
+              alt={p.title}
             />
-          </p>
+          </div>
+          <div>
+            <Link to={productsUrl + "/" + p.id}>
+              <p>
+                <b>{p.title}</b>
+              </p>
+            </Link>
+            {errorMessage ? (
+              <p className="text-red">{errorMessage}</p>
+            ) : (
+              <p>
+                {p.quantity} &times; {p.price} ={" "}
+                <PricePill
+                  price={p.quantity * p.price}
+                  className="d-inline"
+                  padding={2}
+                />
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-    ));
+      );
+    });
 
     const address = this.state.address;
-
-    const checkoutEl = loggedIn ? (
+    const checkoutEl = hasError ? (
+      <></>
+    ) : loggedIn ? (
       address ? (
         <>
           <IconButton
@@ -147,15 +162,29 @@ export default class Checkout extends Component {
         <div className="card p-3 row flex-row">
           <div className="col-lg-6">{productsEl}</div>
           <div className="col-lg-6 text-center my-5">
-            <p className="text-green font-weight-bold">
-              Your total for this order is:
-            </p>
-            <div className="my-3">
-              <PricePill
-                price={this.context.state.cart.getTotalPrice()}
-                className="d-inline"
-              />
-            </div>
+            {hasError ? (
+              <>
+                <p>The cart seems to have some issues.</p>
+                <p>You need to resolve them before you can place the order.</p>
+                <p className="text-muted">
+                  Or you can just
+                  <br />
+                  <PrimaryButton text="Clear Cart" click={this.clearCart} />
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-green font-weight-bold">
+                  Your total for this order is:
+                </p>
+                <div className="my-3">
+                  <PricePill
+                    price={this.context.state.cart.getTotalPrice()}
+                    className="d-inline"
+                  />
+                </div>
+              </>
+            )}
             {checkoutEl}
           </div>
         </div>
@@ -220,4 +249,26 @@ export default class Checkout extends Component {
           });
       });
   }
+
+  clearCart = () => {
+    this.context.services.uiService
+      .confirmModal(
+        "Clear Cart",
+        "Are you sure you want to clear your cart?",
+        "warning",
+        true,
+        "Yes"
+      )
+      .then((confirmed) => {
+        if (confirmed) {
+          this.context.state.cart.clearCart();
+          this.context.setState({ ...this.context.state });
+          this.context.services.uiService.iconModal(
+            "Cart cleared!",
+            "Your cart should be good as new!",
+            "success"
+          );
+        }
+      });
+  };
 }
