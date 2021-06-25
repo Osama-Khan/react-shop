@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../context/app.provider";
+import { productsUrl } from "../routes";
 import CartState from "../state/cart-state";
 
 let restoreDone = false;
@@ -15,7 +16,6 @@ export default function SessionRestore() {
   promises.push(cartP);
   Promise.all(promises)
     .then(() => {
-      console.log(userP, cartP);
       if (user && cart) {
         context.setState({ user, cart });
       } else if (user) {
@@ -55,6 +55,9 @@ function restoreCart(context) {
   const prd = context.services.productService;
   const ui = context.services.uiService;
   const promises = [];
+  const removedProducts = [];
+  const readjustedProducts = [];
+
   const oldCartItems = stg.loadCart();
   if (!oldCartItems) return;
   const cart = new CartState();
@@ -69,17 +72,75 @@ function restoreCart(context) {
   });
   oldCartItems.forEach((cp) => {
     promises.push(
-      prd
-        .fetchProduct(cp.id)
-        .then((res) => cart.addProduct(res.data, cp.quantity))
+      prd.fetchProduct(cp.id).then((res) => {
+        const product = res.data;
+        if (product.stock === 0) {
+          removedProducts.push(product);
+          return;
+        }
+        if (product.stock < cp.quantity) {
+          readjustedProducts.push(product);
+          cp.quantity = product.stock;
+        }
+        cart.addProduct(product, cp.quantity);
+      })
     );
   });
   return Promise.all(promises)
     .then(() => {
       Promise.resolve(toastPromise);
+      if (removedProducts.length > 0 || readjustedProducts.length > 0) {
+        showCartReadjustmentModal(
+          ui.htmlModal,
+          readjustedProducts,
+          removedProducts
+        );
+      }
       return cart;
     })
     .catch((err) => {
       Promise.reject(toastPromise);
     });
 }
+
+const showCartReadjustmentModal = (htmlModal, adjusted, removed) => {
+  const elFromProduct = (p) => (
+    <div>
+      <a href={`${productsUrl}/${p.id}`}>{p.title}</a>
+    </div>
+  );
+  const adjustedEls = adjusted.map(elFromProduct);
+  const removedEls = removed.map(elFromProduct);
+  const [showAdj, showRmv] = [adjusted.length > 0, removed.length > 0];
+  htmlModal(
+    "Cart Readjustment",
+    <div>
+      {showAdj ? (
+        <>
+          <p>
+            The quantity has been reduced for the following products due to
+            stock changes.
+          </p>
+          <>{adjustedEls}</>
+        </>
+      ) : (
+        ""
+      )}
+      {showRmv && showAdj ? <hr /> : ""}
+      {showRmv ? (
+        <>
+          <p>
+            The following products have been removed from the cart because they
+            are no longer available.
+          </p>
+          <>{removedEls}</>
+        </>
+      ) : (
+        ""
+      )}
+    </div>,
+    "warning",
+    false,
+    "Okay"
+  );
+};
