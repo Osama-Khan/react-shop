@@ -42,15 +42,38 @@ export default function ProductCard({ product, classes = "" }) {
         </div>
       </Link>
       {product.stock > 0 ? (
-        <IconButton
-          classes="btn-primary-outline top-right mr-4 mt-3"
-          iconClasses="icon-sm"
-          dataIcon="bi-cart-plus"
-          click={() => {
-            context.state.cart.addProduct(product);
-            context.setState({ ...context.state });
-          }}
-        />
+        context.state.cart.getProduct(product.id) ? (
+          <IconButton
+            key="added-btn"
+            classes="btn-green top-right mr-4 mt-3"
+            iconClasses="icon-sm"
+            dataIcon="bi-cart-check-fill"
+            click={() => {
+              if (context.state.cart.removeProduct(product.id)) {
+                context.setState({ ...context.state });
+                context.services.uiService.successToast(
+                  "Product removed from cart!"
+                );
+              } else {
+                context.services.uiService.errorToast(
+                  "Product could not be removed from cart!"
+                );
+              }
+            }}
+          />
+        ) : (
+          <IconButton
+            key="add-btn"
+            classes="btn-primary-outline top-right mr-4 mt-3"
+            iconClasses="icon-sm"
+            dataIcon="bi-cart-plus-fill"
+            click={() => {
+              context.state.cart.addProduct(product);
+              context.setState({ ...context.state });
+              context.services.uiService.successToast("Product added to cart!");
+            }}
+          />
+        )
       ) : (
         ""
       )}
