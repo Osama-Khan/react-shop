@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/app.provider";
 import Criteria from "../../models/criteria";
@@ -9,133 +9,171 @@ import FilterForm from "./filter-form";
 import Pagination from "../pagination/pagination";
 import LoadingFailed from "../loading/loading-failed";
 
-const initialState = {
+const initialFilterState = {
   search: "",
   limit: "",
   orderBy: "",
   orderDir: "ASC",
+  priceMin: 0,
+  priceMax: 100000,
+  ratingMin: 0,
+  showOutOfStock: true,
+};
+
+const initialState = {
   products: undefined,
   meta: undefined,
   fetching: false,
   failed: false,
+  filters: initialFilterState,
 };
 
-export default function ProductsList({ requestMethod, showFilters = true }) {
-  let prods;
-  const [state, setState] = useState(initialState);
-  const context = useContext(AppContext);
+export default class ProductsList extends Component {
+  static contextType = AppContext;
 
-  const filterDiv = showFilters ? (
-    <FilterForm
-      state={state}
-      setState={setState}
-      onFilter={() => doFetch(state, setState, requestMethod, context)}
-    />
-  ) : (
-    <></>
-  );
+  constructor(props) {
+    super(props);
+    this.state = initialState;
+  }
 
-  const pagination = state.meta ? (
-    <div className="mt-3 d-flex">
-      <div className="ml-auto">
-        <Pagination
-          currentPage={state.meta.currentPage}
-          totalPages={state.meta.totalPages}
-          gotoPage={(p) => {
-            doFetch({ ...state, page: p }, setState, requestMethod, context);
-          }}
-        />
-      </div>
-    </div>
-  ) : (
-    <></>
-  );
+  componentDidMount() {
+    this.doFetch();
+  }
 
-  if (state.fetching) {
-    return <LoadingSpinner />;
-  } else if (!state.fetching && !state.products && !state.failed) {
-    doFetch(state, setState, requestMethod, context);
-  } else if (state.products?.length > 0) {
-    prods = state.products.map((p, i) => {
-      return (
-        <div key={`product-${i}`} className="col-md-4 col-sm-12">
-          <ProductCard product={p} />
+  componentDidUpdate() {
+    if (!this.state.fetching && !this.state.products && !this.state.failed) {
+      this.doFetch();
+    }
+  }
+
+  render() {
+    let prods;
+
+    const filterDiv = (
+      <FilterForm
+        state={this.state.filters}
+        setState={(obj) => this.setState({ ...this.state, filters: obj })}
+        onFilter={this.doFetch}
+      />
+    );
+
+    const pagination = this.state.meta ? (
+      <div className="mt-3 d-flex">
+        <div className="ml-auto">
+          <Pagination
+            currentPage={this.state.meta.currentPage}
+            totalPages={this.state.meta.totalPages}
+            gotoPage={(p) => {
+              this.setState({ ...this.state, page: p });
+              this.doFetch();
+            }}
+          />
         </div>
+      </div>
+    ) : (
+      <></>
+    );
+
+    if (this.state.fetching) {
+      return <LoadingSpinner />;
+    } else if (this.state.products?.length > 0) {
+      prods = this.state.products.map((p, i) => {
+        return (
+          <div key={`product-${i}`} className="col-md-4 col-sm-12">
+            <ProductCard product={p} />
+          </div>
+        );
+      });
+    } else if (this.state.failed) {
+      prods = <LoadingFailed />;
+    } else {
+      return (
+        <>
+          {this.props.showFilters !== false ? filterDiv : <></>}
+          <div className="col-md-12 text-center mt-5">
+            <p className="font-weight-bold text-muted">
+              No products found...{" "}
+              {this.showFilters ? "Try changing the filters!" : ""}
+            </p>
+            {this.props.showFilters !== false ? (
+              <button
+                className="btn btn-dark mt-2"
+                onClick={() => {
+                  this.doFetch();
+                }}>
+                Reset Filters
+              </button>
+            ) : (
+              <Link to={productsUrl}>
+                <button className="btn btn-dark mt-2">View All Products</button>
+              </Link>
+            )}
+          </div>
+        </>
       );
-    });
-  } else if (state.failed) {
-    prods = <LoadingFailed />;
-  } else {
+    }
+
     return (
       <>
-        {showFilters ? filterDiv : <></>}
-        <div className="col-md-12 text-center mt-5">
-          <p className="font-weight-bold text-muted">
-            No products found...{" "}
-            {showFilters ? "Try changing the filters!" : ""}
-          </p>
-          {showFilters ? (
-            <button
-              className="btn btn-dark mt-2"
-              onClick={() => {
-                doFetch(initialState, setState, requestMethod, context);
-              }}>
-              Reset Filters
-            </button>
-          ) : (
-            <Link to={productsUrl}>
-              <button className="btn btn-dark mt-2">View All Products</button>
-            </Link>
-          )}
+        {filterDiv}
+        <div id="products-list" className="row">
+          {prods ? prods : <LoadingSpinner />}
         </div>
+        {pagination}
       </>
     );
   }
 
-  return (
-    <>
-      {filterDiv}
-      <div id="products-list" className="row">
-        {prods ? prods : <LoadingSpinner />}
-      </div>
-      {pagination}
-    </>
-  );
+  generateCriteria = () => {
+    const filters = this.state.filters;
+    const Product = require("../../models/product/product");
+    const criteria = new Criteria(Product);
+    if (filters?.search) {
+      criteria.addFilter("title", `%25${filters.search}%25`, "like");
+    }
+    if (filters?.page) {
+      criteria.setPage(filters.page);
+    }
+    if (filters?.limit) {
+      criteria.setLimit(filters.limit);
+    }
+    if (filters?.orderBy) {
+      criteria.setOrderBy(filters.orderBy);
+      criteria.setOrderDir(filters.orderDir);
+    }
+    if (filters?.priceMin) {
+      criteria.addFilter("price", filters.priceMin, ">=");
+    }
+    if (filters?.priceMax && filters?.priceMax < 100000) {
+      criteria.addFilter("price", filters.priceMax, "<=");
+    }
+    if (filters?.ratingMin) {
+      criteria.addFilter("rating", filters.ratingMin, ">=");
+    }
+    if (!filters?.showOutOfStock) {
+      criteria.addFilter("stock", 0, ">");
+    }
+    return criteria;
+  };
+
+  doFetch = () => {
+    this.setState({ ...this.state, fetching: true });
+    const method = this.props.requestMethod;
+    const criteria = this.generateCriteria();
+    const promise = method
+      ? method(criteria)
+      : this.context.services.productService.fetchProducts(criteria);
+    promise
+      .then((res) => {
+        this.setState({
+          ...this.state,
+          products: res.data.data,
+          meta: res.data.meta,
+          fetching: false,
+        });
+      })
+      .catch((e) =>
+        this.setState({ ...this.state, failed: true, fetching: false })
+      );
+  };
 }
-
-const generateCriteria = (state) => {
-  const Product = require("../../models/product/product");
-  const criteria = new Criteria(Product);
-  if (state?.search) {
-    criteria.addFilter("title", state.search);
-  }
-  if (state?.page) {
-    criteria.setPage(state.page);
-  }
-  if (state?.limit) {
-    criteria.setLimit(state.limit);
-  }
-  if (state?.orderBy) {
-    criteria.setOrderBy(state.orderBy);
-    criteria.setOrderDir(state.orderDir);
-  }
-  return criteria;
-};
-
-const doFetch = (state, setState, method, context) => {
-  setState({ ...state, fetching: true });
-  const criteria = generateCriteria(state);
-  const promise = method
-    ? method(criteria)
-    : context.services.productService.fetchProducts(criteria);
-  promise
-    .then((res) => {
-      setState({
-        ...state,
-        products: res.data.data,
-        meta: res.data.meta,
-        fetching: false,
-      });
-    })
-    .catch((e) => setState({ ...state, failed: true, fetching: false }));
-};
