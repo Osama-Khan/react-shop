@@ -1,3 +1,13 @@
+type FilterOperator =
+  | "="
+  | ">"
+  | "<"
+  | ">="
+  | "<="
+  | "!="
+  | "like"
+  | "not like";
+
 export default class Criteria<T extends Object> {
   private limit?: number;
   private page?: number;
@@ -71,8 +81,12 @@ export default class Criteria<T extends Object> {
     this.orderDir = orderDir;
   }
 
-  addFilter = (key: Extract<keyof T, string>, value: any) => {
-    this.filters[key] = value;
+  addFilter = (
+    key: Extract<keyof T, string>,
+    value: any,
+    operator?: FilterOperator
+  ) => {
+    this.filters[key] = ((operator ? operator + ":" : "=:") + value) as any;
   };
 
   removeFilter = (key: Extract<keyof T, string>) => {
