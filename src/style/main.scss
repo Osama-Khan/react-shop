@@ -8,7 +8,8 @@
 
 // 3. Base stuff
 @import "base/base", "base/backgrounds", "base/borders", "base/fonts",
-  "base/typography", "base/helpers", "base/images";
+  "base/typography", "base/helpers", "base/images", "base/opacity",
+  "base/transitions";
 
 // 4. Layout-related sections
 @import "layout/header", "layout/footer";

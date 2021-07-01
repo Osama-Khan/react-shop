@@ -1,0 +1,15 @@
+.transition {
+  transition: all $animation-normal;
+  &.slower {
+    transition-duration: $animation-slower;
+  }
+  &.slow {
+    transition-duration: $animation-slow;
+  }
+  &.fast {
+    transition-duration: $animation-fast;
+  }
+  &.faster {
+    transition-duration: $animation-faster;
+  }
+}
