@@ -207,7 +207,7 @@ export default class FilterForm extends Component {
                 type="checkbox"
                 className="mx-1"
                 checked={this.props.state.showOutOfStock}
-                onClick={(e) =>
+                onChange={(e) =>
                   this.props.setState({
                     ...this.props.state,
                     showOutOfStock: e.target.checked,
