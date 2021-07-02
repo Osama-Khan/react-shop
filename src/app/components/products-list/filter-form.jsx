@@ -114,8 +114,10 @@ export default class FilterForm extends Component {
                 Filter
               </button>
               <span
-                onClick={() => this.setState({ showAdvanced: true })}
-                className="text-clickable mx-2"
+                onClick={() =>
+                  this.setState({ showAdvanced: !this.state.showAdvanced })
+                }
+                className="text-clickable mx-2 transition fast"
                 title="Show Advanced Filters">
                 <Icon dataIcon="fa:chevron-down" />
               </span>
