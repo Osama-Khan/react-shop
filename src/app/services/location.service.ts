@@ -1,6 +1,6 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import ApiService from './api.service';
 
 export default class LocationService extends ApiService {
   endpoint = this.domain;
@@ -11,7 +11,7 @@ export default class LocationService extends ApiService {
       criteria.setLimit(1000000);
     }
     const res = await axios.get(
-      `${this.endpoint}/countries${criteria.getUrlParameters()}`
+      `${this.endpoint}/countries${criteria.getUrlParameters()}`,
     );
     return res;
   }
@@ -21,9 +21,9 @@ export default class LocationService extends ApiService {
       criteria = new Criteria();
       criteria.setLimit(1000000);
     }
-    criteria.addFilter("country", countryId);
+    criteria.addFilter('country', countryId);
     const res = await axios.get(
-      `${this.endpoint}/states${criteria.getUrlParameters()}`
+      `${this.endpoint}/states${criteria.getUrlParameters()}`,
     );
     return res;
   }
@@ -33,9 +33,9 @@ export default class LocationService extends ApiService {
       criteria = new Criteria();
       criteria.setLimit(1000000);
     }
-    criteria.addFilter("state", stateId);
+    criteria.addFilter('state', stateId);
     const res = await axios.get(
-      `${this.endpoint}/cities${criteria.getUrlParameters()}`
+      `${this.endpoint}/cities${criteria.getUrlParameters()}`,
     );
     return res;
   }

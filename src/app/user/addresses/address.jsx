@@ -1,9 +1,9 @@
-import { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import Icon from "../../components/icon/icon";
-import LoadingSpinner from "../../components/loading/loading-spinner";
-import { AppContext } from "../../context/app.provider";
-import { addAddressUrl, userUrl } from "../../routes";
+import { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import Icon from '../../components/icon/icon';
+import LoadingSpinner from '../../components/loading/loading-spinner';
+import { AppContext } from '../../context/app.provider';
+import { addAddressUrl, userUrl } from '../../routes';
 
 export default class AddressBook extends Component {
   static contextType = AppContext;
@@ -57,8 +57,8 @@ export default class AddressBook extends Component {
       addressEls = this.state.addresses?.map((a) => {
         const isDefault = this.state.defaultAddress.id === a.id;
         const cardClasses = isDefault
-          ? "bg-dark text-light"
-          : "border border-dark";
+          ? 'bg-dark text-light'
+          : 'border border-dark';
         return (
           <div
             key={`address-${a.tag}`}
@@ -73,7 +73,7 @@ export default class AddressBook extends Component {
               {isDefault ? (
                 <span className="ml-1 text-muted">(Default)</span>
               ) : (
-                ""
+                ''
               )}
             </div>
             <p>
@@ -164,11 +164,11 @@ export default class AddressBook extends Component {
         className="ml-auto btn btn-dark-outline"
         onClick={() =>
           modal(
-            "Change Default Address",
+            'Change Default Address',
             defAddressForm,
-            "",
+            '',
             true,
-            "Save"
+            'Save',
           ).then(resolver)
         }>
         Change Default
@@ -181,7 +181,7 @@ export default class AddressBook extends Component {
     svc
       .setDefaultAddress(
         this.context.state.user.id,
-        this.state.selectedAddress.id
+        this.state.selectedAddress.id,
       )
       .then((setting) => {
         svc.getDefaultAddress(this.context.state.user.id).then((res) => {
@@ -194,11 +194,11 @@ export default class AddressBook extends Component {
 
   onChangeDefaultAddress = (e) => {
     const selectedAddress = this.state.addresses.find(
-      (a) => a.id.toString() === e.target.value
+      (a) => a.id.toString() === e.target.value,
     );
     if (!selectedAddress) {
       this.context.services.uiService.errorToast(
-        "Selected address doesn't exist"
+        "Selected address doesn't exist",
       );
       return;
     }
@@ -211,9 +211,9 @@ export default class AddressBook extends Component {
       .confirmModal(
         `Deleting ${a.tag}`,
         `Are you sure you want to delete the address ${a.tag}?`,
-        "warning",
+        'warning',
         true,
-        "Delete"
+        'Delete',
       )
       .then((isConfirmed) => {
         if (isConfirmed) {
@@ -223,14 +223,14 @@ export default class AddressBook extends Component {
               this.setState({
                 ...this.state,
                 addresses: this.state.addresses.filter(
-                  (addr) => addr.id !== a.id
+                  (addr) => addr.id !== a.id,
                 ),
-              })
+              }),
             );
           uiSvc.promiseToast(promise, {
-            loading: "Deleting address...",
-            success: "Address deleted!",
-            error: "Could not delete address, try again.",
+            loading: 'Deleting address...',
+            success: 'Address deleted!',
+            error: 'Could not delete address, try again.',
           });
         }
       });

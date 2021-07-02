@@ -1,14 +1,14 @@
-import React from "react";
-import Carousel from "../components/carousel/Carousel";
-import Card from "../components/card/card";
-import { categoriesUrl } from "../routes";
-import { catIconMap } from "../../data/category-icon-map.ts";
-import { AppContext } from "../context/app.provider";
+import React from 'react';
+import Carousel from '../components/carousel/Carousel';
+import Card from '../components/card/card';
+import { categoriesUrl } from '../routes';
+import { catIconMap } from '../../data/category-icon-map.ts';
+import { AppContext } from '../context/app.provider';
 
 const carouselImages = [
-  "https://hackernoon.com/hn-images/1*jFyawcsqoYctkTuZg6wQ1A.jpeg",
-  "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmFuZG9tfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
-  "https://static.scientificamerican.com/sciam/cache/file/4F73FD83-3377-42FC-915AD56BD66159FE_source.jpg?w=590&h=800&F7E1D298-3587-4BFF-AF028495DEAA9162",
+  'https://hackernoon.com/hn-images/1*jFyawcsqoYctkTuZg6wQ1A.jpeg',
+  'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmFuZG9tfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
+  'https://static.scientificamerican.com/sciam/cache/file/4F73FD83-3377-42FC-915AD56BD66159FE_source.jpg?w=590&h=800&F7E1D298-3587-4BFF-AF028495DEAA9162',
 ];
 
 export default class Home extends React.Component {
@@ -26,7 +26,7 @@ export default class Home extends React.Component {
       })
       .catch((err) => {
         this.context.services.uiService.errorToast(
-          "Failed to fetch categories"
+          'Failed to fetch categories',
         );
       });
   }
@@ -50,7 +50,7 @@ export default class Home extends React.Component {
             <h1>
               <span className="text-primary has-zap-3">
                 <strong>Shop</strong>
-              </span>{" "}
+              </span>{' '}
               like never before.
             </h1>
           </div>

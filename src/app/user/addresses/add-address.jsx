@@ -1,6 +1,6 @@
-import { Component } from "react";
-import Icon from "../../components/icon/icon";
-import { AppContext } from "../../context/app.provider";
+import { Component } from 'react';
+import Icon from '../../components/icon/icon';
+import { AppContext } from '../../context/app.provider';
 
 export default class AddAddress extends Component {
   static contextType = AppContext;
@@ -204,18 +204,18 @@ export default class AddAddress extends Component {
       user: this.context.state.user.id,
     };
     if (!address.tag) {
-      errorToast("Please enter a tag");
+      errorToast('Please enter a tag');
       return false;
     } else if (!address.address) {
-      errorToast("Please enter an address");
+      errorToast('Please enter an address');
       return false;
     } else if (!address.country || !address.state || !address.city) {
-      errorToast("Please select a location");
+      errorToast('Please select a location');
       return false;
     }
     const promise = this.context.services.addressService.addAddress(address);
     promiseToast(promise, {
-      loading: "Adding the address...",
+      loading: 'Adding the address...',
       success: "Congrats, You've got a new address!",
       error: "Oops, that didn't work. Try again!  ",
     });

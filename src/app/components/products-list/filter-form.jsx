@@ -1,5 +1,5 @@
-import { Component } from "react";
-import Icon from "../icon/icon";
+import { Component } from 'react';
+import Icon from '../icon/icon';
 
 export default class FilterForm extends Component {
   constructor({ state, setState, onFilter }) {
@@ -73,13 +73,13 @@ export default class FilterForm extends Component {
           <div className="form-group mx-1">
             <button
               className={`btn m-0 ${
-                this.props.state.orderDir === "ASC"
-                  ? "btn-primary"
-                  : "btn-light"
+                this.props.state.orderDir === 'ASC'
+                  ? 'btn-primary'
+                  : 'btn-light'
               }`}
-              disabled={this.props.state.orderDir === "ASC"}
+              disabled={this.props.state.orderDir === 'ASC'}
               onClick={(e) =>
-                this.props.setState({ ...this.props.state, orderDir: "ASC" })
+                this.props.setState({ ...this.props.state, orderDir: 'ASC' })
               }
               title="Sort in ascending order: A-Z, 0-9">
               <Icon
@@ -89,13 +89,13 @@ export default class FilterForm extends Component {
             </button>
             <button
               className={`btn m-0 ${
-                this.props.state.orderDir === "DESC"
-                  ? "btn-primary"
-                  : "btn-light"
+                this.props.state.orderDir === 'DESC'
+                  ? 'btn-primary'
+                  : 'btn-light'
               }`}
-              disabled={this.props.state.orderDir === "DESC"}
+              disabled={this.props.state.orderDir === 'DESC'}
               onClick={(e) =>
-                this.props.setState({ ...this.props.state, orderDir: "DESC" })
+                this.props.setState({ ...this.props.state, orderDir: 'DESC' })
               }
               title="Sort in descending order: Z-A, 9-0">
               <Icon
@@ -124,10 +124,10 @@ export default class FilterForm extends Component {
         </div>
         <div
           className={`col-12 pt-2 mt-0 mb-2 card ${
-            this.state.showAdvanced ? "" : "d-none"
+            this.state.showAdvanced ? '' : 'd-none'
           }`}>
           <h4 className="mt-2">
-            Advanced Filters{" "}
+            Advanced Filters{' '}
             <span
               className="float-right text-clickable"
               onClick={(e) => this.setState({ showAdvanced: false })}>
@@ -141,10 +141,10 @@ export default class FilterForm extends Component {
               <div className="row">
                 <div className="form-group col-6">
                   <label>
-                    From:{" "}
+                    From:{' '}
                     {this.props.state.priceMin > 10000
-                      ? parseInt(this.props.state.priceMin / 1000) + "k"
-                      : this.props.state.priceMin}{" "}
+                      ? parseInt(this.props.state.priceMin / 1000) + 'k'
+                      : this.props.state.priceMin}{' '}
                     Rs.
                   </label>
                   <input
@@ -159,12 +159,12 @@ export default class FilterForm extends Component {
                 </div>
                 <div className="form-group col-6">
                   <label>
-                    To:{" "}
+                    To:{' '}
                     {this.props.state.priceMax >= 100000
-                      ? "No limit"
+                      ? 'No limit'
                       : this.props.state.priceMax > 10000
-                      ? parseInt(this.props.state.priceMax / 1000) + "k Rs."
-                      : this.props.state.priceMax + " Rs."}
+                      ? parseInt(this.props.state.priceMax / 1000) + 'k Rs.'
+                      : this.props.state.priceMax + ' Rs.'}
                   </label>
                   <input
                     type="range"

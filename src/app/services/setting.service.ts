@@ -1,8 +1,8 @@
-import axios from "axios";
-import ApiService from "./api.service";
+import axios from 'axios';
+import ApiService from './api.service';
 
 export default class SettingService extends ApiService {
-  endpoint = this.domain + "/settings";
+  endpoint = this.domain + '/settings';
 
   /**
    * Gets default address of user

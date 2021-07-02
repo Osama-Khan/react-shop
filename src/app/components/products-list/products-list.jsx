@@ -1,19 +1,19 @@
-import { Component } from "react";
-import { Link } from "react-router-dom";
-import { AppContext } from "../../context/app.provider";
-import Criteria from "../../models/criteria";
-import { productsUrl } from "../../routes";
-import ProductCard from "./product-card";
-import LoadingSpinner from "../loading/loading-spinner";
-import FilterForm from "./filter-form";
-import Pagination from "../pagination/pagination";
-import LoadingFailed from "../loading/loading-failed";
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../../context/app.provider';
+import Criteria from '../../models/criteria';
+import { productsUrl } from '../../routes';
+import ProductCard from './product-card';
+import LoadingSpinner from '../loading/loading-spinner';
+import FilterForm from './filter-form';
+import Pagination from '../pagination/pagination';
+import LoadingFailed from '../loading/loading-failed';
 
 const initialFilterState = {
-  search: "",
-  limit: "",
-  orderBy: "",
-  orderDir: "ASC",
+  search: '',
+  limit: '',
+  orderBy: '',
+  orderDir: 'ASC',
   priceMin: 0,
   priceMax: 100000,
   ratingMin: 0,
@@ -92,8 +92,8 @@ export default class ProductsList extends Component {
           {this.props.showFilters !== false ? filterDiv : <></>}
           <div className="col-md-12 text-center mt-5">
             <p className="font-weight-bold text-muted">
-              No products found...{" "}
-              {this.showFilters ? "Try changing the filters!" : ""}
+              No products found...{' '}
+              {this.showFilters ? 'Try changing the filters!' : ''}
             </p>
             {this.props.showFilters !== false ? (
               <button
@@ -126,10 +126,10 @@ export default class ProductsList extends Component {
 
   generateCriteria = () => {
     const filters = this.state.filters;
-    const Product = require("../../models/product/product");
+    const Product = require('../../models/product/product');
     const criteria = new Criteria(Product);
     if (filters?.search) {
-      criteria.addFilter("title", `%25${filters.search}%25`, "like");
+      criteria.addFilter('title', `%25${filters.search}%25`, 'like');
     }
     if (filters?.page) {
       criteria.setPage(filters.page);
@@ -142,16 +142,16 @@ export default class ProductsList extends Component {
       criteria.setOrderDir(filters.orderDir);
     }
     if (filters?.priceMin) {
-      criteria.addFilter("price", filters.priceMin, ">=");
+      criteria.addFilter('price', filters.priceMin, '>=');
     }
     if (filters?.priceMax && filters?.priceMax < 100000) {
-      criteria.addFilter("price", filters.priceMax, "<=");
+      criteria.addFilter('price', filters.priceMax, '<=');
     }
     if (filters?.ratingMin) {
-      criteria.addFilter("rating", filters.ratingMin, ">=");
+      criteria.addFilter('rating', filters.ratingMin, '>=');
     }
     if (!filters?.showOutOfStock) {
-      criteria.addFilter("stock", 0, ">");
+      criteria.addFilter('stock', 0, '>');
     }
     return criteria;
   };
@@ -173,7 +173,7 @@ export default class ProductsList extends Component {
         });
       })
       .catch((e) =>
-        this.setState({ ...this.state, failed: true, fetching: false })
+        this.setState({ ...this.state, failed: true, fetching: false }),
       );
   };
 }

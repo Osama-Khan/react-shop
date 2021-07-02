@@ -2,11 +2,11 @@
 // This file contains CSS helper classes.
 // -----------------------------------------------------------------------------
 .switch-wrapper {
-    position: relative;
-    &>div {
-      position: absolute;
-      width: 100%;
-    }
+  position: relative;
+  & > div {
+    position: absolute;
+    width: 100%;
+  }
 }
 
 .anchor-color-remover {

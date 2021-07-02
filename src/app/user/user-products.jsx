@@ -1,8 +1,8 @@
-import { Component } from "react";
-import LoadingFailed from "../components/loading/loading-failed";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import ProductsList from "../components/products-list/products-list";
-import { AppContext } from "../context/app.provider";
+import { Component } from 'react';
+import LoadingFailed from '../components/loading/loading-failed';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import ProductsList from '../components/products-list/products-list';
+import { AppContext } from '../context/app.provider';
 
 export default class UserProducts extends Component {
   static contextType = AppContext;
@@ -28,7 +28,7 @@ export default class UserProducts extends Component {
             requestMethod={(criteria) =>
               this.context.services.userService.fetchProducts(
                 parseInt(this.props.match.params.id),
-                criteria
+                criteria,
               )
             }
           />
@@ -49,9 +49,9 @@ export default class UserProducts extends Component {
       .catch((err) => {
         if (err.response.status === 404) {
           this.context.services.uiService.iconModal(
-            "No Such User",
-            "The user you have provided does not exist",
-            "error"
+            'No Such User',
+            'The user you have provided does not exist',
+            'error',
           );
         }
         this.setState({ ...this.state, failed: true });

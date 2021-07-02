@@ -1,10 +1,10 @@
-import { Component } from "react";
-import { Link } from "react-router-dom";
-import { IconButton, PrimaryButton } from "../components/button/Button";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import PricePill from "../components/pills/price-pill";
-import { AppContext } from "../context/app.provider";
-import { addAddressUrl, addressesUrl, productsUrl } from "../routes";
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { IconButton, PrimaryButton } from '../components/button/Button';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import PricePill from '../components/pills/price-pill';
+import { AppContext } from '../context/app.provider';
+import { addAddressUrl, addressesUrl, productsUrl } from '../routes';
 
 export default class Checkout extends Component {
   static contextType = AppContext;
@@ -61,7 +61,7 @@ export default class Checkout extends Component {
     const productsEl = products.map((p) => {
       const errorMessage =
         p.stock === 0
-          ? "This product is no longer available!"
+          ? 'This product is no longer available!'
           : p.stock < p.quantity
           ? `Max quantity available for this product is ${p.stock} but cart has ${p.quantity}!`
           : undefined;
@@ -71,13 +71,13 @@ export default class Checkout extends Component {
           <div>
             <img
               src={p.img}
-              style={{ height: "4em" }}
+              style={{ height: '4em' }}
               className="mx-3"
               alt={p.title}
             />
           </div>
           <div>
-            <Link to={productsUrl + "/" + p.id}>
+            <Link to={productsUrl + '/' + p.id}>
               <p>
                 <b>{p.title}</b>
               </p>
@@ -86,7 +86,7 @@ export default class Checkout extends Component {
               <p className="text-red">{errorMessage}</p>
             ) : (
               <p>
-                {p.quantity} &times; {p.price} ={" "}
+                {p.quantity} &times; {p.price} ={' '}
                 <PricePill
                   price={p.quantity * p.price}
                   className="d-inline"
@@ -106,19 +106,19 @@ export default class Checkout extends Component {
       address ? (
         <>
           <IconButton
-            classes={"btn-green" + (!this.state.placingOrder ? " d-none" : "")}
+            classes={'btn-green' + (!this.state.placingOrder ? ' d-none' : '')}
             dataIcon="fa:spinner"
             iconClasses="spin"
             text="Placing order"
           />
           <IconButton
-            classes={"btn-green" + (this.state.placingOrder ? " d-none" : "")}
+            classes={'btn-green' + (this.state.placingOrder ? ' d-none' : '')}
             dataIcon="fa-check"
             text="Place Order"
             click={() => this.placeOrder()}
           />
           <div className="text-muted mt-3">
-            Your order will be shipped to{" "}
+            Your order will be shipped to{' '}
             <b
               data-toggle="tooltip"
               title={`${address.address} - ${address.city}, ${address.country}`}>
@@ -198,7 +198,7 @@ export default class Checkout extends Component {
       quantity: p.quantity,
     }));
     if (!this.state.address) {
-      this.context.uiService.errorToast("No address available");
+      this.context.uiService.errorToast('No address available');
       return;
     }
     this.setState({ ...this.state, placingOrder: true });
@@ -206,24 +206,24 @@ export default class Checkout extends Component {
       .placeOrder(
         `${this.state.address.address} - ${this.state.address.city}, ${this.state.address.country}`,
         this.context.state.user.id,
-        products
+        products,
       )
       .then((res) => {
         const cart = this.context.state.cart;
         cart.clearCart();
         this.context.setState({ ...this.context.state, cart });
         this.context.services.uiService.iconModal(
-          "Order Placed",
-          "Your order has been placed successfully!",
-          "success"
+          'Order Placed',
+          'Your order has been placed successfully!',
+          'success',
         );
       })
       .catch((error) =>
         this.context.services.uiService.iconModal(
-          "Order Failed",
-          "Failed to place your order, please try again!",
-          "error"
-        )
+          'Order Failed',
+          'Failed to place your order, please try again!',
+          'error',
+        ),
       )
       .finally(() => {
         this.setState({ ...this.state, placingOrder: false });
@@ -253,20 +253,20 @@ export default class Checkout extends Component {
   clearCart = () => {
     this.context.services.uiService
       .confirmModal(
-        "Clear Cart",
-        "Are you sure you want to clear your cart?",
-        "warning",
+        'Clear Cart',
+        'Are you sure you want to clear your cart?',
+        'warning',
         true,
-        "Yes"
+        'Yes',
       )
       .then((confirmed) => {
         if (confirmed) {
           this.context.state.cart.clearCart();
           this.context.setState({ ...this.context.state });
           this.context.services.uiService.iconModal(
-            "Cart cleared!",
-            "Your cart should be good as new!",
-            "success"
+            'Cart cleared!',
+            'Your cart should be good as new!',
+            'success',
           );
         }
       });

@@ -1,7 +1,7 @@
-import { React } from "react";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
-import Icon from "../icon/icon";
+import { React } from 'react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Icon from '../icon/icon';
 
 export default function Modal({
   title,
@@ -9,9 +9,9 @@ export default function Modal({
   trigger,
   hasClose = false,
   primaryAction,
-  primaryActionText = "Save",
+  primaryActionText = 'Save',
   secondaryAction,
-  secondaryActionText = "Close",
+  secondaryActionText = 'Close',
 }) {
   return (
     <Popup trigger={trigger} modal>
@@ -22,9 +22,9 @@ export default function Modal({
               <Icon dataIcon="fa:times" />
             </div>
           ) : (
-            ""
+            ''
           )}
-          <div className="header font-weight-bold">{title || "Modal"}</div>
+          <div className="header font-weight-bold">{title || 'Modal'}</div>
           <div className="content">{content}</div>
           {primaryAction || secondaryAction ? (
             <div className="footer row m-0">
@@ -37,7 +37,7 @@ export default function Modal({
                   {secondaryActionText}
                 </div>
               ) : (
-                ""
+                ''
               )}
               {primaryAction ? (
                 <div
@@ -48,7 +48,7 @@ export default function Modal({
                   {primaryActionText}
                 </div>
               ) : (
-                ""
+                ''
               )}
             </div>
           ) : (

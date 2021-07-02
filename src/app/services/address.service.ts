@@ -1,6 +1,6 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import ApiService from './api.service';
 
 export default class AddressService extends ApiService {
   endpoint = `${this.domain}/addresses`;
@@ -13,8 +13,8 @@ export default class AddressService extends ApiService {
   async getAddresses(id: number, criteria?: Criteria<any>) {
     if (!criteria) {
       criteria = new Criteria();
-      criteria.addFilter("user", id);
-      criteria.addRelation("city");
+      criteria.addFilter('user', id);
+      criteria.addRelation('city');
     }
     const ret = await axios.get(this.endpoint + criteria.getUrlParameters());
     return ret;

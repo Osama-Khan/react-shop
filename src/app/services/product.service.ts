@@ -1,7 +1,7 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import Product from "../models/product/product";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import Product from '../models/product/product';
+import ApiService from './api.service';
 
 export default class ProductService extends ApiService {
   private endpoint = `${this.domain}/products`;
@@ -12,7 +12,7 @@ export default class ProductService extends ApiService {
    * @returns A list of products
    */
   async fetchProducts(criteria?: Criteria<Product>) {
-    const critStr = criteria?.getUrlParameters() || "";
+    const critStr = criteria?.getUrlParameters() || '';
     const ret = await axios.get(this.endpoint + critStr);
     return ret;
   }
@@ -35,7 +35,7 @@ export default class ProductService extends ApiService {
    * @returns List of products that have the provided category
    */
   async fetchFromCategory(name: string, criteria?: Criteria<any>) {
-    const params = criteria?.getUrlParameters() || "";
+    const params = criteria?.getUrlParameters() || '';
     const url = `${this.domain}/categories/products/${name}${params}`;
     const ret = await axios.get(url);
     return ret;

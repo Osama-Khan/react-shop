@@ -1,7 +1,7 @@
-import { Component } from "react";
-import { AppContext } from "../../context/app.provider";
-import validate from "../../helpers/validation.helper";
-import { IconButton, PrimaryButton } from "../button/Button";
+import { Component } from 'react';
+import { AppContext } from '../../context/app.provider';
+import validate from '../../helpers/validation.helper';
+import { IconButton, PrimaryButton } from '../button/Button';
 
 export default class Form extends Component {
   static contextType = AppContext;
@@ -29,14 +29,14 @@ export default class Form extends Component {
           <input
             id={c.id || undefined}
             name={c.name || undefined}
-            type={c.type || "text"}
+            type={c.type || 'text'}
             className={
-              (c.className || "form-control ") +
+              (c.className || 'form-control ') +
               (c.valid === false
-                ? "is-invalid"
+                ? 'is-invalid'
                 : c.valid === true
-                ? "is-valid"
-                : "")
+                ? 'is-valid'
+                : '')
             }
             value={c.value || undefined}
             onChange={(e) => {
@@ -54,16 +54,16 @@ export default class Form extends Component {
     const button = this.props.btnDataIcon ? (
       <IconButton
         dataIcon={this.props.btnDataIcon}
-        text={this.props.btnText || "Submit"}
-        classes={`btn-primary btn-block${this.props.btnClassName || ""}`}
+        text={this.props.btnText || 'Submit'}
+        classes={`btn-primary btn-block${this.props.btnClassName || ''}`}
         iconClasses={this.props.btnIconClassName}
         click={this.onSubmit}
         disabled={!this.state.valid}
       />
     ) : (
       <PrimaryButton
-        text={this.props.btnText || "Submit"}
-        classes={`btn-block ${this.props.btnClassName || ""}`}
+        text={this.props.btnText || 'Submit'}
+        classes={`btn-block ${this.props.btnClassName || ''}`}
         click={this.onSubmit}
         disabled={!this.state.valid}
       />
@@ -85,10 +85,10 @@ export default class Form extends Component {
   onSubmit = () => {
     if (!this.state.valid) {
       if (this.state.valid === false) {
-        this.context.services.uiService.errorToast("Invalid data");
+        this.context.services.uiService.errorToast('Invalid data');
         return;
       }
-      this.context.services.uiService.errorToast("No changes to update");
+      this.context.services.uiService.errorToast('No changes to update');
     }
     const data = this.state.controls.map((c) => c.value);
     this.props.onSubmit(data);

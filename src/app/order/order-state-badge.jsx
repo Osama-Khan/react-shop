@@ -1,5 +1,5 @@
-import Icon from "../components/icon/icon";
-import { OrderStateEnum } from "./order-state.enum";
+import Icon from '../components/icon/icon';
+import { OrderStateEnum } from './order-state.enum';
 
 export default function OrderStateBadge({ orderState }) {
   const stateId = orderState.id;

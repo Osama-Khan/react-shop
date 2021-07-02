@@ -4,12 +4,12 @@ import {
   productsUrl,
   registerUrl,
   userUrl,
-} from "../../../routes";
-import { PrimaryButton } from "../../button/Button";
-import { Link } from "react-router-dom";
-import Icon from "../../icon/icon";
-import Popup from "../../popup/popup";
-import NavbarCartCard from "./navbar-cart-card";
+} from '../../../routes';
+import { PrimaryButton } from '../../button/Button';
+import { Link } from 'react-router-dom';
+import Icon from '../../icon/icon';
+import Popup from '../../popup/popup';
+import NavbarCartCard from './navbar-cart-card';
 
 const NavAccountContent = ({ context }) => (
   <div>
@@ -55,21 +55,21 @@ export default function DefaultNav({ context, loc }) {
       </li>
       <li className="nav-item">
         <Link
-          className={`nav-link ${loc === homeUrl ? "active" : ""}`}
+          className={`nav-link ${loc === homeUrl ? 'active' : ''}`}
           to={homeUrl}>
           <Icon dataIcon="ant-design:home-filled" /> Home
         </Link>
       </li>
       <li className="nav-item">
         <Link
-          className={`nav-link ${loc === productsUrl ? "active" : ""}`}
+          className={`nav-link ${loc === productsUrl ? 'active' : ''}`}
           to={productsUrl}>
           <Icon dataIcon="ant-design:shopping-filled" /> Products
         </Link>
       </li>
       <li className="nav-item">
         <Link
-          className={`nav-link ${loc === categoriesUrl ? "active" : ""}`}
+          className={`nav-link ${loc === categoriesUrl ? 'active' : ''}`}
           to={categoriesUrl}>
           <Icon dataIcon="bx:bxs-category-alt" /> Categories
         </Link>
@@ -105,7 +105,7 @@ export default function DefaultNav({ context, loc }) {
                 {context.state.user.token ? (
                   <span className="ml-1">{context.state.user.username}</span>
                 ) : (
-                  ""
+                  ''
                 )}
               </div>
             }
@@ -122,11 +122,11 @@ export default function DefaultNav({ context, loc }) {
 const login = (context) => {
   const userSvc = context.services.userService;
   const uiSvc = context.services.uiService;
-  const username = document.getElementById("loginPopupUsernameField").value;
-  const password = document.getElementById("loginPopupPasswordField").value;
+  const username = document.getElementById('loginPopupUsernameField').value;
+  const password = document.getElementById('loginPopupPasswordField').value;
   const messages = {
-    loading: "Hold on, logging you in!",
-    success: "You are logged in!",
+    loading: 'Hold on, logging you in!',
+    success: 'You are logged in!',
     error: "We couldn't log you in.",
   };
   const loginPromise = userSvc.login(username, password, context);

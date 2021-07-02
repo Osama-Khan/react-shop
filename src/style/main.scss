@@ -1,32 +1,32 @@
 @charset "UTF-8";
 
 // 1. Configuration and helpers
-@import "abstracts/variables", "abstracts/functions", "abstracts/mixins";
+@import 'abstracts/variables', 'abstracts/functions', 'abstracts/mixins';
 
 // 2. Vendors
-@import "vendors/normalize";
+@import 'vendors/normalize';
 
 // 3. Base stuff
-@import "base/base", "base/backgrounds", "base/borders", "base/fonts",
-  "base/typography", "base/helpers", "base/images", "base/opacity",
-  "base/transitions";
+@import 'base/base', 'base/backgrounds', 'base/borders', 'base/fonts',
+  'base/typography', 'base/helpers', 'base/images', 'base/opacity',
+  'base/transitions';
 
 // 4. Layout-related sections
-@import "layout/header", "layout/footer";
+@import 'layout/header', 'layout/footer';
 
 // 5. Components
-@import "components/button", "components/carousel", "components/card",
-  "components/icon";
+@import 'components/button', 'components/carousel', 'components/card',
+  'components/icon';
 
 // 6. Page-specific styles
-@import "pages/products";
+@import 'pages/products';
 
 // 7. Themes
-@import "themes/default";
+@import 'themes/default';
 
 // 8. Animations
-@import "animations/animations";
+@import 'animations/animations';
 
 // 9. Vendor Extensions
-@import "vendors-extensions/reactjs-popup";
-@import "vendors-extensions/bootstrap";
+@import 'vendors-extensions/reactjs-popup';
+@import 'vendors-extensions/bootstrap';

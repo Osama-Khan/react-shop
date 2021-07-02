@@ -1,19 +1,19 @@
 type FilterOperator =
-  | "="
-  | ">"
-  | "<"
-  | ">="
-  | "<="
-  | "!="
-  | "like"
-  | "not like";
+  | '='
+  | '>'
+  | '<'
+  | '>='
+  | '<='
+  | '!='
+  | 'like'
+  | 'not like';
 
 export default class Criteria<T extends Object> {
   private limit?: number;
   private page?: number;
   private relations: string[] = [];
   private orderBy?: string;
-  private orderDir?: "ASC" | "DESC";
+  private orderDir?: 'ASC' | 'DESC';
   private filters: Partial<T> = {};
 
   validKeys: string[] = [];
@@ -28,7 +28,7 @@ export default class Criteria<T extends Object> {
       params.push(`page=${this.page}`);
     }
     if (this.relations.length > 0) {
-      const incs = this.relations.join(";");
+      const incs = this.relations.join(';');
       params.push(`relations=${incs}`);
     }
     if (this.orderBy) {
@@ -46,11 +46,11 @@ export default class Criteria<T extends Object> {
           filt.push(`${key}:${value}`);
         }
       }
-      const filtString = filt.join(";");
+      const filtString = filt.join(';');
       params.push(`filters=${filtString}`);
     }
 
-    return params.length > 0 ? `?${params.join("&")}` : "";
+    return params.length > 0 ? `?${params.join('&')}` : '';
   }
 
   setLimit(lim: number) {
@@ -77,16 +77,16 @@ export default class Criteria<T extends Object> {
     this.orderBy = orderBy;
   }
 
-  setOrderDir(orderDir: "ASC" | "DESC") {
+  setOrderDir(orderDir: 'ASC' | 'DESC') {
     this.orderDir = orderDir;
   }
 
   addFilter = (
     key: Extract<keyof T, string>,
     value: any,
-    operator?: FilterOperator
+    operator?: FilterOperator,
   ) => {
-    this.filters[key] = ((operator ? operator + ":" : "=:") + value) as any;
+    this.filters[key] = ((operator ? operator + ':' : '=:') + value) as any;
   };
 
   removeFilter = (key: Extract<keyof T, string>) => {

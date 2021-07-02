@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useContext } from "react";
-import { AppContext } from "../context/app.provider";
-import attachTokenInterceptor from "./attach-token.interceptor";
-import responseErrorInterceptor from "./response-error.interceptor";
+import axios from 'axios';
+import { useContext } from 'react';
+import { AppContext } from '../context/app.provider';
+import attachTokenInterceptor from './attach-token.interceptor';
+import responseErrorInterceptor from './response-error.interceptor';
 
 let requestInterceptors = [];
 let responseInterceptors = [];
@@ -25,15 +25,15 @@ export default function InterceptorInitializer() {
 
   requestInterceptors.push(
     axios.interceptors.request.use(
-      attachTokenInterceptor(context.state.user?.token)
-    )
+      attachTokenInterceptor(context.state.user?.token),
+    ),
   );
 
   responseInterceptors.push(
     axios.interceptors.response.use(
       undefined,
-      responseErrorInterceptor(context)
-    )
+      responseErrorInterceptor(context),
+    ),
   );
 
   return <></>;

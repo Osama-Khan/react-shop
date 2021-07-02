@@ -1,9 +1,9 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import ApiService from './api.service';
 
 export default class FavoriteService extends ApiService {
-  endpoint = this.domain + "/favorites";
+  endpoint = this.domain + '/favorites';
 
   /**
    * Checks how many users have favorited a product
@@ -32,8 +32,8 @@ export default class FavoriteService extends ApiService {
    */
   getFavoritesOfUser(userId: number, criteria?: Criteria<any>) {
     if (!criteria) criteria = new Criteria<any>();
-    criteria.addFilter("user", userId);
-    criteria.addRelation("product");
+    criteria.addFilter('user', userId);
+    criteria.addRelation('product');
     const url = this.endpoint + criteria.getUrlParameters();
     return axios.get(url).then((res) => {
       const data = res.data.data.map((d: any) => d.product);
@@ -50,10 +50,10 @@ export default class FavoriteService extends ApiService {
    */
   isProductFavoriteOfUser(productId: number, userId: number) {
     const criteria = new Criteria<any>();
-    criteria.addFilter("user", userId);
-    criteria.addFilter("product", productId);
-    criteria.addRelation("product");
-    criteria.addRelation("user");
+    criteria.addFilter('user', userId);
+    criteria.addFilter('product', productId);
+    criteria.addRelation('product');
+    criteria.addRelation('user');
     const url = this.endpoint + criteria.getUrlParameters();
     const res = axios.get(url);
     return res;
@@ -68,7 +68,7 @@ export default class FavoriteService extends ApiService {
   async setFavorite(userId: number, productId: number) {
     const fav = await this.isProductFavoriteOfUser(productId, userId);
     if (fav.data.length > 0) {
-      throw new Error("Product already favorited");
+      throw new Error('Product already favorited');
     }
     const res = axios.put(this.endpoint, { user: userId, product: productId });
     return res;
@@ -83,7 +83,7 @@ export default class FavoriteService extends ApiService {
   async unsetFavorite(userId: number, productId: number) {
     const fav = await this.isProductFavoriteOfUser(productId, userId);
     if (fav.data.length === 0) {
-      throw new Error("Product not favorited");
+      throw new Error('Product not favorited');
     }
     const res = axios.delete(`${this.endpoint}/${fav.data.data[0].id}`);
     return res;

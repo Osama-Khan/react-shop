@@ -1,10 +1,10 @@
-import { React, Component } from "react";
-import { Link } from "react-router-dom";
-import { checkoutUrl, productsUrl } from "../../../routes";
-import { IconButton, PrimaryButton } from "../../button/Button";
-import { AppContext } from "../../../context/app.provider";
-import Icon from "../../icon/icon";
-import CartProduct from "../../../models/product/cart-product";
+import { React, Component } from 'react';
+import { Link } from 'react-router-dom';
+import { checkoutUrl, productsUrl } from '../../../routes';
+import { IconButton, PrimaryButton } from '../../button/Button';
+import { AppContext } from '../../../context/app.provider';
+import Icon from '../../icon/icon';
+import CartProduct from '../../../models/product/cart-product';
 
 export default class NavbarCartCard extends Component {
   static contextType = AppContext;
@@ -29,7 +29,7 @@ export default class NavbarCartCard extends Component {
                 <img src={p.img} alt={p.title} />
               </div>
               <div className="col-sm-8 d-flex flex-column">
-                <Link to={productsUrl + "/" + p.id}>
+                <Link to={productsUrl + '/' + p.id}>
                   <div className="truncate">{p.title}</div>
                 </Link>
                 <div>
@@ -88,7 +88,7 @@ export default class NavbarCartCard extends Component {
         cart: this.context.state.cart,
       });
     } else {
-      errorToast("Some problem occured");
+      errorToast('Some problem occured');
     }
   }
 

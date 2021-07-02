@@ -1,13 +1,13 @@
 .spin {
-    animation: spin $animation-slow infinite linear;
+  animation: spin $animation-slow infinite linear;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotateZ(0deg);
-    }
+  0% {
+    transform: rotateZ(0deg);
+  }
 
-    100% {
-        transform: rotateZ(360deg);
-    }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }

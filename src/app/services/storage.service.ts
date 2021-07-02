@@ -1,8 +1,8 @@
-import CartState from "../state/cart-state";
+import CartState from '../state/cart-state';
 
 export default class StorageService {
-  userTokenKey = "user-token";
-  cartKey = "cart";
+  userTokenKey = 'user-token';
+  cartKey = 'cart';
 
   /**
    * Saves the given token in localStorage
@@ -29,7 +29,7 @@ export default class StorageService {
     if (cart.products?.length > 0)
       localStorage.setItem(
         this.cartKey,
-        cart.products.map((p) => p.id + ":" + p.quantity).join(";")
+        cart.products.map((p) => p.id + ':' + p.quantity).join(';'),
       );
     else this.clearCart();
   };
@@ -42,9 +42,9 @@ export default class StorageService {
    * @returns list of objects containing product id and quantity
    */
   loadCart = () => {
-    const items = localStorage.getItem(this.cartKey)?.split(";");
+    const items = localStorage.getItem(this.cartKey)?.split(';');
     return items?.map((i) => {
-      const data = i.split(":").map((n) => parseInt(n));
+      const data = i.split(':').map((n) => parseInt(n));
       return { id: data[0], quantity: data[1] };
     });
   };

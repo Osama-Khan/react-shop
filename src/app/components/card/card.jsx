@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import Icon from "../icon/icon";
+import { Link } from 'react-router-dom';
+import Icon from '../icon/icon';
 
 export default function Card(props) {
   if (props.image) {
@@ -15,13 +15,13 @@ function IconCard({
   text,
   icon,
   click,
-  color = "",
-  classes = "",
-  iconClasses = "",
+  color = '',
+  classes = '',
+  iconClasses = '',
   linkTo,
 }) {
   const cardClasses = `card ${color} m-1 py-3 row ${
-    click ? "clickable" : ""
+    click ? 'clickable' : ''
   } ${classes}`;
   const textEl = text ? (
     <p className="text-center m-auto col-12">{text}</p>
@@ -43,9 +43,9 @@ function IconCard({
   }
 }
 
-function ImageCard({ text, image, click, color = "", classes = "", linkTo }) {
+function ImageCard({ text, image, click, color = '', classes = '', linkTo }) {
   const cardClasses = `card ${color} m-1 pb-3 row ${
-    click ? "clickable" : ""
+    click ? 'clickable' : ''
   } ${classes}`;
   const textEl = text ? (
     <p className="text-center m-auto col-12">{text}</p>
@@ -70,12 +70,12 @@ function ImageCard({ text, image, click, color = "", classes = "", linkTo }) {
 function TextCard({
   text,
   click,
-  color = "",
-  classes = "",
+  color = '',
+  classes = '',
   linkTo = undefined,
 }) {
   const cardClasses = `card ${color} m-1 py-3 row ${
-    click ? "clickable" : ""
+    click ? 'clickable' : ''
   } ${classes}`;
   const textEl = text ? (
     <p className="text-center m-auto col-12">{text}</p>

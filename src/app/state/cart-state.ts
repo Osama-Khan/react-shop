@@ -1,5 +1,5 @@
-import CartProduct from "../models/product/cart-product";
-import Product from "../models/product/product";
+import CartProduct from '../models/product/cart-product';
+import Product from '../models/product/product';
 
 export default class CartState {
   /** The list of items in the cart */

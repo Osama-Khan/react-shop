@@ -1,4 +1,4 @@
-import Product from "./product";
+import Product from './product';
 
 export default class CartProduct {
   id: number;
@@ -27,13 +27,13 @@ export default class CartProduct {
    */
   static isQuantityInvalid(qty: number, max: number): string | false {
     if (max === 0) {
-      return "This product is not available anymore!";
+      return 'This product is not available anymore!';
     }
     if (qty !== 0 && !qty) {
-      return "Quantity must be a number!";
+      return 'Quantity must be a number!';
     }
     if (qty <= 0) {
-      return "Quantity must be above 0!";
+      return 'Quantity must be above 0!';
     }
     if (qty > max) {
       return `Max quantity available is ${max}!`;

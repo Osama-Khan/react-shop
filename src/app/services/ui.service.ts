@@ -1,16 +1,16 @@
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast';
 import {
   DefaultToastOptions,
   IconTheme,
-} from "react-hot-toast/dist/core/types";
-import SwalDefault, { SweetAlertResult } from "sweetalert2";
-import withReact from "sweetalert2-react-content";
+} from 'react-hot-toast/dist/core/types';
+import SwalDefault, { SweetAlertResult } from 'sweetalert2';
+import withReact from 'sweetalert2-react-content';
 
 const Swal = SwalDefault.mixin({
   customClass: {
-    confirmButton: "btn btn-primary",
-    cancelButton: "btn btn-primary-outline",
-    denyButton: "btn btn-red",
+    confirmButton: 'btn btn-primary',
+    cancelButton: 'btn btn-primary-outline',
+    denyButton: 'btn btn-red',
   },
   buttonsStyling: false,
 });
@@ -20,18 +20,18 @@ interface ToastOptions {
   id?: string;
   icon?: string;
   duration?: number;
-  role?: "status" | "alert";
-  ariaLive?: "assertive" | "off" | "polite" | undefined;
+  role?: 'status' | 'alert';
+  ariaLive?: 'assertive' | 'off' | 'polite' | undefined;
   className?: string | undefined;
   style?: any;
   iconTheme?: IconTheme | undefined;
 }
 
-type Icon = "warning" | "success" | "error" | "info" | "question";
+type Icon = 'warning' | 'success' | 'error' | 'info' | 'question';
 
 const toastStyle = {
-  backgroundColor: "#222",
-  color: "#fff",
+  backgroundColor: '#222',
+  color: '#fff',
 };
 
 /**
@@ -75,7 +75,7 @@ export default class UiService {
   promiseToast = (
     promise: Promise<any>,
     msgs: { loading: any; success: any; error: any },
-    options?: DefaultToastOptions
+    options?: DefaultToastOptions,
   ): Promise<any> =>
     toast.promise(promise, msgs, { style: toastStyle, ...options });
 
@@ -92,7 +92,7 @@ export default class UiService {
     html: any,
     icon: Icon,
     showCancelButton = true,
-    confirmButtonText: string
+    confirmButtonText: string,
   ): Promise<SweetAlertResult> =>
     SwalWithReact.fire({
       title,
@@ -107,7 +107,7 @@ export default class UiService {
     text: string,
     icon: Icon,
     showCancelButton = true,
-    confirmButtonText: string
+    confirmButtonText: string,
   ): Promise<boolean> =>
     Swal.fire({
       title,

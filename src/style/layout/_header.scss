@@ -3,18 +3,18 @@
 // -----------------------------------------------------------------------------
 
 nav {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .nav-logo {
-    font-size: 34px;
-    margin-right: 8px!important;
+  font-size: 34px;
+  margin-right: 8px !important;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .nav-logo {
@@ -30,7 +30,7 @@ nav {
 }
 
 .nav-link.active {
-    background-color: $color-primary-subtle;
-    color: $color-primary;
-    border-bottom: 2px solid $color-primary;
+  background-color: $color-primary-subtle;
+  color: $color-primary;
+  border-bottom: 2px solid $color-primary;
 }

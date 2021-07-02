@@ -4,9 +4,9 @@ import {
   homeUrl,
   productsUrl,
   userUrl,
-} from "../../../routes";
-import Icon from "../../icon/icon";
-import { Link } from "react-router-dom";
+} from '../../../routes';
+import Icon from '../../icon/icon';
+import { Link } from 'react-router-dom';
 
 export default function MobileNav({ loc }) {
   return (
@@ -35,7 +35,7 @@ export default function MobileNav({ loc }) {
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
-                loc === homeUrl ? "active" : ""
+                loc === homeUrl ? 'active' : ''
               }`}
               to={homeUrl}>
               <Icon dataIcon="ant-design:home-filled" /> Home
@@ -44,7 +44,7 @@ export default function MobileNav({ loc }) {
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
-                loc === productsUrl ? "active" : ""
+                loc === productsUrl ? 'active' : ''
               }`}
               to={productsUrl}>
               <Icon dataIcon="ant-design:shopping-filled" /> Products
@@ -53,7 +53,7 @@ export default function MobileNav({ loc }) {
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
-                loc === categoriesUrl ? "active" : ""
+                loc === categoriesUrl ? 'active' : ''
               }`}
               to={categoriesUrl}>
               <Icon dataIcon="bx:bxs-category-alt" /> Categories
@@ -63,7 +63,7 @@ export default function MobileNav({ loc }) {
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
-                loc === userUrl ? "active" : ""
+                loc === userUrl ? 'active' : ''
               }`}
               to={userUrl}>
               <Icon dataIcon="mi-user" /> Account
@@ -72,7 +72,7 @@ export default function MobileNav({ loc }) {
           <li className="nav-item p-0 my-1">
             <Link
               className={`px-2 py-3 w-100 nav-link ${
-                loc === checkoutUrl ? "active" : ""
+                loc === checkoutUrl ? 'active' : ''
               }`}
               to={checkoutUrl}>
               <Icon dataIcon="bi-cart" /> Cart

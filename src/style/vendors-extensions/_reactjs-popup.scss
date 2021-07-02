@@ -1,4 +1,4 @@
-[role="tooltip"].popup-content {
+[role='tooltip'].popup-content {
   width: 300px !important;
   height: 400px !important;
   max-height: 800px;
@@ -6,11 +6,11 @@
   padding: 1em;
 }
 
-[data-popup="modal"].popup-overlay {
+[data-popup='modal'].popup-overlay {
   justify-content: center;
 }
 
-[role="dialog"].popup-content {
+[role='dialog'].popup-content {
   position: fixed !important;
   margin: auto;
   top: 3em;

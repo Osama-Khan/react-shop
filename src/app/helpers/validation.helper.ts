@@ -6,18 +6,18 @@
  */
 export default function validate(value: any, validators: string[]) {
   return validators.some((v) => {
-    const ind = v.indexOf("(");
-    const indEnd = v.indexOf(")");
+    const ind = v.indexOf('(');
+    const indEnd = v.indexOf(')');
     if (ind !== -1) {
       const numStr = v.substring(ind + 1, indEnd);
       const num = parseInt(numStr);
       v = v.substring(0, ind);
       if (num)
         switch (v) {
-          case "min":
+          case 'min':
             if (value.length < num) return false;
             break;
-          case "max":
+          case 'max':
             if (value.length > num) return false;
             break;
           default:
@@ -25,13 +25,13 @@ export default function validate(value: any, validators: string[]) {
         }
     } else {
       switch (v) {
-        case "notEmpty":
-          if (value === "") return false;
+        case 'notEmpty':
+          if (value === '') return false;
           break;
-        case "notNull":
+        case 'notNull':
           if (!value) return false;
           break;
-        case "isEmail":
+        case 'isEmail':
           if (!isEmail(value)) return false;
           break;
         default:
@@ -42,5 +42,6 @@ export default function validate(value: any, validators: string[]) {
   });
 }
 
-const emailRegex: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
+const emailRegex: RegExp =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
 const isEmail = (email: string) => emailRegex.test(email);

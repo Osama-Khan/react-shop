@@ -1,14 +1,14 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import Icon from "../icon/icon";
-import { productsUrl } from "../../routes";
-import { IconButton } from "../button/Button";
-import ProductRating from "../product-rating/product-rating";
-import { AppContext } from "../../context/app.provider";
-import PricePill from "../pills/price-pill";
-import Pill from "../pills/pill";
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import Icon from '../icon/icon';
+import { productsUrl } from '../../routes';
+import { IconButton } from '../button/Button';
+import ProductRating from '../product-rating/product-rating';
+import { AppContext } from '../../context/app.provider';
+import PricePill from '../pills/price-pill';
+import Pill from '../pills/pill';
 
-export default function ProductCard({ product, classes = "" }) {
+export default function ProductCard({ product, classes = '' }) {
   const cardClasses = `card clickable m-1 p-3 row anchor-color-remover ${classes}`;
   const context = useContext(AppContext);
 
@@ -18,7 +18,7 @@ export default function ProductCard({ product, classes = "" }) {
         <img
           src={product.img}
           classes="mx-auto"
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: 'contain' }}
           alt=""
         />
         <b>{product.title}</b>
@@ -30,7 +30,7 @@ export default function ProductCard({ product, classes = "" }) {
               <Icon dataIcon="fa:heart" /> {product.favoriteCount}
             </div>
           ) : (
-            ""
+            ''
           )}
           <div className="ml-auto">
             {product.stock > 0 ? (
@@ -52,11 +52,11 @@ export default function ProductCard({ product, classes = "" }) {
               if (context.state.cart.removeProduct(product.id)) {
                 context.setState({ ...context.state });
                 context.services.uiService.successToast(
-                  "Product removed from cart!"
+                  'Product removed from cart!',
                 );
               } else {
                 context.services.uiService.errorToast(
-                  "Product could not be removed from cart!"
+                  'Product could not be removed from cart!',
                 );
               }
             }}
@@ -70,12 +70,12 @@ export default function ProductCard({ product, classes = "" }) {
             click={() => {
               context.state.cart.addProduct(product);
               context.setState({ ...context.state });
-              context.services.uiService.successToast("Product added to cart!");
+              context.services.uiService.successToast('Product added to cart!');
             }}
           />
         )
       ) : (
-        ""
+        ''
       )}
     </>
   );

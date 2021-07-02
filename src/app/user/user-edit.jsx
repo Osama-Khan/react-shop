@@ -1,10 +1,10 @@
-import { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import Form from "../components/form/form";
-import Icon from "../components/icon/icon";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import { AppContext } from "../context/app.provider";
-import { userUrl } from "../routes";
+import { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import Form from '../components/form/form';
+import Icon from '../components/icon/icon';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import { AppContext } from '../context/app.provider';
+import { userUrl } from '../routes';
 
 export default class UserEdit extends Component {
   static contextType = AppContext;
@@ -65,9 +65,9 @@ export default class UserEdit extends Component {
     const userSvc = this.context.services.userService;
     const uiSvc = this.context.services.uiService;
     const msgs = {
-      loading: "Updating...",
-      success: "Account updated!",
-      error: "Failed to update account!",
+      loading: 'Updating...',
+      success: 'Account updated!',
+      error: 'Failed to update account!',
     };
     const promise = userSvc.update(this.state.user.id, u);
     uiSvc.promiseToast(promise, msgs).then((res) => {
@@ -82,41 +82,41 @@ export default class UserEdit extends Component {
   initFormData = (user) =>
     (this.formData = [
       {
-        label: "First Name",
-        name: "firstName",
+        label: 'First Name',
+        name: 'firstName',
         value: user.firstName,
-        validators: ["notEmpty"],
+        validators: ['notEmpty'],
       },
       {
-        label: "Last Name",
-        name: "lastName",
+        label: 'Last Name',
+        name: 'lastName',
         value: user.lastName,
-        validators: ["notEmpty"],
+        validators: ['notEmpty'],
       },
       {
-        label: "Email",
-        name: "email",
+        label: 'Email',
+        name: 'email',
         value: user.email,
-        validators: ["isEmail"],
+        validators: ['isEmail'],
       },
       {
-        label: "Username",
-        name: "username",
+        label: 'Username',
+        name: 'username',
         value: user.username,
-        validators: ["min(4)"],
+        validators: ['min(4)'],
       },
       {
-        label: "Password",
-        name: "password",
+        label: 'Password',
+        name: 'password',
         value: user.password,
-        validators: ["min(4)"],
+        validators: ['min(4)'],
       },
       {
-        label: "Date of Birth",
-        name: "dateOfBirth",
-        type: "Date",
+        label: 'Date of Birth',
+        name: 'dateOfBirth',
+        type: 'Date',
         value: user.dateOfBirth.substring(0, 10),
-        validators: ["notNull"],
+        validators: ['notNull'],
       },
     ]);
 }

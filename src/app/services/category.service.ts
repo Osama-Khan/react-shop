@@ -1,9 +1,9 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import ApiService from './api.service';
 
 export default class CategoryService extends ApiService {
-  private endpoint = this.domain + "/categories";
+  private endpoint = this.domain + '/categories';
 
   /**
    * Get a list of all categories

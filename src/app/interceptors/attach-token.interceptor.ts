@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from 'axios';
 
 /**
  * Attaches a Bearer token to the Authorization header of the request
@@ -8,7 +8,7 @@ import { AxiosRequestConfig } from "axios";
 export default function attachTokenInterceptor(token: string) {
   return (request: AxiosRequestConfig) => {
     if (token) {
-      request.headers["Authorization"] = `Bearer ${token}`;
+      request.headers['Authorization'] = `Bearer ${token}`;
     }
     return request;
   };

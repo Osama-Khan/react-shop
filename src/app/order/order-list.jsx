@@ -1,7 +1,7 @@
-import { productsUrl } from "../routes";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import OrderStateBadge from "./order-state-badge";
-import { Link } from "react-router-dom";
+import { productsUrl } from '../routes';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import OrderStateBadge from './order-state-badge';
+import { Link } from 'react-router-dom';
 
 export default function OrderList({ state }) {
   return state.orders.length > 0 ? (
@@ -23,14 +23,14 @@ export default function OrderList({ state }) {
                   <>
                     <br />
                     <span className="ml-2">
-                      {" "}
-                      {op.quantity} &times;{" "}
+                      {' '}
+                      {op.quantity} &times;{' '}
                       <Link
                         to={`${productsUrl}/${op.product.id}`}
                         title={op.product.title}>
-                        {op.product.title.substring(0, 16) + "..."}
+                        {op.product.title.substring(0, 16) + '...'}
                       </Link>
-                    </span>{" "}
+                    </span>{' '}
                     = <b>{op.price} Rs.</b>
                   </>
                 );
@@ -58,7 +58,7 @@ export default function OrderList({ state }) {
         You have placed no orders... yet!
       </div>
       <div className="d-flex">
-        {" "}
+        {' '}
         <Link className="btn btn-dark mx-auto mt-3" to={productsUrl}>
           Go Get Something
         </Link>

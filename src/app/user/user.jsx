@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { PrimaryButton } from "../components/button/Button";
-import { AppContext } from "../context/app.provider";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { PrimaryButton } from '../components/button/Button';
+import { AppContext } from '../context/app.provider';
 import {
   registerUrl,
   userUrl,
@@ -9,11 +9,11 @@ import {
   editUserUrl,
   ordersUrl,
   userFavoritesUrl,
-} from "../routes";
-import Icon from "../components/icon/icon";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import Card from "../components/card/card";
-import LoadingFailed from "../components/loading/loading-failed";
+} from '../routes';
+import Icon from '../components/icon/icon';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import Card from '../components/card/card';
+import LoadingFailed from '../components/loading/loading-failed';
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -91,7 +91,7 @@ export default class User extends React.Component {
               </div>
               <div className="col-sm-6">
                 <p className="mb-0">
-                  Default Address{" "}
+                  Default Address{' '}
                   <Link to={addressesUrl}>
                     <Icon
                       dataIcon="bx-bxs-message-square-detail"
@@ -100,12 +100,12 @@ export default class User extends React.Component {
                   </Link>
                 </p>
                 <p>
-                  <b>{this.state.address ? this.state.address.tag : ""}</b>{" "}
+                  <b>{this.state.address ? this.state.address.tag : ''}</b>{' '}
                   <span className="text-sm text-muted">
-                    {" "}
+                    {' '}
                     {this.state.address
                       ? this.state.address.address
-                      : "No default address"}
+                      : 'No default address'}
                   </span>
                 </p>
               </div>
@@ -232,9 +232,9 @@ export default class User extends React.Component {
           if (err) {
             if (err.response.status === 404) {
               this.context.services.uiService.iconModal(
-                "Nobody Here",
-                "The user you are looking for could not be found",
-                "error"
+                'Nobody Here',
+                'The user you are looking for could not be found',
+                'error',
               );
             }
             this.setState({ ...this.state, failed: true });
@@ -279,11 +279,11 @@ export default class User extends React.Component {
   login = () => {
     const userSvc = this.context.services.userService;
     const uiSvc = this.context.services.uiService;
-    const username = document.getElementById("loginUsernameField").value;
-    const password = document.getElementById("loginPasswordField").value;
+    const username = document.getElementById('loginUsernameField').value;
+    const password = document.getElementById('loginPasswordField').value;
     const messages = {
-      loading: "Hold on, logging you in!",
-      success: "You are logged in!",
+      loading: 'Hold on, logging you in!',
+      success: 'You are logged in!',
       error: "We couldn't log you in.",
     };
     const loginPromise = userSvc.login(username, password, this.context);

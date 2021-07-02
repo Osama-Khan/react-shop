@@ -1,12 +1,12 @@
-import { Component } from "react";
-import { Redirect } from "react-router-dom";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import { AppContext } from "../context/app.provider";
-import { userUrl } from "../routes";
-import Criteria from "../models/criteria";
-import Pagination from "../components/pagination/pagination";
-import OrderList from "./order-list";
-import LoadingFailed from "../components/loading/loading-failed";
+import { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import { AppContext } from '../context/app.provider';
+import { userUrl } from '../routes';
+import Criteria from '../models/criteria';
+import Pagination from '../components/pagination/pagination';
+import OrderList from './order-list';
+import LoadingFailed from '../components/loading/loading-failed';
 
 export default class Orders extends Component {
   static contextType = AppContext;
@@ -91,7 +91,7 @@ export default class Orders extends Component {
     criteria.setLimit(5);
     criteria.setPage(page);
     if (this.state.selectedOrderState >= 0) {
-      criteria.addFilter("orderState", this.state.selectedOrderState);
+      criteria.addFilter('orderState', this.state.selectedOrderState);
     }
     this.context.services.orderService
       .getOrders(this.context.state.user.id, criteria)
@@ -106,7 +106,7 @@ export default class Orders extends Component {
         let promises = [];
         res.data.data.forEach((o, i) => {
           const promise = this.context.services.orderService.getOrderDetail(
-            o.id
+            o.id,
           );
           promises.push(promise);
           promise.then((res) => {
@@ -116,14 +116,14 @@ export default class Orders extends Component {
           });
         });
         Promise.all(promises).then(() =>
-          this.setState({ ...this.state, detailLoaded: true })
+          this.setState({ ...this.state, detailLoaded: true }),
         );
       })
       .catch((err) => {
         this.context.services.uiService.iconModal(
           `Error ${err.status}`,
           err.statusText,
-          "error"
+          'error',
         );
       });
   };
@@ -137,9 +137,9 @@ export default class Orders extends Component {
       })
       .catch((err) => {
         this.context.services.uiService.iconModal(
-          `Error ${err?.status ?? ""}`,
-          err?.statusText ?? "Something went wrong!",
-          "error"
+          `Error ${err?.status ?? ''}`,
+          err?.statusText ?? 'Something went wrong!',
+          'error',
         );
       });
   };

@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { AppContext } from "../context/app.provider";
-import { productsUrl } from "../routes";
-import CartState from "../state/cart-state";
+import { useContext } from 'react';
+import { AppContext } from '../context/app.provider';
+import { productsUrl } from '../routes';
+import CartState from '../state/cart-state';
 
 let restoreDone = false;
 
@@ -35,9 +35,9 @@ function restoreUser(context) {
   if (token) {
     const promise = svc.userService.loginWithToken(token);
     const messages = {
-      loading: "Restoring session...",
-      success: "Session restored! You are now logged in.",
-      error: "Could not restore session!",
+      loading: 'Restoring session...',
+      success: 'Session restored! You are now logged in.',
+      error: 'Could not restore session!',
     };
     return svc.uiService
       .promiseToast(promise, messages)
@@ -63,12 +63,12 @@ function restoreCart(context) {
   const cart = new CartState();
   const toastPromise = new Promise(
     (res) => res(),
-    (rej) => rej()
+    (rej) => rej(),
   );
   ui.promiseToast(toastPromise, {
-    loading: "Restoring cart...",
-    success: "Cart restored successfully!",
-    error: "Could not restore cart!",
+    loading: 'Restoring cart...',
+    success: 'Cart restored successfully!',
+    error: 'Could not restore cart!',
   });
   oldCartItems.forEach((cp) => {
     promises.push(
@@ -83,7 +83,7 @@ function restoreCart(context) {
           cp.quantity = product.stock;
         }
         cart.addProduct(product, cp.quantity);
-      })
+      }),
     );
   });
   return Promise.all(promises)
@@ -93,7 +93,7 @@ function restoreCart(context) {
         showCartReadjustmentModal(
           ui.htmlModal,
           readjustedProducts,
-          removedProducts
+          removedProducts,
         );
       }
       return cart;
@@ -113,7 +113,7 @@ const showCartReadjustmentModal = (htmlModal, adjusted, removed) => {
   const removedEls = removed.map(elFromProduct);
   const [showAdj, showRmv] = [adjusted.length > 0, removed.length > 0];
   htmlModal(
-    "Cart Readjustment",
+    'Cart Readjustment',
     <div>
       {showAdj ? (
         <>
@@ -124,9 +124,9 @@ const showCartReadjustmentModal = (htmlModal, adjusted, removed) => {
           <>{adjustedEls}</>
         </>
       ) : (
-        ""
+        ''
       )}
-      {showRmv && showAdj ? <hr /> : ""}
+      {showRmv && showAdj ? <hr /> : ''}
       {showRmv ? (
         <>
           <p>
@@ -136,11 +136,11 @@ const showCartReadjustmentModal = (htmlModal, adjusted, removed) => {
           <>{removedEls}</>
         </>
       ) : (
-        ""
+        ''
       )}
     </div>,
-    "warning",
+    'warning',
     false,
-    "Okay"
+    'Okay',
   );
 };

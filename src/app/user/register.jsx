@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { PrimaryButton } from "../components/button/Button";
-import { AppContext } from "../context/app.provider";
-import { userUrl } from "../routes";
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { PrimaryButton } from '../components/button/Button';
+import { AppContext } from '../context/app.provider';
+import { userUrl } from '../routes';
 
 let valid, setValid;
 export default function Register(props) {
@@ -82,19 +82,19 @@ export default function Register(props) {
   );
 
   function validate() {
-    const firstname = document.getElementById("registerFirstnameField").value;
-    const lastname = document.getElementById("registerLastnameField").value;
-    const username = document.getElementById("registerUsernameField").value;
-    const email = document.getElementById("registerEmailField").value;
-    const password = document.getElementById("registerPasswordField").value;
-    const dob = document.getElementById("registerDobField").value;
+    const firstname = document.getElementById('registerFirstnameField').value;
+    const lastname = document.getElementById('registerLastnameField').value;
+    const username = document.getElementById('registerUsernameField').value;
+    const email = document.getElementById('registerEmailField').value;
+    const password = document.getElementById('registerPasswordField').value;
+    const dob = document.getElementById('registerDobField').value;
 
     if (
-      firstname === "" ||
-      lastname === "" ||
+      firstname === '' ||
+      lastname === '' ||
       username.length < 4 ||
       !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-        email
+        email,
       ) ||
       password.length < 4 ||
       !dob
@@ -106,18 +106,18 @@ export default function Register(props) {
   }
 
   function register() {
-    const firstName = document.getElementById("registerFirstnameField").value;
-    const lastName = document.getElementById("registerLastnameField").value;
-    const username = document.getElementById("registerUsernameField").value;
-    const email = document.getElementById("registerEmailField").value;
-    const password = document.getElementById("registerPasswordField").value;
-    const dateOfBirth = document.getElementById("registerDobField").value;
+    const firstName = document.getElementById('registerFirstnameField').value;
+    const lastName = document.getElementById('registerLastnameField').value;
+    const username = document.getElementById('registerUsernameField').value;
+    const email = document.getElementById('registerEmailField').value;
+    const password = document.getElementById('registerPasswordField').value;
+    const dateOfBirth = document.getElementById('registerDobField').value;
     const userSvc = context.services.userService;
     const uiSvc = context.services.uiService;
     const msgs = {
-      loading: "Creating account",
-      success: "Account created!",
-      error: "Failed to create account!",
+      loading: 'Creating account',
+      success: 'Account created!',
+      error: 'Failed to create account!',
     };
     const promise = userSvc.register(
       username,
@@ -125,7 +125,7 @@ export default function Register(props) {
       firstName,
       lastName,
       email,
-      dateOfBirth
+      dateOfBirth,
     );
     uiSvc.promiseToast(promise, msgs);
   }

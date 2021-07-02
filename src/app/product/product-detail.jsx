@@ -1,13 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Icon from "../components/icon/icon";
-import { IconButton } from "../components/button/Button";
-import { AppContext } from "../context/app.provider";
-import { categoriesUrl } from "../routes";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import ProductRating from "../components/product-rating/product-rating";
-import CartProduct from "../models/product/cart-product";
-import LoadingFailed from "../components/loading/loading-failed";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Icon from '../components/icon/icon';
+import { IconButton } from '../components/button/Button';
+import { AppContext } from '../context/app.provider';
+import { categoriesUrl } from '../routes';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import ProductRating from '../components/product-rating/product-rating';
+import CartProduct from '../models/product/cart-product';
+import LoadingFailed from '../components/loading/loading-failed';
 
 export default class ProductDetail extends React.Component {
   static contextType = AppContext;
@@ -58,7 +58,7 @@ export default class ProductDetail extends React.Component {
       return (
         <span key={c.id}>
           <Link
-            to={categoriesUrl + "/" + c.name}
+            to={categoriesUrl + '/' + c.name}
             className="badge bg-primary-subtle">
             {c.name}
           </Link>
@@ -69,7 +69,7 @@ export default class ProductDetail extends React.Component {
     if (categoryList) categoryList = categoryList.reverse();
     if (product) {
       const highlights = Object.keys(product.highlights).map((k) => (
-        <li key={"highlight" + k}>{product.highlights[k].highlight}</li>
+        <li key={'highlight' + k}>{product.highlights[k].highlight}</li>
       ));
 
       component = (
@@ -144,7 +144,7 @@ export default class ProductDetail extends React.Component {
             dataIcon="fluent-emoji-meh-24-filled"
             classes="icon-sm"
             inline={false}
-          />{" "}
+          />{' '}
           Last in stock
         </b>
       ) : (
@@ -153,7 +153,7 @@ export default class ProductDetail extends React.Component {
             dataIcon="fluent-emoji-laugh-24-filled"
             classes="icon-sm"
             inline={false}
-          />{" "}
+          />{' '}
           In stock
         </b>
       )
@@ -163,7 +163,7 @@ export default class ProductDetail extends React.Component {
           dataIcon="fluent-emoji-sad-24-filled"
           classes="icon-sm"
           inline={false}
-        />{" "}
+        />{' '}
         Out of Stock
       </b>
     );
@@ -225,7 +225,7 @@ export default class ProductDetail extends React.Component {
   };
 
   FavoriteButton = ({ product }) => {
-    const favCount = product.favoriteCount === 0 ? "0" : product.favoriteCount;
+    const favCount = product.favoriteCount === 0 ? '0' : product.favoriteCount;
     if (!this.context.state.user.token) {
       return (
         <div className="bg-white-subtle text-dark p-3 badge-pill">
@@ -238,9 +238,9 @@ export default class ProductDetail extends React.Component {
     const noFav = isFav === undefined;
     return (
       <IconButton
-        key={isFav ? "btn-favorited" : "btn-not-favorited"}
-        dataIcon={isFav ? "fa:heart" : "fa-regular:heart"}
-        classes={isFav ? "btn-primary" : "btn-dark-outline text-dark"}
+        key={isFav ? 'btn-favorited' : 'btn-not-favorited'}
+        dataIcon={isFav ? 'fa:heart' : 'fa-regular:heart'}
+        classes={isFav ? 'btn-primary' : 'btn-dark-outline text-dark'}
         text={favCount}
         click={() => this.toggleFavorite(product)}
         disabled={noFav}
@@ -263,9 +263,9 @@ export default class ProductDetail extends React.Component {
       })
       .catch((e) => {
         this.context.services.uiService.iconModal(
-          `Error ${e.response?.status || ""}`,
+          `Error ${e.response?.status || ''}`,
           e.response?.statusText || e.message,
-          "error"
+          'error',
         );
         this.setState({ ...this.state, isFavorite: isFav });
       });
@@ -286,9 +286,9 @@ export default class ProductDetail extends React.Component {
           })
           .catch((err) => {
             svc.uiService.iconModal(
-              "Error",
-              "Failed to fetch categories of product!",
-              "error"
+              'Error',
+              'Failed to fetch categories of product!',
+              'error',
             );
             this.setState({ ...this.state, failed: true });
           });
@@ -296,7 +296,7 @@ export default class ProductDetail extends React.Component {
         }
       })
       .catch((err) => {
-        svc.uiService.iconModal("Error", "Failed to fetch products!", "error");
+        svc.uiService.iconModal('Error', 'Failed to fetch products!', 'error');
         this.setState({ ...this.state, failed: true });
       })
       .finally(() => this.setState({ ...this.state, fetching: false }));
@@ -323,7 +323,7 @@ export default class ProductDetail extends React.Component {
           ...this.state,
           fetchingFav: false,
           favFetchedFor: curUserId,
-        })
+        }),
       );
   };
 }

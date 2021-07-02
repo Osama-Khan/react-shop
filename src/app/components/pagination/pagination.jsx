@@ -37,12 +37,12 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
     numEls.push(
       <PaginationElement
         key={`pagination-el-${i}`}
-        className={currentPage === i ? " active" : ""}
+        className={currentPage === i ? ' active' : ''}
         onClick={() => {
           if (currentPage !== i) gotoPage(i);
         }}
         text={i}
-      />
+      />,
     );
   }
 
@@ -55,7 +55,7 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
       <ul className="pagination">
         <PaginationElement
           key="pagination-el-first"
-          className={isFirst ? " disabled" : ""}
+          className={isFirst ? ' disabled' : ''}
           text="First"
           onClick={() => {
             gotoPage(1);
@@ -64,7 +64,7 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
         {numEls}
         <PaginationElement
           key="pagination-el-last"
-          className={isLast ? " disabled" : ""}
+          className={isLast ? ' disabled' : ''}
           text="Last"
           onClick={() => {
             gotoPage(totalPages);

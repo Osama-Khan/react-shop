@@ -1,7 +1,7 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import { User } from "../models/user";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import { User } from '../models/user';
+import ApiService from './api.service';
 
 export default class UserService extends ApiService {
   /**
@@ -14,7 +14,7 @@ export default class UserService extends ApiService {
   async login(username: string, password: string, context?: any) {
     const obj = { username, password };
     const res = await axios.post(`${this.domain}/login`, obj, {
-      headers: { "Content-type": "application/json" },
+      headers: { 'Content-type': 'application/json' },
     });
     if (context) {
       const user = res.data;
@@ -46,11 +46,11 @@ export default class UserService extends ApiService {
     firstName: string,
     lastName: string,
     email: string,
-    dateOfBirth: Date
+    dateOfBirth: Date,
   ) {
     const obj = { username, password, firstName, lastName, email, dateOfBirth };
     const res = await axios.post(`${this.domain}/register`, obj, {
-      headers: { "Content-type": "application/json" },
+      headers: { 'Content-type': 'application/json' },
     });
     return res;
   }
@@ -89,7 +89,7 @@ export default class UserService extends ApiService {
     if (!criteria) {
       criteria = new Criteria();
     }
-    criteria.addFilter("user", id);
+    criteria.addFilter('user', id);
     const endPoint = `products${criteria.getUrlParameters()}`;
     const res = await axios.get(`${this.domain}/${endPoint}`);
     return res;

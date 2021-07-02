@@ -1,15 +1,15 @@
-import Icon from "../icon/icon";
+import Icon from '../icon/icon';
 
 export function PrimaryButton({
   text,
   outline,
   disabled = false,
-  classes = "",
+  classes = '',
   click = () => {},
 }) {
   return (
     <button
-      className={`btn btn-primary${outline ? "-outline" : ""} ${classes}`}
+      className={`btn btn-primary${outline ? '-outline' : ''} ${classes}`}
       disabled={disabled}
       onClick={click}>
       {text}
@@ -21,12 +21,12 @@ export function SecondaryButton({
   text,
   outline,
   disabled = false,
-  classes = "",
+  classes = '',
   click = () => {},
 }) {
   return (
     <button
-      className={`btn btn-secondary${outline ? "-outline" : ""} ${classes}`}
+      className={`btn btn-secondary${outline ? '-outline' : ''} ${classes}`}
       disabled={disabled}
       onClick={click}>
       {text}
@@ -37,8 +37,8 @@ export function SecondaryButton({
 export function IconButton({
   dataIcon,
   click,
-  classes = "btn-primary-outline",
-  iconClasses = "",
+  classes = 'btn-primary-outline',
+  iconClasses = '',
   text,
   disabled = false,
 }) {

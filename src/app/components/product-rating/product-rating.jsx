@@ -1,4 +1,4 @@
-import Icon from "../icon/icon";
+import Icon from '../icon/icon';
 
 export default function ProductRating({ rating, classes }) {
   const stars = rating ? rating : 0;
@@ -24,16 +24,16 @@ export default function ProductRating({ rating, classes }) {
     }
   }
 
-  let textClass = rating ? "text-dark" : "text-muted";
-  textClass += " ml-1 border-left";
-  const divClass = rating ? "text-yellow" : "text-muted";
+  let textClass = rating ? 'text-dark' : 'text-muted';
+  textClass += ' ml-1 border-left';
+  const divClass = rating ? 'text-yellow' : 'text-muted';
 
   return (
-    <div className={`p-1 ${divClass} ${classes ? classes : ""}`}>
+    <div className={`p-1 ${divClass} ${classes ? classes : ''}`}>
       {starsEl}
       <span className={textClass}>
-        {" "}
-        {rating ? rating + " Stars" : "No ratings"}
+        {' '}
+        {rating ? rating + ' Stars' : 'No ratings'}
       </span>
     </div>
   );

@@ -1,6 +1,6 @@
-import axios from "axios";
-import Criteria from "../models/criteria";
-import ApiService from "./api.service";
+import axios from 'axios';
+import Criteria from '../models/criteria';
+import ApiService from './api.service';
 
 export default class OrderService extends ApiService {
   endpoint = `${this.domain}/orders`;
@@ -15,13 +15,13 @@ export default class OrderService extends ApiService {
   async placeOrder(
     address: string,
     userId: number,
-    products: [{ id: number; quantity: number }]
+    products: [{ id: number; quantity: number }],
   ) {
     const url = this.endpoint;
     const ret = await axios.put(
       url,
       { address, user: userId, products },
-      { headers: { "Content-type": "application/json" } }
+      { headers: { 'Content-type': 'application/json' } },
     );
     return ret;
   }
@@ -36,9 +36,9 @@ export default class OrderService extends ApiService {
     if (!criteria) {
       criteria = new Criteria();
     }
-    criteria.addRelation("orderProducts");
-    criteria.addRelation("orderState");
-    criteria.addFilter("user", userId);
+    criteria.addRelation('orderProducts');
+    criteria.addRelation('orderState');
+    criteria.addFilter('user', userId);
     const url = this.endpoint + criteria.getUrlParameters();
     const res = await axios.get(url);
     return res;

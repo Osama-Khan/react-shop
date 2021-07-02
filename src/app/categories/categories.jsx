@@ -1,11 +1,11 @@
-import { Component } from "react";
-import { Link } from "react-router-dom";
-import { AppContext } from "../context/app.provider";
-import { categoriesUrl } from "../routes";
-import Criteria from "../models/criteria";
-import LoadingSpinner from "../components/loading/loading-spinner";
-import ProductsList from "../components/products-list/products-list";
-import Icon from "../components/icon/icon";
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { AppContext } from '../context/app.provider';
+import { categoriesUrl } from '../routes';
+import Criteria from '../models/criteria';
+import LoadingSpinner from '../components/loading/loading-spinner';
+import ProductsList from '../components/products-list/products-list';
+import Icon from '../components/icon/icon';
 
 export default class Categories extends Component {
   static contextType = AppContext;
@@ -22,8 +22,8 @@ export default class Categories extends Component {
   componentDidMount() {
     if (!this.categoryName) {
       const criteria = new Criteria();
-      criteria.addRelation("childCategories");
-      criteria.addRelation("parentCategory");
+      criteria.addRelation('childCategories');
+      criteria.addRelation('parentCategory');
       criteria.setLimit(10000);
       this.context.services.categoryService
         .fetchCategories(criteria)
@@ -35,7 +35,7 @@ export default class Categories extends Component {
 
   render() {
     const rootCategories = this.state.categories?.filter(
-      (c) => !c.parentCategory
+      (c) => !c.parentCategory,
     );
     const page = this.state.categories ? (
       <this.CategoriesList categories={rootCategories} />
@@ -44,7 +44,7 @@ export default class Categories extends Component {
         requestMethod={(criteria) =>
           this.context.services.productService.fetchFromCategory(
             this.categoryName,
-            criteria
+            criteria,
           )
         }
       />
@@ -58,7 +58,7 @@ export default class Categories extends Component {
           {this.categoryName ? (
             <>:&nbsp;{this.categoryName.toUpperCase()}</>
           ) : (
-            ""
+            ''
           )}
         </h1>
         {page}
@@ -76,14 +76,14 @@ export default class Categories extends Component {
       return (
         <div key={c.id} className="col-6 col-md-4 col-lg-2">
           <div
-            className={`card p-0 my-2 transition ${
+            className={`card clickable p-0 my-2 transition ${
               isSelected
-                ? "bg-dark text-light shadow font-weight-bold"
-                : `shadow-sm${!isTop ? " opacity-3" : ""}`
+                ? 'bg-dark text-light shadow font-weight-bold'
+                : `shadow-sm${!isTop ? ' opacity-3' : ''}`
             }`}>
             <div className="row mx-0">
               <Link
-                className={"py-3 ml-2 flex-grow-1 anchor-color-remover"}
+                className={'py-3 ml-2 flex-grow-1 anchor-color-remover'}
                 to={`${categoriesUrl}/${c.name.toLowerCase()}`}>
                 {c.name}
               </Link>
@@ -122,7 +122,7 @@ export default class Categories extends Component {
     );
     return (
       <>
-        {!isRoot ? <hr /> : ""}
+        {!isRoot ? <hr /> : ''}
         <div className="row mt-5">{mainCats}</div>
         {subCats}
       </>
@@ -136,7 +136,7 @@ export default class Categories extends Component {
    */
   getChildren(parentId) {
     return this.state.categories.filter(
-      (c) => c.parentCategory?.id === parentId
+      (c) => c.parentCategory?.id === parentId,
     );
   }
 }
