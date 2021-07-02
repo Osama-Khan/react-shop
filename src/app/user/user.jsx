@@ -14,6 +14,7 @@ import Icon from '../components/icon/icon';
 import LoadingSpinner from '../components/loading/loading-spinner';
 import Card from '../components/card/card';
 import LoadingFailed from '../components/loading/loading-failed';
+import RoleBadge from './profile/role-badge';
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -80,6 +81,8 @@ export default class User extends React.Component {
               <Link to={`${userUrl}/${user.id}`}>
                 <p className="badge btn btn-light">@{user.username}</p>
               </Link>
+              <br />
+              {user.roles ? <RoleBadge roles={user.roles} /> : ''}
             </div>
           </div>
           <div className="col-sm-8">
@@ -159,7 +162,7 @@ export default class User extends React.Component {
   profileTemplateOther = (user) => (
     <div className="mt-5">
       <div className="col-sm-4 bg-primary d-flex flex-column m-auto card">
-        <div className="text-center text-white my-auto">
+        <div className="text-center text-white my-3">
           <img
             src={user.profileImage}
             className="rounded-circle shadow img-large"
@@ -171,6 +174,8 @@ export default class User extends React.Component {
           <Link to={`${userUrl}/${user.id}`}>
             <p className="badge btn btn-light">@{user.username}</p>
           </Link>
+          <br />
+          <RoleBadge roles={user.roles} />
         </div>
       </div>
       <div className="col-sm-4 mt-3 mx-auto">
