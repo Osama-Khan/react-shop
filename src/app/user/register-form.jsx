@@ -5,7 +5,7 @@ import { AppContext } from '../context/app.provider';
 import { userUrl } from '../routes';
 
 let valid, setValid;
-export default function Register(props) {
+export default function RegisterForm(props) {
   const context = useContext(AppContext);
   [valid, setValid] = useState(false);
   return (

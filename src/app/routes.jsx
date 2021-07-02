@@ -2,7 +2,7 @@ import Categories from './categories/categories';
 import ProductList from './product/product-list';
 import Home from './home/Home';
 import User from './user/user';
-import Register from './user/register';
+import RegisterForm from './user/register-form';
 import Checkout from './order/checkout';
 import Orders from './order/orders';
 import UserEdit from './user/user-edit';
@@ -38,7 +38,7 @@ export const routes = [
   { path: userUrl + '/:id', component: User },
   { path: userProductsUrl, component: UserProducts },
   { path: addAddressUrl, component: AddAddress },
-  { path: registerUrl, component: Register },
+  { path: registerUrl, component: RegisterForm },
   { path: checkoutUrl, component: Checkout },
   { path: ordersUrl, component: Orders },
 ];
