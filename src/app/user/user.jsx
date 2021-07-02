@@ -1,20 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { PrimaryButton } from '../components/button/Button';
 import { AppContext } from '../context/app.provider';
-import {
-  registerUrl,
-  userUrl,
-  addressesUrl,
-  editUserUrl,
-  ordersUrl,
-  userFavoritesUrl,
-} from '../routes';
-import Icon from '../components/icon/icon';
 import LoadingSpinner from '../components/loading/loading-spinner';
-import Card from '../components/card/card';
 import LoadingFailed from '../components/loading/loading-failed';
-import RoleBadge from './profile/role-badge';
+import UserProfile from './profile/user-profile';
+import LoginForm from './login-form';
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -45,183 +34,23 @@ export default class User extends React.Component {
         (this.context.state.user.token &&
           this.state.user?.id === this.context.state.user.id)
       ) {
-        return this.profileTemplateOwn(this.context.state.user);
+        return (
+          <UserProfile
+            user={this.context.state.user}
+            address={this.state.address}
+            isOwn={true}
+            onLogout={this.logout}
+          />
+        );
       } else {
-        if (this.state.user) return this.profileTemplateOther(this.state.user);
+        if (this.state.user) return <UserProfile user={this.state.user} />;
         else if (this.state.fetching) return <LoadingSpinner />;
         else return <LoadingFailed />;
       }
     } else {
-      return this.loginTemplate();
+      return <LoginForm context={this.context} />;
     }
   }
-
-  profileTemplateOwn = (user) => (
-    <div className="mt-5">
-      <div className="card border border-primary m-auto col-md-8 p-0">
-        <div className="row ml-0 mr-0 bg-white">
-          <div className="col-sm-4 bg-primary d-flex flex-column m-0 card rounded-left">
-            <div className="m-2 top-right">
-              <Link to={editUserUrl}>
-                <Icon
-                  classes="text-subtle-white clickable"
-                  dataIcon="bx-bxs-message-square-edit"
-                />
-              </Link>
-            </div>
-            <div className="text-center text-white my-auto">
-              <img
-                src={user.profileImage}
-                className="rounded-circle shadow img-large"
-                alt="User-Profile"
-              />
-              <h6 className="mt-1 font-weight-bold">
-                {user.firstName} {user.lastName}
-              </h6>
-              <Link to={`${userUrl}/${user.id}`}>
-                <p className="badge btn btn-light">@{user.username}</p>
-              </Link>
-              <br />
-              {user.roles ? <RoleBadge roles={user.roles} /> : ''}
-            </div>
-          </div>
-          <div className="col-sm-8">
-            <h6 className="mt-3 font-weight-bold">Information</h6>
-            <div className="row">
-              <div className="col-sm-6">
-                <p className="mb-0">Email</p>
-                <h6 className="text-muted">{user.email}</h6>
-              </div>
-              <div className="col-sm-6">
-                <p className="mb-0">
-                  Default Address{' '}
-                  <Link to={addressesUrl}>
-                    <Icon
-                      dataIcon="bx-bxs-message-square-detail"
-                      classes="text-transparent-dark clickable"
-                    />
-                  </Link>
-                </p>
-                <p>
-                  <b>{this.state.address ? this.state.address.tag : ''}</b>{' '}
-                  <span className="text-sm text-muted">
-                    {' '}
-                    {this.state.address
-                      ? this.state.address.address
-                      : 'No default address'}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <hr />
-            <div className="row mt-2">
-              <div className="col-sm-6 mb-3 mx-auto">
-                <Card
-                  text="My Products"
-                  icon="bx-bxs-box"
-                  color="primary"
-                  iconClasses="icon-sm"
-                  linkTo={`${userUrl}/${user.id}/products`}
-                />
-              </div>
-              <div className="col-sm-6 mb-3 mx-auto">
-                <Card
-                  text="My Orders"
-                  icon="fa-solid:file-invoice"
-                  color="primary"
-                  iconClasses="icon-sm"
-                  linkTo={ordersUrl}
-                />
-              </div>
-              <div className="col-sm-6 mb-3 mx-auto">
-                <Card
-                  text="My Favorites"
-                  icon="fa:heart"
-                  color="primary"
-                  iconClasses="icon-sm"
-                  linkTo={userFavoritesUrl}
-                />
-              </div>
-              <div className="col-sm-6 mb-3 mx-auto">
-                <Card
-                  text="Logout"
-                  icon="fa:sign-out"
-                  color="red"
-                  classes="border border-red"
-                  iconClasses="icon-sm"
-                  click={this.logout}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  profileTemplateOther = (user) => (
-    <div className="mt-5">
-      <div className="col-sm-4 bg-primary d-flex flex-column m-auto card">
-        <div className="text-center text-white my-3">
-          <img
-            src={user.profileImage}
-            className="rounded-circle shadow img-large"
-            alt="User-Profile"
-          />
-          <h6 className="mt-1 font-weight-bold">
-            {user.firstName} {user.lastName}
-          </h6>
-          <Link to={`${userUrl}/${user.id}`}>
-            <p className="badge btn btn-light">@{user.username}</p>
-          </Link>
-          <br />
-          <RoleBadge roles={user.roles} />
-        </div>
-      </div>
-      <div className="col-sm-4 mt-3 mx-auto">
-        <Card
-          text="Products"
-          icon="bx-bxs-box"
-          color="primary"
-          iconClasses="icon-sm"
-          linkTo={`${userUrl}/${user.id}/products`}
-        />
-      </div>
-    </div>
-  );
-
-  loginTemplate = () => (
-    <div className="row">
-      <div className="col-md-6 mx-auto mt-5 card shadow p-3 d-flex flex-column">
-        <p className="text-center font-weight-bold">ACCOUNT</p>
-        <div className="form-group">
-          <label>Username</label>
-          <input className="form-control" type="text" id="loginUsernameField" />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            className="form-control"
-            type="password"
-            id="loginPasswordField"
-          />
-          <label className="ml-auto text-sm text-clickable">
-            Forgot password?
-          </label>
-        </div>
-        <PrimaryButton
-          text="Login"
-          click={this.login}
-          classes="btn-block"></PrimaryButton>
-        <Link to={registerUrl}>
-          <PrimaryButton
-            text="Create an account"
-            outline={true}
-            classes="btn-block"></PrimaryButton>
-        </Link>
-      </div>
-    </div>
-  );
 
   fetchData = () => {
     this.setState({ ...this.state, fetching: true });
@@ -279,20 +108,6 @@ export default class User extends React.Component {
           }
         });
     }
-  };
-
-  login = () => {
-    const userSvc = this.context.services.userService;
-    const uiSvc = this.context.services.uiService;
-    const username = document.getElementById('loginUsernameField').value;
-    const password = document.getElementById('loginPasswordField').value;
-    const messages = {
-      loading: 'Hold on, logging you in!',
-      success: 'You are logged in!',
-      error: "We couldn't log you in.",
-    };
-    const loginPromise = userSvc.login(username, password, this.context);
-    uiSvc.promiseToast(loginPromise, messages);
   };
 
   logout = () => {
