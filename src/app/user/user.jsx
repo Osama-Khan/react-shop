@@ -1,9 +1,11 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { AppContext } from '../context/app.provider';
 import LoadingSpinner from '../components/loading/loading-spinner';
 import LoadingFailed from '../components/loading/loading-failed';
 import UserProfile from './profile/user-profile';
 import LoginForm from './login-form';
+import { userUrl } from '../routes';
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -20,6 +22,9 @@ export default class User extends React.Component {
   }
 
   render() {
+    if (this.context.state.user?.id === parseInt(this.props.match.params.id)) {
+      return <Redirect to={userUrl} />;
+    }
     if (this.context.state.user.token || this.props.match.params.id) {
       if (this.state.address === undefined && this.state.user === undefined) {
         if (this.state.failed) {
