@@ -11,9 +11,16 @@ import AddAddress from './user/addresses/add-address';
 import UserProducts from './user/user-products';
 import UserFavorites from './user/user-favorites';
 import ProductDetail from './product/product-detail';
+import AdminHome from './admin/admin-home';
 
 // Url Constants
 export const homeUrl = '/';
+// Admin
+export const adminUrl = '/admin';
+export const adminUsersUrl = adminUrl + '/users';
+export const adminProductsUrl = adminUrl + '/products';
+export const adminOrdersUrl = adminUrl + '/orders';
+export const adminCategoriesUrl = adminUrl + '/categories';
 // Categories
 export const categoriesUrl = '/categories';
 // Orders
@@ -29,6 +36,11 @@ export const userFavoritesUrl = userUrl + '/favorites';
 export const addressesUrl = userUrl + '/addresses';
 export const addAddressUrl = addressesUrl + '/add';
 export const registerUrl = '/register';
+
+// Route Constants
+const adminRoutes = [
+  { path: adminUrl, component: AdminHome },
+];
 
 const categoryRoutes = [
   { path: categoriesUrl, component: Categories },
@@ -58,6 +70,7 @@ const userRoutes = [
 
 export const routes = [
   { path: homeUrl, component: Home },
+  ...adminRoutes,
   ...categoryRoutes,
   ...orderRoutes,
   ...productRoutes,

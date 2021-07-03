@@ -3,6 +3,7 @@ import Card from '../../components/card/card';
 import Icon from '../../components/icon/icon';
 import {
   addressesUrl,
+  adminUrl,
   editUserUrl,
   ordersUrl,
   userFavoritesUrl,
@@ -121,6 +122,7 @@ export default function UserProfile({
                       color="primary"
                       classes="border border-primary"
                       iconClasses="icon-sm"
+                      linkTo={adminUrl}
                     />
                   </div>
                 ) : (
