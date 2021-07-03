@@ -1,3 +1,5 @@
 import { User } from '../models/user';
 
-export default class UserState extends User {}
+export default class UserState extends User {
+  restoringState = false;
+}

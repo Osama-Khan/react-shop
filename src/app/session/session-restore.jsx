@@ -33,6 +33,7 @@ function restoreUser(context) {
   const svc = context.services;
   const token = svc.storageService.loadUserToken();
   if (token) {
+    context.state.user.restoringState = true;
     const promise = svc.userService.loginWithToken(token);
     const messages = {
       loading: 'Restoring session...',
@@ -46,7 +47,8 @@ function restoreUser(context) {
         user.token = token;
         return user;
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => (context.state.user.restoringState = false));
   }
 }
 
