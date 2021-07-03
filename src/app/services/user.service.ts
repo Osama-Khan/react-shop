@@ -56,6 +56,16 @@ export default class UserService extends ApiService {
   }
 
   /**
+   * Gets all users
+   * @param criteria Criteria object to filter the results
+   * @returns object with user data and meta
+   */
+  async getUsers(criteria?: Criteria<User>) {
+    const params = criteria?.getUrlParameters() || '';
+    const res = await axios.get(`${this.domain}/users${params}`);
+    return res;
+  }
+  /**
    * Gets the user with given id
    * @param id of the user to get
    * @returns user with given id
@@ -103,6 +113,15 @@ export default class UserService extends ApiService {
    */
   async update(id: number, data: Partial<User>) {
     const res = await axios.patch(`${this.domain}/users/${id}`, data);
+    return res;
+  }
+
+  /**
+   * Sends a delete request to the server
+   * @param id ID of the user to delete
+   */
+  async delete(id: number) {
+    const res = await axios.delete(`${this.domain}/users/${id}`);
     return res;
   }
 }
