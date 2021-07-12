@@ -94,7 +94,7 @@ export default class Orders extends Component {
       criteria.addFilter('orderState', this.state.selectedOrderState);
     }
     this.context.services.orderService
-      .getOrders(this.context.state.user.id, criteria)
+      .getOrdersByUser(this.context.state.user.id, criteria)
       .then((res) => {
         this.setState({
           ...this.state,

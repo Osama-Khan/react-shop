@@ -27,12 +27,23 @@ export default class OrderService extends ApiService {
   }
 
   /**
+   * Sends a request to get orders
+   * @param criteria filters for the orders
+   * @returns A list of orders
+   */
+  async getOrders(criteria?: Criteria<any>) {
+    const url = this.endpoint + (criteria?.getUrlParameters() || '');
+    const res = await axios.get(url);
+    return res;
+  }
+
+  /**
    * Sends a request to get the orders of the given user
    * @param userId ID of the user to fetch orders of
    * @param criteria filters for the orders
    * @returns A list of orders
    */
-  async getOrders(userId: number, criteria?: Criteria<any>) {
+  async getOrdersByUser(userId: number, criteria?: Criteria<any>) {
     if (!criteria) {
       criteria = new Criteria();
     }
