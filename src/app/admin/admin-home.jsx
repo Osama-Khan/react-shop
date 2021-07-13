@@ -11,6 +11,7 @@ import {
   homeUrl,
 } from '../routes';
 import LoadingSpinner from '../components/loading/loading-spinner';
+import authorize from './auth.helper';
 
 export default class AdminHome extends Component {
   static contextType = AppContext;
@@ -22,18 +23,8 @@ export default class AdminHome extends Component {
   componentDidMount() {}
 
   render() {
-    if (this.context.state.user.restoringState) {
-      return <LoadingSpinner />;
-    }
-    if (
-      !this.context.state.user.token ||
-      !this.context.state.user.roles.find((r) => r.name === 'admin')
-    ) {
-      this.context.services.uiService.toast(
-        'You need to be logged in as admin to access admin panel.',
-      );
-      return <Redirect to={homeUrl} />;
-    }
+    const auth = authorize(this.context);
+    if (auth) return auth;
     return (
       <div className="mt-5 card col-md-8 mx-auto px-0">
         <div className="card-header">
