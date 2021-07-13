@@ -40,4 +40,15 @@ export default class ProductService extends ApiService {
     const ret = await axios.get(url);
     return ret;
   }
+
+  /**
+   * Deletes a product matching the given id
+   * @param id of the product to delete
+   * @returns Deleted product
+   */
+  async delete(id: number) {
+    const url = `${this.endpoint}/${id}`;
+    const ret = await axios.delete(url);
+    return ret;
+  }
 }
