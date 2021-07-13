@@ -12,6 +12,10 @@ import UserProducts from './user/user-products';
 import UserFavorites from './user/user-favorites';
 import ProductDetail from './product/product-detail';
 import AdminHome from './admin/admin-home';
+import AdminUsers from './admin/users/admin-users';
+import AdminProducts from './admin/products/admin-products';
+import AdminOrders from './admin/orders/admin-orders';
+import AdminCategories from './admin/categories/admin-categories';
 
 // Url Constants
 export const homeUrl = '/';
@@ -40,6 +44,10 @@ export const registerUrl = '/register';
 // Route Constants
 const adminRoutes = [
   { path: adminUrl, component: AdminHome },
+  { path: adminUsersUrl, component: AdminUsers },
+  { path: adminProductsUrl, component: AdminProducts },
+  { path: adminOrdersUrl, component: AdminOrders },
+  { path: adminCategoriesUrl, component: AdminCategories },
 ];
 
 const categoryRoutes = [
