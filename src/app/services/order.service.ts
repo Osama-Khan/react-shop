@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { OrderStateEnum } from '../../data/order-state.enum';
 import Criteria from '../models/criteria';
 import ApiService from './api.service';
 
@@ -73,6 +74,42 @@ export default class OrderService extends ApiService {
   async getOrderStates() {
     const url = `${this.endpoint}/states`;
     const res = await axios.get(url);
+    return res;
+  }
+
+  /**
+   * Marks an order as delivered
+   * @param orderId ID of the order to mark delivered
+   * @returns the order marked as delivered
+   */
+  async deliverOrder(orderId: number) {
+    const o = { orderState: OrderStateEnum.Delivered };
+    const url = `${this.endpoint}/${orderId}`;
+    const res = await axios.patch(url, o);
+    return res;
+  }
+
+  /**
+   * Marks an order as shipped
+   * @param orderId ID of the order to mark shipped
+   * @returns the order marked as shipped
+   */
+  async shipOrder(orderId: number) {
+    const o = { orderState: OrderStateEnum.Shipped };
+    const url = `${this.endpoint}/${orderId}`;
+    const res = await axios.patch(url, o);
+    return res;
+  }
+
+  /**
+   * Marks an order as canceled
+   * @param orderId ID of the order to mark canceled
+   * @returns the order marked as canceled
+   */
+  async cancelOrder(orderId: number) {
+    const o = { orderState: OrderStateEnum.Cancelled };
+    const url = `${this.endpoint}/${orderId}`;
+    const res = await axios.patch(url, o);
     return res;
   }
 }
