@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import Card from '../components/card/card';
 import { AppContext } from '../context/app.provider';
 import Icon from '../components/icon/icon';
@@ -8,9 +7,7 @@ import {
   adminOrdersUrl,
   adminProductsUrl,
   adminUsersUrl,
-  homeUrl,
 } from '../routes';
-import LoadingSpinner from '../components/loading/loading-spinner';
 import authorize from './auth.helper';
 
 export default class AdminHome extends Component {
