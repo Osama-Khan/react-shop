@@ -91,18 +91,19 @@ export default class ListingComponent<T> extends Component<
           <thead className="table-dark">
             <tr>
               {this.options.map((o) => (
-                <th>{o.header}</th>
+                <th key={`t-head-${o.header}`}>{o.header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {this.state.data?.map((d: any) => (
-              <tr>
-                {this.options.map((o) => (
-                  <td>
+            {this.state.data?.map((d: any, i: number) => (
+              <tr key={`row-${i}`}>
+                {this.options.map((o, i) => (
+                  <td key={`cell-${i}`}>
                     {o.actions
-                      ? o.actions.map((a) => (
+                      ? o.actions.map((a, i) => (
                           <span
+                            key={`action-${i}`}
                             onClick={() =>
                               a.onClick(d)?.then(() => this.fetch())
                             }>
