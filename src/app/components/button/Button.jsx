@@ -45,7 +45,7 @@ export function IconButton({
   const t = text ? <span className="mx-2">{text}</span> : null;
   return (
     <button
-      className={`btn btn-icon ${classes}`}
+      className={`btn ${text ? '' : 'btn-icon'} ${classes}`}
       onClick={click}
       disabled={disabled}>
       <Icon dataIcon={dataIcon} classes={iconClasses} />

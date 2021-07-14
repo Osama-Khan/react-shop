@@ -2,8 +2,13 @@
 // This file contains all styles related to the button component.
 // -----------------------------------------------------------------------------
 .btn {
+  color: white;
   transition: 0.25s all;
   margin: 0.2em;
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .btn:hover {
