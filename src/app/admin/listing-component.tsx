@@ -105,7 +105,9 @@ export default class ListingComponent<T> extends Component<
                           <span
                             key={`action-${i}`}
                             onClick={() =>
-                              a.onClick(d)?.then(() => this.fetch())
+                              a.onClick
+                                ? a.onClick(d)?.then(() => this.fetch())
+                                : undefined
                             }>
                             {a.selector(d)}
                           </span>
