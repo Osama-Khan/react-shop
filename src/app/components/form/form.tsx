@@ -21,6 +21,14 @@ export default class Form extends Component<FormProps, any> {
     };
   }
 
+  componentDidUpdate(prevProps: FormProps) {
+    // Check if props have been updated and update form controls
+    const controlsUpdated = this.props.controls !== prevProps.controls;
+    if (controlsUpdated) {
+      this.setState({ ...this.state, controls: this.props.controls });
+    }
+  }
+
   render() {
     return this.state.controls.map((c: any, i: number) => {
       c.onChange = c.onChange || ((e: any) => this.defaultOnChange(e, c));
