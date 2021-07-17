@@ -8,7 +8,6 @@ import {
   adminProductsUrl,
   adminUsersUrl,
 } from '../routes';
-import authorize from './auth.helper';
 
 export default class AdminHome extends Component {
   static contextType = AppContext;
@@ -20,8 +19,6 @@ export default class AdminHome extends Component {
   componentDidMount() {}
 
   render() {
-    const auth = authorize(this.context);
-    if (auth) return auth;
     return (
       <div className="mt-5 card col-md-8 mx-auto px-0">
         <div className="card-header">

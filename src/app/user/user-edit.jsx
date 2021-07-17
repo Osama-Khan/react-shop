@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Form from '../components/form/form.tsx';
 import {
   isEmail,
@@ -35,10 +35,6 @@ export default class UserEdit extends Component {
   render() {
     if (!this.state.user) {
       return <LoadingSpinner />;
-    }
-
-    if (!this.state.user.token) {
-      return <Redirect to={userUrl} />;
     }
 
     this.initFormData();

@@ -10,7 +10,6 @@ import InputControl from '../../components/form/models/input.model';
 import SelectControl from '../../components/form/models/select.model';
 import { AppContext } from '../../context/app.provider';
 import LoadingSpinner from '../../components/loading/loading-spinner';
-import authorize from '../auth.helper';
 
 export default class CreateProduct extends Component {
   static contextType = AppContext;
@@ -33,8 +32,6 @@ export default class CreateProduct extends Component {
   }
 
   render() {
-    const auth = authorize(this.context);
-    if (auth) return auth;
     return (
       <div className="row">
         <div className="col-md-8 mx-auto mt-5 p-0 card shadow">

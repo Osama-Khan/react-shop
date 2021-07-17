@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/app.provider';
 import { categoriesUrl } from '../../routes';
-import authorize from '../auth.helper';
 import ListingComponent from '../listing-component.tsx';
 
 export default class AdminCategories extends Component {
@@ -20,8 +19,6 @@ export default class AdminCategories extends Component {
   ];
 
   render() {
-    const auth = authorize(this.context);
-    if (auth) return auth;
     return (
       <div className="mt-5 card">
         <h3 className="card-header">

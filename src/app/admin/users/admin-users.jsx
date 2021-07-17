@@ -4,7 +4,6 @@ import { AppContext } from '../../context/app.provider';
 import { userUrl } from '../../routes';
 import Icon from '../../components/icon/icon';
 import ListingComponent from '../listing-component.tsx';
-import authorize from '../auth.helper';
 
 export default class AdminUsers extends Component {
   static contextType = AppContext;
@@ -49,8 +48,6 @@ export default class AdminUsers extends Component {
   ];
 
   render() {
-    const auth = authorize(this.context);
-    if (auth) return auth;
     return (
       <div className="mt-5 card">
         <h3 className="card-header">

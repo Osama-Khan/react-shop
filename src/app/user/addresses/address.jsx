@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Icon from '../../components/icon/icon';
 import LoadingSpinner from '../../components/loading/loading-spinner';
 import { AppContext } from '../../context/app.provider';
-import { addAddressUrl, userUrl } from '../../routes';
+import { addAddressUrl } from '../../routes';
 
 export default class AddressBook extends Component {
   static contextType = AppContext;
@@ -47,9 +47,6 @@ export default class AddressBook extends Component {
   };
 
   render() {
-    if (!this.context.state.user.token) {
-      return <Redirect to={userUrl} />;
-    }
     let addressEls;
     if (!this.state.addresses || this.state.defaultAddress === undefined) {
       addressEls = <LoadingSpinner />;

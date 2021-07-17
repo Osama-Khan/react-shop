@@ -1,8 +1,6 @@
 import { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import LoadingSpinner from '../components/loading/loading-spinner';
 import { AppContext } from '../context/app.provider';
-import { userUrl } from '../routes';
 import Criteria from '../models/criteria';
 import Pagination from '../components/pagination/pagination';
 import OrderList from './order-list';
@@ -30,9 +28,6 @@ export default class Orders extends Component {
   }
 
   render() {
-    if (!this.context.state.user.id) {
-      return <Redirect to={userUrl} />;
-    }
     if (this.state.fetching) {
       return <LoadingSpinner />;
     }

@@ -5,7 +5,6 @@ import { adminProductsAddUrl, productsUrl, userUrl } from '../../routes';
 import Icon from '../../components/icon/icon';
 import ListingComponent from '../listing-component.tsx';
 import Criteria from '../../models/criteria';
-import authorize from '../auth.helper';
 import { IconButton } from '../../components/button/Button';
 
 export default class AdminProducts extends Component {
@@ -76,8 +75,6 @@ export default class AdminProducts extends Component {
   }
 
   render() {
-    const auth = authorize(this.context);
-    if (auth) return auth;
     return (
       <div className="mt-5 card">
         <h3 className="card-header">
