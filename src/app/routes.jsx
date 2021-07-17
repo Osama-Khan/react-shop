@@ -47,13 +47,41 @@ export const registerUrl = '/register';
 
 // Route Constants
 const adminRoutes = [
-  { path: adminUrl, component: AdminHome },
-  { path: adminUsersUrl, component: AdminUsers },
-  { path: adminProductsUrl, component: AdminProducts },
-  { path: adminProductsAddUrl, component: CreateProduct },
-  { path: adminProductsEditUrl, component: EditProduct },
-  { path: adminOrdersUrl, component: AdminOrders },
-  { path: adminCategoriesUrl, component: AdminCategories },
+  {
+    path: adminUrl,
+    component: AdminHome,
+    requiresRole: ['admin', 'moderator'],
+  },
+  {
+    path: adminUsersUrl,
+    component: AdminUsers,
+    requiresRole: ['admin', 'moderator'],
+  },
+  {
+    path: adminProductsUrl,
+    component: AdminProducts,
+    requiresRole: ['admin', 'editor'],
+  },
+  {
+    path: adminProductsAddUrl,
+    component: CreateProduct,
+    requiresRole: ['admin', 'editor'],
+  },
+  {
+    path: adminProductsEditUrl,
+    component: EditProduct,
+    requiresRole: ['admin', 'editor'],
+  },
+  {
+    path: adminOrdersUrl,
+    component: AdminOrders,
+    requiresRole: ['admin', 'moderator'],
+  },
+  {
+    path: adminCategoriesUrl,
+    component: AdminCategories,
+    requiresRole: ['admin', 'moderator'],
+  },
 ];
 
 const categoryRoutes = [
@@ -63,7 +91,7 @@ const categoryRoutes = [
 
 const orderRoutes = [
   { path: checkoutUrl, component: Checkout },
-  { path: ordersUrl, component: Orders },
+  { path: ordersUrl, component: Orders, requiresAuth: true },
 ];
 
 const productRoutes = [
@@ -73,12 +101,12 @@ const productRoutes = [
 
 const userRoutes = [
   { path: userUrl, component: User },
-  { path: addressesUrl, component: AddressBook },
-  { path: editUserUrl, component: UserEdit },
-  { path: userFavoritesUrl, component: UserFavorites },
+  { path: addressesUrl, component: AddressBook, requiresAuth: true },
+  { path: editUserUrl, component: UserEdit, requiresAuth: true },
+  { path: userFavoritesUrl, component: UserFavorites, requiresAuth: true },
   { path: userUrl + '/:id', component: User },
   { path: userProductsUrl, component: UserProducts },
-  { path: addAddressUrl, component: AddAddress },
+  { path: addAddressUrl, component: AddAddress, requiresAuth: true },
   { path: registerUrl, component: RegisterForm },
 ];
 
