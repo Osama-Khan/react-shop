@@ -42,6 +42,31 @@ export default class ProductService extends ApiService {
   }
 
   /**
+   * Creates a product with the given data
+   * @param data Product data
+   * @param userId ID of the user who is creating the product
+   * @returns The product created
+   */
+  async create(data: any, userId: number) {
+    const url = this.endpoint;
+    data.user = userId;
+    const ret = await axios.put(url, data);
+    return ret;
+  }
+
+  /**
+   * Edits a product with the given id
+   * @param id Product id
+   * @param data Product data
+   * @returns The updated product
+   */
+  async edit(id: number, data: any) {
+    const url = `${this.endpoint}/${id}`;
+    const ret = await axios.patch(url, data);
+    return ret;
+  }
+
+  /**
    * Deletes a product matching the given id
    * @param id of the product to delete
    * @returns Deleted product
