@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/app.provider';
-import { productsUrl, userUrl } from '../../routes';
+import { adminProductsAddUrl, productsUrl, userUrl } from '../../routes';
 import Icon from '../../components/icon/icon';
 import ListingComponent from '../listing-component.tsx';
 import Criteria from '../../models/criteria';
 import authorize from '../auth.helper';
+import { IconButton } from '../../components/button/Button';
 
 export default class AdminProducts extends Component {
   static contextType = AppContext;
@@ -47,9 +48,19 @@ export default class AdminProducts extends Component {
       header: 'Actions',
       actions: [
         {
+          selector: (r) => (
+            <Link to={`products/${r.id}/edit`} title="Edit">
+              <Icon dataIcon="fa:pencil" classes="mx-1 text-blue" />
+            </Link>
+          ),
+        },
+        {
           selector: () => (
             <span title="Delete">
-              <Icon dataIcon="fa:trash" classes="text-red text-clickable" />
+              <Icon
+                dataIcon="fa:trash"
+                classes="mx-1 text-red text-clickable"
+              />
             </span>
           ),
           onClick: (row) => this.delete(row),
@@ -79,6 +90,15 @@ export default class AdminProducts extends Component {
         </h3>
         <div className="card-body">
           <div className="d-flex flex-column">
+            <div className="row mx-0">
+              <Link to={adminProductsAddUrl} className="ml-auto">
+                <IconButton
+                  classes="btn-dark"
+                  text="Add Product"
+                  dataIcon="fa:plus"
+                />
+              </Link>
+            </div>
             <ListingComponent
               options={this.listingColumnOptions}
               fetchMethod={(crit) =>

@@ -16,6 +16,8 @@ import AdminUsers from './admin/users/admin-users';
 import AdminProducts from './admin/products/admin-products';
 import AdminOrders from './admin/orders/admin-orders';
 import AdminCategories from './admin/categories/admin-categories';
+import CreateProduct from './admin/products/create-product';
+import EditProduct from './admin/products/edit-product';
 
 // Url Constants
 export const homeUrl = '/';
@@ -23,6 +25,8 @@ export const homeUrl = '/';
 export const adminUrl = '/admin';
 export const adminUsersUrl = adminUrl + '/users';
 export const adminProductsUrl = adminUrl + '/products';
+export const adminProductsAddUrl = adminProductsUrl + '/create';
+export const adminProductsEditUrl = adminProductsUrl + '/:id/edit';
 export const adminOrdersUrl = adminUrl + '/orders';
 export const adminCategoriesUrl = adminUrl + '/categories';
 // Categories
@@ -46,6 +50,8 @@ const adminRoutes = [
   { path: adminUrl, component: AdminHome },
   { path: adminUsersUrl, component: AdminUsers },
   { path: adminProductsUrl, component: AdminProducts },
+  { path: adminProductsAddUrl, component: CreateProduct },
+  { path: adminProductsEditUrl, component: EditProduct },
   { path: adminOrdersUrl, component: AdminOrders },
   { path: adminCategoriesUrl, component: AdminCategories },
 ];
