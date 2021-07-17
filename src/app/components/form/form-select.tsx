@@ -19,7 +19,7 @@ export default function FormSelect(props: { control: SelectControl }) {
       value={c.value || ''}
       onChange={c.onChange}>
       {c.options.map((o) => (
-        <option value={o.value} disabled={o.disabled}>
+        <option value={o.value} disabled={o.disabled} key={`option-${o.name}`}>
           {o.name}
         </option>
       ))}

@@ -49,6 +49,6 @@ export default class Form extends Component<FormProps, any> {
 
   defaultOnChange = (e: any, control: FormControl) => {
     control.value = e.target.value;
-    this.props.onChange(this.state.controls);
+    if (this.props.onChange) this.props.onChange(this.state.controls);
   };
 }
