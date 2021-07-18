@@ -10,8 +10,9 @@ import { Link } from 'react-router-dom';
 import Icon from '../../icon/icon';
 import Popup from '../../popup/popup';
 import NavbarCartCard from './navbar-cart-card';
+import { useState } from 'react';
 
-const NavAccountContent = ({ context }) => (
+const NavAccountContent = ({ context, state, setState }) => (
   <div>
     <p className="text-center font-weight-bold">ACCOUNT</p>
     <hr />
@@ -20,32 +21,49 @@ const NavAccountContent = ({ context }) => (
       <input
         className="form-control"
         type="text"
-        id="loginPopupUsernameField"
+        value={state.username}
+        onChange={(e) => setState({ ...state, username: e.target.value })}
       />
     </div>
-    <div className="form-group">
+    <div>
       <label>Password</label>
       <input
         className="form-control"
         type="password"
-        id="loginPopupPasswordField"
+        value={state.password}
+        onChange={(e) => setState({ ...state, password: e.target.value })}
       />
       <label className="ml-auto text-sm text-clickable">Forgot password?</label>
     </div>
+    <div>
+      <input
+        type="checkbox"
+        onChange={(e) => setState({ ...state, remember: e.target.checked })}
+      />
+      <label>&nbsp;Remember Me</label>
+    </div>
     <PrimaryButton
       text="Login"
-      click={() => login(context)}
-      classes="btn-block"></PrimaryButton>
+      click={() => login(context, state)}
+      classes="btn-block"
+      disabled={!state.username || !state.password}
+    />
     <Link to={registerUrl}>
       <PrimaryButton
         text="Create an account"
         outline={true}
-        classes="btn-block"></PrimaryButton>
+        classes="btn-block"
+      />
     </Link>
   </div>
 );
 
 export default function DefaultNav({ context, loc }) {
+  const [state, setState] = useState({
+    username: '',
+    password: '',
+    remember: false,
+  });
   return (
     <ul className="d-none d-md-flex nav container">
       <li className="nav-logo m-1">
@@ -109,7 +127,13 @@ export default function DefaultNav({ context, loc }) {
                 )}
               </div>
             }
-            content={<NavAccountContent context={context} />}
+            content={
+              <NavAccountContent
+                context={context}
+                state={state}
+                setState={setState}
+              />
+            }
             position="bottom right"
             parent="nav"
           />
@@ -119,16 +143,19 @@ export default function DefaultNav({ context, loc }) {
   );
 }
 
-const login = (context) => {
+const login = (context, state) => {
   const userSvc = context.services.userService;
   const uiSvc = context.services.uiService;
-  const username = document.getElementById('loginPopupUsernameField').value;
-  const password = document.getElementById('loginPopupPasswordField').value;
+  const { username, password, remember } = state;
+  if (!password || !username) {
+    uiSvc.toast('Please enter login data!');
+    return;
+  }
   const messages = {
     loading: 'Hold on, logging you in!',
     success: 'You are logged in!',
     error: "We couldn't log you in.",
   };
-  const loginPromise = userSvc.login(username, password, context);
+  const loginPromise = userSvc.login(username, password, context, remember);
   uiSvc.promiseToast(loginPromise, messages);
 };
