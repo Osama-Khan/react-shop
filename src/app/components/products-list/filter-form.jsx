@@ -125,98 +125,101 @@ export default class FilterForm extends Component {
           }
         </div>
         <div
-          className={`col-12 pt-2 mt-0 mb-2 card ${
+          className={`col-12 p-0 mt-0 mb-2 card ${
             this.state.showAdvanced ? '' : 'd-none'
           }`}>
-          <h4 className="mt-2">
-            Advanced Filters{' '}
-            <span
-              className="float-right text-clickable"
-              onClick={(e) => this.setState({ showAdvanced: false })}>
-              &times;
-            </span>
-          </h4>
-          <hr />
-          <div className="row flex-row">
-            <div className="form-group col-md-4">
-              <label className="font-weight-bold">Price Range</label>
-              <div className="row">
-                <div className="form-group col-6">
-                  <label>
-                    From:{' '}
-                    {this.props.state.priceMin > 10000
-                      ? parseInt(this.props.state.priceMin / 1000) + 'k'
-                      : this.props.state.priceMin}{' '}
-                    Rs.
-                  </label>
-                  <input
-                    type="range"
-                    value={this.props.state.priceMin}
-                    className="form-control"
-                    min="0"
-                    max={this.props.state.priceMax}
-                    step="100"
-                    onChange={(e) => this.getMinFromInput(e)}
-                  />
-                </div>
-                <div className="form-group col-6">
-                  <label>
-                    To:{' '}
-                    {this.props.state.priceMax >= 100000
-                      ? 'No limit'
-                      : this.props.state.priceMax > 10000
-                      ? parseInt(this.props.state.priceMax / 1000) + 'k Rs.'
-                      : this.props.state.priceMax + ' Rs.'}
-                  </label>
-                  <input
-                    type="range"
-                    value={this.props.state.priceMax}
-                    className="form-control"
-                    min="500"
-                    max="100000"
-                    step="500"
-                    onChange={(e) => this.getMaxFromInput(e)}
-                  />
+          <div className="card-header">
+            <h4 className="mt-2">
+              Advanced Filters
+              <span
+                className="float-right text-clickable"
+                onClick={(e) => this.setState({ showAdvanced: false })}>
+                &times;
+              </span>
+            </h4>
+          </div>
+          <div className="card-body">
+            <div className="row flex-row">
+              <div className="form-group col-md-4">
+                <label className="font-weight-bold">Price Range</label>
+                <div className="row">
+                  <div className="form-group col-6">
+                    <label>
+                      From:{' '}
+                      {this.props.state.priceMin > 10000
+                        ? parseInt(this.props.state.priceMin / 1000) + 'k'
+                        : this.props.state.priceMin}{' '}
+                      Rs.
+                    </label>
+                    <input
+                      type="range"
+                      value={this.props.state.priceMin}
+                      className="form-control"
+                      min="0"
+                      max={this.props.state.priceMax}
+                      step="100"
+                      onChange={(e) => this.getMinFromInput(e)}
+                    />
+                  </div>
+                  <div className="form-group col-6">
+                    <label>
+                      To:{' '}
+                      {this.props.state.priceMax >= 100000
+                        ? 'No limit'
+                        : this.props.state.priceMax > 10000
+                        ? parseInt(this.props.state.priceMax / 1000) + 'k Rs.'
+                        : this.props.state.priceMax + ' Rs.'}
+                    </label>
+                    <input
+                      type="range"
+                      value={this.props.state.priceMax}
+                      className="form-control"
+                      min="500"
+                      max="100000"
+                      step="500"
+                      onChange={(e) => this.getMaxFromInput(e)}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="form-group col-md-4">
-              <label className="font-weight-bold">Minimum Rating</label>
-              <select
-                value={this.props.state.ratingMin}
-                onChange={(e) =>
-                  this.props.setState({
-                    ...this.props.state,
-                    ratingMin: parseFloat(e.target.value),
-                  })
-                }
-                className="form-control">
-                <option value="0">All</option>
-                <option value="0.5">0.5 Stars</option>
-                <option value="1">1 Star</option>
-                <option value="1.5">1.5 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="2.5">2.5 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="3.5">3.5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="4.5">4.5 Stars</option>
-                <option value="5">5 Stars</option>
-              </select>
-            </div>
-            <div className="form-group col-md-4">
-              <input
-                type="checkbox"
-                className="mx-1"
-                checked={this.props.state.showOutOfStock}
-                onChange={(e) =>
-                  this.props.setState({
-                    ...this.props.state,
-                    showOutOfStock: e.target.checked,
-                  })
-                }
-              />
-              <label>Show out of stock</label>
+              <div className="form-group col-md-4">
+                <label className="font-weight-bold">Minimum Rating</label>
+                <select
+                  value={this.props.state.ratingMin}
+                  onChange={(e) =>
+                    this.props.setState({
+                      ...this.props.state,
+                      ratingMin: parseFloat(e.target.value),
+                    })
+                  }
+                  className="form-control">
+                  <option value="0">All</option>
+                  <option value="0.5">0.5 Stars</option>
+                  <option value="1">1 Star</option>
+                  <option value="1.5">1.5 Stars</option>
+                  <option value="2">2 Stars</option>
+                  <option value="2.5">2.5 Stars</option>
+                  <option value="3">3 Stars</option>
+                  <option value="3.5">3.5 Stars</option>
+                  <option value="4">4 Stars</option>
+                  <option value="4.5">4.5 Stars</option>
+                  <option value="5">5 Stars</option>
+                </select>
+              </div>
+              <div className="form-group col-md-4">
+                <input
+                  type="checkbox"
+                  className="mx-1"
+                  checked={this.props.state.showOutOfStock}
+                  onChange={(e) =>
+                    this.props.setState({
+                      ...this.props.state,
+                      showOutOfStock: e.target.checked,
+                    })
+                  }
+                />
+                <label>Show out of stock</label>
+              </div>
             </div>
           </div>
         </div>
