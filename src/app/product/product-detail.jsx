@@ -8,6 +8,7 @@ import LoadingSpinner from '../components/loading/loading-spinner';
 import ProductRating from '../components/product-rating/product-rating';
 import CartProduct from '../models/product/cart-product';
 import LoadingFailed from '../components/loading/loading-failed';
+import PricePill from '../components/pills/price-pill';
 
 export default class ProductDetail extends React.Component {
   static contextType = AppContext;
@@ -75,7 +76,7 @@ export default class ProductDetail extends React.Component {
       component = (
         <div className="row">
           <div className="col-md-4">
-            <div className="my-3 text-center">
+            <div className="m-3 p-3 text-center border rounded">
               <img src={product.img} className="m-auto" alt="Product" />
             </div>
           </div>
@@ -128,6 +129,13 @@ export default class ProductDetail extends React.Component {
         <div className="text-right">
           <this.Stock stock={p.stock} />
         </div>
+        {p.stock > 0 ? (
+          <div className="mt-3 d-flex">
+            <PricePill className="ml-auto" price={p.price} />
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="mt-3 d-flex">
           <this.CartButton product={p} />
           <this.FavoriteButton product={p} />
