@@ -87,20 +87,20 @@ export default class ProductsList extends Component {
     } else if (this.state.failed) {
       prods = <LoadingFailed />;
     } else {
+      const hasFilters = this.state.filters !== initialFilterState;
+
       return (
         <>
           {this.props.showFilters !== false ? filterDiv : <></>}
           <div className="col-md-12 text-center mt-5">
             <p className="font-weight-bold text-muted">
               No products found...{' '}
-              {this.showFilters ? 'Try changing the filters!' : ''}
+              {hasFilters ? 'Try changing the filters!' : ''}
             </p>
-            {this.props.showFilters !== false ? (
+            {hasFilters ? (
               <button
                 className="btn btn-dark mt-2"
-                onClick={() => {
-                  this.doFetch();
-                }}>
+                onClick={() => this.setState(initialState)}>
                 Reset Filters
               </button>
             ) : (
