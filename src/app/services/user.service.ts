@@ -3,6 +3,15 @@ import Criteria from '../models/criteria';
 import { User } from '../models/user';
 import ApiService from './api.service';
 
+type RegisterData = {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  email: string;
+  dateOfBirth: string;
+};
+
 export default class UserService extends ApiService {
   /**
    * Logs in the user with given parameters
@@ -46,16 +55,8 @@ export default class UserService extends ApiService {
    * Registers a new user with the given parameters
    * @returns An object with user data
    */
-  async register(
-    username: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    dateOfBirth: Date,
-  ) {
-    const obj = { username, password, firstName, lastName, email, dateOfBirth };
-    const res = await axios.post(`${this.domain}/register`, obj, {
+  async register(data: RegisterData) {
+    const res = await axios.post(`${this.domain}/register`, data, {
       headers: { 'Content-type': 'application/json' },
     });
     return res;
