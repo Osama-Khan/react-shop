@@ -9,9 +9,15 @@ export default class UserService extends ApiService {
    * @param username The username of the login user
    * @param password The password of the login user
    * @param context The context object containing user state
+   * @param remember Should the token be remembered
    * @returns An object with user data along with token
    */
-  async login(username: string, password: string, context?: any) {
+  async login(
+    username: string,
+    password: string,
+    context?: any,
+    remember = true,
+  ) {
     const obj = { username, password };
     const res = await axios.post(`${this.domain}/login`, obj, {
       headers: { 'Content-type': 'application/json' },
@@ -19,7 +25,7 @@ export default class UserService extends ApiService {
     if (context) {
       const user = res.data;
       context.setState({ ...context.state, user });
-      context.services.storageService.saveUserToken(user.token);
+      if (remember) context.services.storageService.saveUserToken(user.token);
     }
     return res;
   }
