@@ -1,25 +1,23 @@
 export interface IUser {
-  id: number | undefined;
-  username: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-  img: string | undefined;
-  roles: string[] | undefined;
-  token: string | undefined;
-  dateOfBirth: Date | undefined;
-  profileImage: string | undefined;
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  img?: string;
+  roles?: string[];
+  dateOfBirth?: Date;
+  profileImage?: string;
 }
 
 export class User implements IUser {
-  id: number | undefined;
-  username: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-  img: string | undefined;
-  roles: string[] | undefined;
-  token: string | undefined;
-  dateOfBirth: Date | undefined;
-  profileImage: string | undefined;
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  img?: string;
+  roles?: string[];
+  dateOfBirth?: Date;
+  profileImage?: string;
 
   constructor(obj?: IUser) {
     if (obj) {
@@ -29,7 +27,6 @@ export class User implements IUser {
       this.lastName = obj.lastName;
       this.img = obj.img;
       this.roles = obj.roles;
-      this.token = obj.token;
       this.dateOfBirth = obj.dateOfBirth;
       this.profileImage = obj.profileImage;
     }
