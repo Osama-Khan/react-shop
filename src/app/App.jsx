@@ -1,7 +1,12 @@
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { AnimatedSwitch } from 'react-router-transition';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { routes as r } from './routes';
 import { Toaster } from 'react-hot-toast';
 import { AppProvider } from './context/app.provider';
@@ -45,18 +50,23 @@ export default class App extends React.Component {
         <div className="app">
           <Router>
             <Navbar />
-            <div className="container">
-              <AnimatedSwitch
-                atEnter={{ opacity: 0 }}
-                atLeave={{ opacity: 0 }}
-                atActive={{ opacity: 1 }}
-                className="switch-wrapper">
-                {routes}
-              </AnimatedSwitch>
-            </div>
+            <AnimatedContent routes={routes} />
           </Router>
         </div>
       </AppProvider>
     );
   }
 }
+
+const AnimatedContent = ({ routes }) => {
+  const location = useLocation();
+  return (
+    <TransitionGroup>
+      <CSSTransition timeout={500} classNames="fade" key={location.key}>
+        <div className="container">
+          <Switch location={location}>{routes}</Switch>
+        </div>
+      </CSSTransition>
+    </TransitionGroup>
+  );
+};

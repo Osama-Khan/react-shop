@@ -1,0 +1,17 @@
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+
+  &.fade-enter-active {
+    opacity: 1;
+    transition: opacity $animation-fast ease-in;
+  }
+}
+
+.fade-exit {
+  display: none;
+  &.fade-exit-active {
+    opacity: 0;
+    transition: opacity $animation-fast ease-out;
+  }
+}
