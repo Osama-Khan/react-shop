@@ -4,6 +4,7 @@ import Card from '../components/card/card';
 import { categoriesUrl } from '../routes';
 import { catIconMap } from '../../data/category-icon-map.ts';
 import { AppContext } from '../context/app.provider';
+import Icon from '../components/icon/icon';
 
 const carouselImages = [
   'https://hackernoon.com/hn-images/1*jFyawcsqoYctkTuZg6wQ1A.jpeg',
@@ -58,7 +59,10 @@ export default class Home extends React.Component {
         <div className="row">
           <div className="col-md-12 m-auto">
             <h4>
-              <b>Featured Items</b>
+              <b>
+                <Icon dataIcon="fa-solid:chart-line" />
+                &nbsp; Trending
+              </b>
             </h4>
             <div className="bg-light shadow rounded">
               <Carousel images={carouselImages} captions={[]} />
@@ -66,7 +70,10 @@ export default class Home extends React.Component {
           </div>
           <div className="col-md-12 mt-5">
             <h4>
-              <b>Explore</b>
+              <b>
+                <Icon dataIcon="fa:compass" />
+                &nbsp; Explore
+              </b>
             </h4>
             <div className="row">{cats}</div>
           </div>

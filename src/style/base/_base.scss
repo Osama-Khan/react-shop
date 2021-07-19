@@ -30,3 +30,20 @@ a {
 img {
   max-width: 100%;
 }
+
+nav {
+  transition: box-shadow $animation-normal, background-color $animation-normal;
+
+  &.elevated {
+    background-color: #fffe;
+  }
+  @supports (
+    (-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px))
+  ) {
+    &.elevated {
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+      background-color: #fffc;
+      backdrop-filter: blur(16px);
+    }
+  }
+}
