@@ -101,6 +101,7 @@ export default function DefaultNav({ context, loc }) {
           }
           content={<NavbarCartCard />}
           parent="nav"
+          className="nav-popup"
         />
       </li>
       <li className="nav-item">
@@ -136,6 +137,7 @@ export default function DefaultNav({ context, loc }) {
             }
             position="bottom right"
             parent="nav"
+            className="nav-popup"
           />
         )}
       </li>
