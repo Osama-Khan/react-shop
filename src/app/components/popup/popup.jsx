@@ -6,9 +6,10 @@ export default function Popup({
   trigger,
   position = 'bottom center',
   content,
+  className,
 }) {
   return (
-    <P trigger={trigger} position={position}>
+    <P trigger={trigger} position={position} className={className}>
       {content}
     </P>
   );
