@@ -1,26 +1,25 @@
 import Icon from '../icon/icon';
 
 export default function ProductRating({ rating, classes }) {
-  const stars = rating ? rating : 0;
   const starsEl = [];
-  if (stars > 0) {
+  if (rating > 0) {
     let iters,
       count = 0;
-    for (iters = stars; iters >= 1; iters--) {
-      starsEl.push(<Icon key={count} dataIcon="bi-star-fill"></Icon>);
+    for (iters = rating; iters >= 1; iters--) {
+      starsEl.push(<Icon key={count} dataIcon="bi-star-fill" />);
       count++;
     }
     if (iters !== 0) {
-      starsEl.push(<Icon key={count} dataIcon="bi-star-half"></Icon>);
+      starsEl.push(<Icon key={count} dataIcon="bi-star-half" />);
       count++;
     }
     while (count < 5) {
-      starsEl.push(<Icon key={count} dataIcon="bi-star"></Icon>);
+      starsEl.push(<Icon key={count} dataIcon="bi-star" />);
       count++;
     }
   } else {
     for (let i = 0; i < 5; i++) {
-      starsEl.push(<Icon key={i} dataIcon="bi-star"></Icon>);
+      starsEl.push(<Icon key={i} dataIcon="bi-star" />);
     }
   }
 
@@ -32,7 +31,7 @@ export default function ProductRating({ rating, classes }) {
     <div className={`p-1 ${divClass} ${classes ? classes : ''}`}>
       {starsEl}
       <span className={textClass}>
-        {' '}
+        &nbsp;
         {rating ? rating + ' Stars' : 'No ratings'}
       </span>
     </div>
