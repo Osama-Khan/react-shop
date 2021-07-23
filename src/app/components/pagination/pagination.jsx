@@ -51,26 +51,24 @@ export default function Pagination({ currentPage, totalPages, gotoPage }) {
   }
 
   return (
-    <div className="shadow">
-      <ul className="pagination">
-        <PaginationElement
-          key="pagination-el-first"
-          className={isFirst ? ' disabled' : ''}
-          text="First"
-          onClick={() => {
-            gotoPage(1);
-          }}
-        />
-        {numEls}
-        <PaginationElement
-          key="pagination-el-last"
-          className={isLast ? ' disabled' : ''}
-          text="Last"
-          onClick={() => {
-            gotoPage(totalPages);
-          }}
-        />
-      </ul>
-    </div>
+    <ul className="pagination shadow">
+      <PaginationElement
+        key="pagination-el-first"
+        className={isFirst ? ' disabled' : ''}
+        text="First"
+        onClick={() => {
+          gotoPage(1);
+        }}
+      />
+      {numEls}
+      <PaginationElement
+        key="pagination-el-last"
+        className={isLast ? ' disabled' : ''}
+        text="Last"
+        onClick={() => {
+          gotoPage(totalPages);
+        }}
+      />
+    </ul>
   );
 }
