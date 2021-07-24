@@ -31,6 +31,9 @@ const initialState = {
 export default class ProductsList extends Component {
   static contextType = AppContext;
 
+  /** Used in fetch method to decide what page to request */
+  page = 1;
+
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -41,14 +44,14 @@ export default class ProductsList extends Component {
   }
 
   componentDidUpdate() {
+    // Fetch products if data does not exist
     if (!this.state.fetching && !this.state.products && !this.state.failed) {
       this.doFetch();
     }
   }
 
   render() {
-    let prods;
-
+    // The FilterForm component used for product filtering
     const filterDiv = (
       <FilterForm
         state={this.state.filters}
@@ -57,6 +60,7 @@ export default class ProductsList extends Component {
       />
     );
 
+    // The pagination element for page navigation
     const pagination = this.state.meta ? (
       <div className="mt-3 d-flex">
         <div className="ml-auto">
@@ -64,7 +68,7 @@ export default class ProductsList extends Component {
             currentPage={this.state.meta.currentPage}
             totalPages={this.state.meta.totalPages}
             gotoPage={(p) => {
-              this.setState({ ...this.state, page: p });
+              this.page = p;
               this.doFetch();
             }}
           />
@@ -74,65 +78,69 @@ export default class ProductsList extends Component {
       <></>
     );
 
+    // If fetching is in progress, return a loading spinner
     if (this.state.fetching) {
       return <LoadingSpinner />;
-    } else if (this.state.products?.length > 0) {
-      prods = this.state.products.map((p, i) => {
+    }
+
+    // If fetching fails, show LoadingFailed component
+    if (this.state.failed) {
+      return <LoadingFailed />;
+    }
+
+    // If products exist, show a list of products
+    if (this.state.products?.length > 0) {
+      const prods = this.state.products.map((p, i) => {
         return (
           <div key={`product-${i}`} className="col-md-4 col-sm-12">
             <ProductCard product={p} />
           </div>
         );
       });
-    } else if (this.state.failed) {
-      prods = <LoadingFailed />;
-    } else {
-      const hasFilters = this.state.filters !== initialFilterState;
-
       return (
         <>
-          {this.props.showFilters !== false ? filterDiv : <></>}
-          <div className="col-md-12 text-center mt-5">
-            <p className="font-weight-bold text-muted">
-              No products found...{' '}
-              {hasFilters ? 'Try changing the filters!' : ''}
-            </p>
-            {hasFilters ? (
-              <button
-                className="btn btn-dark mt-2"
-                onClick={() => this.setState(initialState)}>
-                Reset Filters
-              </button>
-            ) : (
-              <Link to={productsUrl}>
-                <button className="btn btn-dark mt-2">View All Products</button>
-              </Link>
-            )}
+          {filterDiv}
+          <div id="products-list" className="row">
+            {prods ? prods : <LoadingSpinner />}
           </div>
+          {pagination}
         </>
       );
     }
 
+    // Otherwise, show a no products found view
+    const hasFilters = this.state.filters !== initialFilterState;
+
     return (
       <>
-        {filterDiv}
-        <div id="products-list" className="row">
-          {prods ? prods : <LoadingSpinner />}
+        {this.props.showFilters !== false ? filterDiv : <></>}
+        <div className="col-md-12 text-center mt-5">
+          <p className="font-weight-bold text-muted">
+            No products found... {hasFilters ? 'Try changing the filters!' : ''}
+          </p>
+          {hasFilters ? (
+            <button
+              className="btn btn-dark mt-2"
+              onClick={() => this.setState(initialState)}>
+              Reset Filters
+            </button>
+          ) : (
+            <Link to={productsUrl}>
+              <button className="btn btn-dark mt-2">View All Products</button>
+            </Link>
+          )}
         </div>
-        {pagination}
       </>
     );
   }
 
+  /** Uses the filters in current state to create a criteria object */
   generateCriteria = () => {
     const filters = this.state.filters;
-    const Product = require('../../models/product/product');
-    const criteria = new Criteria(Product);
+    const criteria = new Criteria();
+    criteria.setPage(this.page);
     if (filters?.search) {
       criteria.addFilter('title', `%25${filters.search}%25`, 'like');
-    }
-    if (filters?.page) {
-      criteria.setPage(filters.page);
     }
     if (filters?.limit) {
       criteria.setLimit(filters.limit);
@@ -156,6 +164,7 @@ export default class ProductsList extends Component {
     return criteria;
   };
 
+  /** Initiates fetch request */
   doFetch = () => {
     this.setState({ ...this.state, fetching: true });
     const method = this.props.requestMethod;
