@@ -112,4 +112,16 @@ export default class OrderService extends ApiService {
     const res = await axios.patch(url, o);
     return res;
   }
+
+  /**
+   * Gets one of user product orders prioritized by state: Delivered > Shipped > Processing > Canceled
+   * @param uid ID of the user to fetch order of
+   * @param pid ID of the product the order is placed for
+   * @returns a response object containing order details and state as data if an order exists
+   */
+  async getUserProduct(uid: number, pid: number) {
+    const url = `${this.endpoint}/user/${uid}/product/${pid}`;
+    const res = await axios.get(url);
+    return res;
+  }
 }

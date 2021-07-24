@@ -9,6 +9,9 @@ import ProductRating from '../components/product-rating/product-rating';
 import CartProduct from '../models/product/cart-product';
 import LoadingFailed from '../components/loading/loading-failed';
 import PricePill from '../components/pills/price-pill';
+import ProductRatingDetail from './product-detail/product-rating-detail';
+import RatingSummary from './product-detail/rating-summary';
+import OwnRating from './product-detail/own-rating';
 
 export default class ProductDetail extends React.Component {
   static contextType = AppContext;
@@ -53,8 +56,14 @@ export default class ProductDetail extends React.Component {
   }
 
   ProductDetail = () => {
-    let component;
     const product = this.state.product;
+    const s = product.ratings?.map((r) => r.stars);
+    const stars =
+      s && s.length > 0
+        ? s.length === 1
+          ? s[0]
+          : (s.reduce((x, y) => x + y) / s.length).toFixed(1)
+        : undefined;
     let categoryList = this.state.categories?.map((c) => {
       return (
         <span key={c.id}>
@@ -68,48 +77,63 @@ export default class ProductDetail extends React.Component {
       );
     });
     if (categoryList) categoryList = categoryList.reverse();
+
+    let detail;
     if (product) {
       const highlights = Object.keys(product.highlights).map((k) => (
         <li key={'highlight' + k}>{product.highlights[k].highlight}</li>
       ));
 
-      component = (
-        <div className="row">
-          <div className="col-md-4">
-            <div className="m-3 p-3 text-center border rounded">
-              <img src={product.img} className="m-auto" alt="Product" />
+      detail = (
+        <div>
+          <div className="row mx-0">
+            <div className="col-md-4">
+              <div className="m-3 p-3 text-center border rounded">
+                <img src={product.img} className="m-auto" alt="Product" />
+              </div>
             </div>
-          </div>
-          <div className="col-md-8">
-            <div className="m-3">
-              <h3>
-                <b>{product.title}</b>
-              </h3>
-              <p className="text-muted">Code: {product.code}</p>
-              <p>
-                {categoryList}
-                <span className="badge bg-primary shadow-sm m-1">
-                  <Link
-                    to={`/categories/${product.category.name}`}
-                    className="text-light">
-                    {product.category.name.toUpperCase()}
-                  </Link>
-                </span>
-              </p>
-              <ProductRating rating={product.rating} />
-              <hr />
-              <p>{product.description}</p>
-              <div className="row">
-                <div className="col-md-6">
-                  <b>
-                    <Icon dataIcon="bi-star-fill" /> Highlights
-                  </b>
-                  <ul>{highlights}</ul>
-                </div>
-                <div className="col-md-6">
-                  <this.PurchaseBox />
+            <div className="col-md-8">
+              <div className="m-3">
+                <h3>
+                  <b>{product.title}</b>
+                </h3>
+                <p className="text-muted">Code: {product.code}</p>
+                <p>
+                  {categoryList}
+                  <span className="badge bg-primary shadow-sm m-1">
+                    <Link
+                      to={`/categories/${product.category.name}`}
+                      className="text-light">
+                      {product.category.name.toUpperCase()}
+                    </Link>
+                  </span>
+                </p>
+                <ProductRating rating={stars} />
+                <hr />
+                <p>{product.description}</p>
+                <div className="row">
+                  <div className="col-md-6">
+                    <b>
+                      <Icon dataIcon="bi-star-fill" /> Highlights
+                    </b>
+                    <ul>{highlights}</ul>
+                  </div>
+                  <div className="col-md-6">
+                    <this.PurchaseBox />
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <hr />
+          <div className="row m-3">
+            <h3 className="col-12 font-weight-bold">Reviews</h3>
+            <div className="col-md-4 p-2 mb-auto bg-light rounded">
+              <RatingSummary ratings={product.ratings} />
+            </div>
+            <div className="col-md-8">
+              <OwnRating product={product} />
+              <ProductRatingDetail product={product} />
             </div>
           </div>
         </div>
@@ -117,7 +141,7 @@ export default class ProductDetail extends React.Component {
     }
     return (
       <div className="bg-white rounded my-5 shadow">
-        {component ? component : <LoadingSpinner />}
+        {detail ? detail : <LoadingSpinner />}
       </div>
     );
   };
