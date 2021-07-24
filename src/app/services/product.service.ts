@@ -76,4 +76,49 @@ export default class ProductService extends ApiService {
     const ret = await axios.delete(url);
     return ret;
   }
+
+  /**
+   * Fetches ratings based on the given criteria
+   * @param criteria used for filtering ratings
+   * @returns list of ratings
+   */
+  async getRatings(criteria: Criteria<any>) {
+    const url = `${this.domain}/ratings${criteria?.getUrlParameters() || ''}`;
+    const ret = await axios.get(url);
+    return ret;
+  }
+
+  /**
+   * Adds rating on a product
+   * @param rating object containing rating data & product id
+   * @returns The rating object created
+   */
+  async addRating(rating: any) {
+    const url = `${this.domain}/ratings`;
+    const ret = await axios.put(url, rating);
+    return ret;
+  }
+
+  /**
+   * Edits rating on a product
+   * @param id ID of the rating
+   * @param rating object containing rating data & product id
+   * @returns The rating object after update
+   */
+  async editRating(id: number, rating: any) {
+    const url = `${this.domain}/ratings/${id}`;
+    const ret = await axios.patch(url, rating);
+    return ret;
+  }
+
+  /**
+   * Removes rating on a product
+   * @param id ID of the rating
+   * @returns The rating object
+   */
+  async removeRating(id: number) {
+    const url = `${this.domain}/ratings/${id}`;
+    const ret = await axios.delete(url);
+    return ret;
+  }
 }
