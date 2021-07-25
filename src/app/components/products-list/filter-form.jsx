@@ -19,7 +19,7 @@ export default class FilterForm extends Component {
         className="col-12 row align-items-center m-0 row"
         onSubmit={(e) => {
           e.preventDefault();
-          this.props.onFilter();
+          if (this.props.onFilter) this.props.onFilter();
         }}>
         <div className="form-group ml-md-auto">
           <input
