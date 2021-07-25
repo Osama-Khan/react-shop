@@ -14,6 +14,7 @@ const initialFilterState = {
   limit: '',
   orderBy: '',
   orderDir: 'ASC',
+  page: 1,
   priceMin: 0,
   priceMax: 100000,
   ratingMin: 0,
@@ -31,9 +32,6 @@ const initialState = {
 export default class ProductsList extends Component {
   static contextType = AppContext;
 
-  /** Used in fetch method to decide what page to request */
-  page = 1;
-
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -43,9 +41,12 @@ export default class ProductsList extends Component {
     this.doFetch();
   }
 
-  componentDidUpdate() {
-    // Fetch products if data does not exist
-    if (!this.state.fetching && !this.state.products && !this.state.failed) {
+  componentDidUpdate(_, prevState) {
+    const noData = !this.state.products && !this.state.failed;
+    const isFetching = this.state.fetching;
+    const pageChange = this.state.filters.page !== prevState.filters.page;
+    // Fetch products if data does not exist or filters have been updated
+    if (!isFetching && (noData || pageChange)) {
       this.doFetch();
     }
   }
@@ -56,7 +57,7 @@ export default class ProductsList extends Component {
       <FilterForm
         state={this.state.filters}
         setState={(obj) => this.setState({ ...this.state, filters: obj })}
-        onFilter={this.doFetch}
+        onFilter={() => this.doFetch()}
       />
     );
 
@@ -68,8 +69,10 @@ export default class ProductsList extends Component {
             currentPage={this.state.meta.currentPage}
             totalPages={this.state.meta.totalPages}
             gotoPage={(p) => {
-              this.page = p;
-              this.doFetch();
+              this.setState({
+                ...this.state,
+                filters: { ...this.state.filters, page: p },
+              });
             }}
           />
         </div>
@@ -138,7 +141,7 @@ export default class ProductsList extends Component {
   generateCriteria = () => {
     const filters = this.state.filters;
     const criteria = new Criteria();
-    criteria.setPage(this.page);
+    criteria.setPage(filters.page);
     if (filters?.search) {
       criteria.addFilter('title', `%25${filters.search}%25`, 'like');
     }
@@ -167,8 +170,10 @@ export default class ProductsList extends Component {
   /** Initiates fetch request */
   doFetch = () => {
     this.setState({ ...this.state, fetching: true });
-    const method = this.props.requestMethod;
+
     const criteria = this.generateCriteria();
+    // The method provided in props, used to fetch products
+    const method = this.props.requestMethod;
     const promise = method
       ? method(criteria)
       : this.context.services.productService.fetchProducts(criteria);
