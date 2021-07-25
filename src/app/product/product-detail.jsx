@@ -114,7 +114,7 @@ export default class ProductDetail extends React.Component {
                 <div className="row">
                   <div className="col-md-6">
                     <b>
-                      <Icon dataIcon="bi-star-fill" /> Highlights
+                      <Icon dataIcon="vaadin-flash" /> Highlights
                     </b>
                     <ul>{highlights}</ul>
                   </div>
@@ -127,11 +127,14 @@ export default class ProductDetail extends React.Component {
           </div>
           <hr />
           <div className="row m-3">
-            <h3 className="col-12 font-weight-bold">Reviews</h3>
+            <h3 className="col-12 font-weight-bold">
+              <Icon dataIcon="bi-star-fill" />
+              &nbsp;Reviews
+            </h3>
             <div className="col-md-4 p-2 mb-auto bg-light rounded">
               <RatingSummary ratings={product.ratings} />
             </div>
-            <div className="col-md-8">
+            <div className="col-md-8 mt-2 mt-md-0">
               <OwnRating product={product} />
               <ProductRatingDetail product={product} />
             </div>

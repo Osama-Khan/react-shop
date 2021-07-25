@@ -69,7 +69,7 @@ export default class OwnRating extends Component {
 
     const order = this.state.orderState?.state;
     return (
-      <div className="rounded bg-light shadow-sm mb-2 mt-sm-2 mt-md-0 p-2">
+      <div className="rounded bg-light shadow-sm mb-2 mt-2 mt-md-0 p-2">
         {
           // Show loading spinner while rating is being fetched
           this.state.rating === undefined ? (

@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export default function MobileNav({ loc }) {
   return (
     <>
-      <ul className="d-flex d-sm-flex d-md-none nav container p-0">
+      <ul className="d-flex d-md-none nav container p-0">
         <li className="nav-logo m-1">
           <Link to="/" className="anchor-color-remover">
             <Icon dataIcon="cib:stripe-s" />

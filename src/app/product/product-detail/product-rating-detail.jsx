@@ -69,7 +69,7 @@ export default class ProductRatingDetail extends React.Component {
 
   /** Formats a rating into a card view */
   RatingDetail = ({ rating }) => (
-    <div className="card flex-md-row flex-sm-column shadow-sm mb-2">
+    <div className="card flex-md-row flex-column shadow-sm mb-2">
       <div className="col-sm-12 col-md-4 col-lg-2 d-flex flex-column my-2 border-right">
         <img
           src={rating.user.profileImage}
