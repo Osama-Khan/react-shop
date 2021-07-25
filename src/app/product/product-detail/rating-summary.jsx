@@ -13,7 +13,7 @@ export default function RatingSummary({ ratings }) {
   // Moves 5 star at top and 1 star at bottom
   stars = stars.reverse();
   return (
-    <>
+    <div className="bg-light rounded p-2">
       {stars.map((s, i) => (
         <RatingSummaryStar
           key={'summary-star-' + i}
@@ -22,7 +22,7 @@ export default function RatingSummary({ ratings }) {
           totalStars={totalStars}
         />
       ))}
-    </>
+    </div>
   );
 }
 

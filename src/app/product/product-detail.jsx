@@ -131,10 +131,10 @@ export default class ProductDetail extends React.Component {
               <Icon dataIcon="bi-star-fill" />
               &nbsp;Reviews
             </h3>
-            <div className="col-md-4 p-2 mb-auto bg-light rounded">
+            <div className="col-md-4 mb-2">
               <RatingSummary ratings={product.ratings} />
             </div>
-            <div className="col-md-8 mt-2 mt-md-0">
+            <div className="col-md-8">
               <OwnRating product={product} />
               <ProductRatingDetail product={product} />
             </div>
