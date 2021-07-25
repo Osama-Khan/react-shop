@@ -14,6 +14,7 @@ import InterceptorInitializer from './interceptors/interceptor.initializer';
 import SessionRestore from './session/session-restore';
 import AuthenticationRoute from './components/route/authentication-route';
 import AuthorizationRoute from './components/route/authorization-route';
+import Footer from './components/footer/footer';
 
 export default class App extends React.Component {
   render() {
@@ -51,6 +52,7 @@ export default class App extends React.Component {
           <Router>
             <Navbar />
             <AnimatedContent routes={routes} />
+            <Footer />
           </Router>
         </div>
       </AppProvider>

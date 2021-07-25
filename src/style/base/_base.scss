@@ -47,3 +47,13 @@ nav {
     }
   }
 }
+
+.bg-dark {
+  a {
+    color: white !important;
+    transition: $animation-fast color;
+    &:hover {
+      color: $color-primary-light !important;
+    }
+  }
+}
