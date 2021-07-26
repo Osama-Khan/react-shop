@@ -1,0 +1,9 @@
+.gallery {
+  & > .main-img {
+    height: 280px;
+    & > img {
+      max-height: 240px;
+      object-fit: contain;
+    }
+  }
+}
