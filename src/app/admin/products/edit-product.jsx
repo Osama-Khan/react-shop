@@ -11,6 +11,7 @@ import SelectControl from '../../components/form/models/select.model';
 import { AppContext } from '../../context/app.provider';
 import LoadingSpinner from '../../components/loading/loading-spinner';
 import LoadingFailed from '../../components/loading/loading-failed';
+import { imgRegex } from './admin-product.helper';
 
 export default class EditProduct extends Component {
   static contextType = AppContext;
@@ -167,17 +168,14 @@ export default class EditProduct extends Component {
         validators: [notEmpty, (v) => min(v, 0)],
       }),
       new InputControl({
-        label: 'Image',
-        name: 'img',
-        placeholder: 'https://www.imagehost.com/image.jpg',
-        value: product.images[0].image,
+        label: 'Images',
+        name: 'images',
+        type: 'textarea',
+        placeholder: 'https://www.imagehost.com/image.jpg\n.../image2.jpg\n...',
+        value: product.images.map((i) => i.image).join('\n'),
         validators: [
           (v) =>
-            isPattern(
-              v,
-              // Regex to allow only urls ending with jpg, jpeg, or png (case insenstitive)
-              new RegExp('^(http|https)://.*/.+(.jpg|.jpeg|.png)$', 'i'),
-            ),
+            isPattern(v, new RegExp(`^(${imgRegex})(\\n${imgRegex})*$`, 'i')),
         ],
       }),
     ];
@@ -205,6 +203,7 @@ export default class EditProduct extends Component {
     this.state.controls.forEach((c) => {
       const prop = c.name.toLowerCase();
       const isHighlightsProp = prop === 'highlights';
+      const isImagesProp = prop === 'images';
       const isCategoryProp = prop === 'category';
 
       // Handles highlights property
@@ -215,6 +214,17 @@ export default class EditProduct extends Component {
         const isHighlightSame = c.value === oldHighlights;
         if (isHighlightSame) return;
         product['highlights'] = c.value.split('\n');
+        return;
+      }
+
+      // Handles images property
+      if (isImagesProp) {
+        const oldImages = this.state.product.images
+          .map((h) => h.image)
+          .join('\n');
+        const isImageSame = c.value === oldImages;
+        if (isImageSame) return;
+        product['images'] = c.value.split('\n');
         return;
       }
 

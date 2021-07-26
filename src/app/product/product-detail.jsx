@@ -12,6 +12,7 @@ import PricePill from '../components/pills/price-pill';
 import ProductRatingDetail from './product-detail/product-rating-detail';
 import RatingSummary from './product-detail/rating-summary';
 import OwnRating from './product-detail/own-rating';
+import ImageGallery from './product-detail/image-gallery';
 
 export default class ProductDetail extends React.Component {
   static contextType = AppContext;
@@ -88,9 +89,7 @@ export default class ProductDetail extends React.Component {
         <div>
           <div className="row mx-0">
             <div className="col-md-4">
-              <div className="m-3 p-3 text-center border rounded">
-                <img src={product.images[0].image} className="m-auto" alt="Product" />
-              </div>
+              <ImageGallery images={product.images} />
             </div>
             <div className="col-md-8">
               <div className="m-3">
