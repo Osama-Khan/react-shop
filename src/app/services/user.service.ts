@@ -83,36 +83,6 @@ export default class UserService extends ApiService {
   }
 
   /**
-   * Fetches data containing details of the most recently added product by the given user
-   * @param id of the user to fetch product of
-   * @returns An object with product data
-   */
-  async fetchMostRecentProduct(id: number) {
-    const endPoint = `${id}/products/recent`;
-    const res = await axios.get(`${this.domain}/users/${endPoint}`);
-    if (res.status === 404) {
-      return undefined;
-    }
-    return res;
-  }
-
-  /**
-   * Fetches data containing products of the user provided
-   * @param id of the user to fetch products of
-   * @param criteria filters for the products
-   * @returns An object with products data
-   */
-  async fetchProducts(id: number, criteria?: Criteria<any>) {
-    if (!criteria) {
-      criteria = new Criteria();
-    }
-    criteria.addFilter('user', id);
-    const endPoint = `products${criteria.getUrlParameters()}`;
-    const res = await axios.get(`${this.domain}/${endPoint}`);
-    return res;
-  }
-
-  /**
    * Sends an update request to the server
    * @param id Id of the user to update
    * @param data object with properties of user
