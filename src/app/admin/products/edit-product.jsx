@@ -1,17 +1,10 @@
 import { Component } from 'react';
 import Criteria from '../../models/criteria';
 import Form from '../../components/form/form';
-import {
-  isPattern,
-  min,
-  notEmpty,
-} from '../../components/form/helpers/validation.helper';
-import InputControl from '../../components/form/models/input.model';
-import SelectControl from '../../components/form/models/select.model';
 import { AppContext } from '../../context/app.provider';
 import LoadingSpinner from '../../components/loading/loading-spinner';
 import LoadingFailed from '../../components/loading/loading-failed';
-import { imgRegex } from './admin-product.helper';
+import { generateFormData } from './admin-product.helper';
 
 export default class EditProduct extends Component {
   static contextType = AppContext;
@@ -105,80 +98,18 @@ export default class EditProduct extends Component {
   }
 
   generateFormData(categories, product) {
-    // Generate options array from category objects
-    const options = [
-      { name: 'Select a category...', value: '', disabled: true },
-      ...categories.map((c) => ({
-        name: c.name,
-        value: c.id,
-      })),
+    // Create array of current values
+    const values = [
+      product.code,
+      product.title,
+      product.description,
+      product.highlights.map((h) => h.highlight).join('\n'),
+      product.category.id,
+      product.price,
+      product.stock,
+      product.images.map((i) => i.image).join('\n'),
     ];
-    return [
-      new InputControl({
-        label: 'Code',
-        name: 'code',
-        placeholder: 'Unique Code',
-        value: product.code,
-        validators: [notEmpty],
-      }),
-      new InputControl({
-        label: 'Title',
-        name: 'title',
-        placeholder: 'Give the product a nice catchy title',
-        value: product.title,
-        validators: [notEmpty],
-      }),
-      new InputControl({
-        label: 'Description',
-        name: 'description',
-        type: 'textarea',
-        placeholder: 'Describe the product in a paragraph or two',
-        value: product.description,
-        validators: [notEmpty],
-      }),
-      new InputControl({
-        label: 'Highlights',
-        name: 'highlights',
-        type: 'textarea',
-        placeholder: 'Lightweight\nSuper fast\n...',
-        value: product.highlights.map((h) => h.highlight).join('\n'),
-        validators: [notEmpty],
-      }),
-      new SelectControl({
-        label: 'Category',
-        name: 'category',
-        options,
-        value: product.category.id,
-        validators: [notEmpty],
-      }),
-      new InputControl({
-        label: 'Price',
-        name: 'price',
-        type: 'number',
-        placeholder: 'A reasonable price for the product',
-        value: product.price,
-        validators: [notEmpty, (v) => min(v, 1)],
-      }),
-      new InputControl({
-        label: 'Stock',
-        name: 'stock',
-        type: 'number',
-        placeholder: 'Stock available for the product',
-        value: product.stock,
-        validators: [notEmpty, (v) => min(v, 0)],
-      }),
-      new InputControl({
-        label: 'Images',
-        name: 'images',
-        type: 'textarea',
-        placeholder: 'https://www.imagehost.com/image.jpg\n.../image2.jpg\n...',
-        value: product.images.map((i) => i.image).join('\n'),
-        validators: [
-          (v) =>
-            isPattern(v, new RegExp(`^(${imgRegex})(\\n${imgRegex})*$`, 'i')),
-        ],
-      }),
-    ];
+    return generateFormData(categories, values);
   }
 
   /**
