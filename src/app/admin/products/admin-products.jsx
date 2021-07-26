@@ -16,8 +16,10 @@ export default class AdminProducts extends Component {
           <Icon dataIcon="bx-bxs-box" />
         </div>
       ),
-      key: 'img',
-      selector: (v) => <img src={v} alt="Product" className="img-small" />,
+      key: 'images',
+      selector: (v) => (
+        <img src={v[0].image} alt="Product" className="img-small" />
+      ),
     },
     {
       header: 'ID',
@@ -98,9 +100,10 @@ export default class AdminProducts extends Component {
             </div>
             <ListingComponent
               options={this.listingColumnOptions}
-              fetchMethod={(crit) =>
-                this.context.services.productService.fetchProducts(crit)
-              }
+              fetchMethod={(crit) => {
+                crit.addRelation('images');
+                return this.context.services.productService.fetchProducts(crit);
+              }}
               criteria={this.criteria}
             />
           </div>

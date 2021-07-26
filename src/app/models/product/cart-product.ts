@@ -15,7 +15,7 @@ export default class CartProduct {
     this.description = p.description;
     this.quantity = quantity;
     this.price = p.price;
-    this.img = p.img;
+    this.img = p.images[0].image;
     this.stock = p.stock;
   }
 

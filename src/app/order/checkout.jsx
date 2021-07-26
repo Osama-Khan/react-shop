@@ -70,7 +70,7 @@ export default class Checkout extends Component {
         <div key={`product-${p.id}`} className="row">
           <div>
             <img
-              src={p.img}
+              src={p.images[0].image}
               style={{ height: '4em' }}
               className="mx-3"
               alt={p.title}

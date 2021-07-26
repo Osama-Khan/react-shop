@@ -8,5 +8,5 @@ export default interface Product {
   rating: number | null;
   stock: number;
   category: string;
-  img: string;
+  images: any;
 }

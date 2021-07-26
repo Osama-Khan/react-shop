@@ -16,7 +16,7 @@ export default function ProductCard({ product, classes = '' }) {
     <>
       <Link to={`${productsUrl}/${product.id}`} className={cardClasses}>
         <img
-          src={product.img}
+          src={product.images[0].image}
           className="mx-auto product-list-card-img"
           style={{ objectFit: 'contain' }}
           alt=""

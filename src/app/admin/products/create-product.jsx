@@ -10,6 +10,7 @@ import InputControl from '../../components/form/models/input.model';
 import SelectControl from '../../components/form/models/select.model';
 import { AppContext } from '../../context/app.provider';
 import LoadingSpinner from '../../components/loading/loading-spinner';
+import { imgRegex } from './admin-product.helper';
 
 export default class CreateProduct extends Component {
   static contextType = AppContext;
@@ -128,15 +129,13 @@ export default class CreateProduct extends Component {
         validators: [notEmpty, (v) => min(v, 0)],
       }),
       new InputControl({
-        label: 'Image',
-        name: 'img',
-        placeholder: 'https://www.imagehost.com/image.jpg',
+        label: 'Images',
+        name: 'images',
+        type: 'textarea',
+        placeholder: 'https://www.imagehost.com/image.jpg\n.../image2.png\n...',
         validators: [
           (v) =>
-            isPattern(
-              v,
-              new RegExp('^(http|https)://.*/.+(.jpg|.jpeg|.png)$', 'i'),
-            ),
+            isPattern(v, new RegExp(`^(${imgRegex})(\\n${imgRegex})*$`, 'i')),
         ],
       }),
     ];
@@ -154,6 +153,7 @@ export default class CreateProduct extends Component {
       product[c.name] = c.value;
     });
     product.highlights = product.highlights.split('\n');
+    product.images = product.images.split('\n');
     const promise = svc.productService.create(
       product,
       this.context.state.user.id,
