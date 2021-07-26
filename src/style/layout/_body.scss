@@ -1,0 +1,9 @@
+/**
+ * Makes sure the app body covers a big part of the screen to prevent
+ * odd app layout in case of less body content
+ */
+.app {
+  & > div {
+    min-height: 80vh;
+  }
+}

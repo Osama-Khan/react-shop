@@ -12,7 +12,7 @@
   'base/transitions';
 
 // 4. Layout-related sections
-@import 'layout/header', 'layout/footer';
+@import 'layout/body', 'layout/header', 'layout/footer';
 
 // 5. Components
 @import 'components/button', 'components/carousel', 'components/card',
