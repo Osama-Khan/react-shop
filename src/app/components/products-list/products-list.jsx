@@ -172,6 +172,7 @@ export default class ProductsList extends Component {
     this.setState({ ...this.state, fetching: true });
 
     const criteria = this.generateCriteria();
+    criteria.addRelation('images');
     // The method provided in props, used to fetch products
     const method = this.props.requestMethod;
     const promise = method

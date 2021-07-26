@@ -170,7 +170,7 @@ export default class EditProduct extends Component {
         label: 'Image',
         name: 'img',
         placeholder: 'https://www.imagehost.com/image.jpg',
-        value: product.img,
+        value: product.images[0].image,
         validators: [
           (v) =>
             isPattern(

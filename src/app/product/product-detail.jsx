@@ -89,7 +89,7 @@ export default class ProductDetail extends React.Component {
           <div className="row mx-0">
             <div className="col-md-4">
               <div className="m-3 p-3 text-center border rounded">
-                <img src={product.img} className="m-auto" alt="Product" />
+                <img src={product.images[0].image} className="m-auto" alt="Product" />
               </div>
             </div>
             <div className="col-md-8">

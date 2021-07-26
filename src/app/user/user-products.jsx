@@ -25,12 +25,13 @@ export default class UserProducts extends Component {
         <div className="mt-5">
           <h1>{this.state.user.username}'s Products</h1>
           <ProductsList
-            requestMethod={(criteria) =>
-              this.context.services.userService.fetchProducts(
-                parseInt(this.props.match.params.id),
+            requestMethod={(criteria) => {
+              criteria.addRelation('images');
+              criteria.addFilter('user', this.state.user.id);
+              return this.context.services.productService.fetchProducts(
                 criteria,
-              )
-            }
+              );
+            }}
           />
         </div>
       );
