@@ -6,10 +6,14 @@ type Option = {
   disabled?: boolean;
 };
 
+type SelectControlObject = Partial<FormControl> & {
+  options: Option[];
+};
+
 export default class SelectControl extends FormControl {
   options: Option[];
 
-  constructor(object: SelectControl) {
+  constructor(object: SelectControlObject) {
     super(object);
     this.options = object.options;
   }

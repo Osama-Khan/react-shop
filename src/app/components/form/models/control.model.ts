@@ -9,7 +9,7 @@ export abstract class FormControl {
   onChange?: (e: any) => any;
   validators: ((v: any) => boolean)[] = [];
 
-  constructor(object: FormControl) {
+  constructor(object: Partial<FormControl>) {
     if (object.label) this.label = object.label;
     if (object.id) this.id = object.id;
     if (object.name) this.name = object.name;
