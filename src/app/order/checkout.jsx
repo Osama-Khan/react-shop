@@ -68,15 +68,15 @@ export default class Checkout extends Component {
       hasError = hasError || errorMessage;
       return (
         <div key={`product-${p.id}`} className="row">
-          <div>
+          <div className="col-2">
             <img
-              src={p.images[0].image}
+              src={p.img}
               style={{ height: '4em' }}
               className="mx-3"
               alt={p.title}
             />
           </div>
-          <div>
+          <div className="col-10">
             <Link to={productsUrl + '/' + p.id}>
               <p>
                 <b>{p.title}</b>

@@ -26,7 +26,7 @@ export default class NavbarCartCard extends Component {
               key={i}
               className="card shadow-sm clickable p-2 my-1 d-flex flex-row text-sm ml-1">
               <div className="col-sm-4 my-auto">
-                <img src={p.images[0].image} alt={p.title} />
+                <img src={p.img} alt={p.title} />
               </div>
               <div className="col-sm-8 d-flex flex-column">
                 <Link to={productsUrl + '/' + p.id}>
