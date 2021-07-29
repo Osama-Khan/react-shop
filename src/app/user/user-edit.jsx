@@ -52,7 +52,7 @@ export default class UserEdit extends Component {
           </div>
           <form className="card-body d-flex flex-column" onSubmit={this.update}>
             <Form
-              controls={this.formData}
+              controls={this.state.controls || this.formData}
               onChange={(controls) => {
                 this.setState({ ...this.state, controls });
               }}
@@ -73,15 +73,15 @@ export default class UserEdit extends Component {
     const userSvc = this.context.services.userService;
     const uiSvc = this.context.services.uiService;
 
-    if (this.state.controls.every((c) => c.valid === false)) {
-      uiSvc.errorToast('Data provided is invalid!');
-      return;
-    }
     const u = {};
 
     // Only get different values
-    this.state.controls.forEach((d, i) => {
+    this.state.controls?.forEach((d, i) => {
       if (d.value !== this.formData[i].value) {
+        if (!d.isValid) {
+          uiSvc.errorToast('Data provided is invalid!');
+          return;
+        }
         u[d.name] = d.value;
       }
     });
