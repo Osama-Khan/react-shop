@@ -1,4 +1,9 @@
-export default function Icon({ dataIcon, classes, click, inline = true }) {
+export default function Icon({
+  dataIcon,
+  classes = undefined,
+  click = undefined,
+  inline = true,
+}) {
   return click ? (
     ClickableIcon({ dataIcon, classes, click, inline })
   ) : (
