@@ -10,6 +10,7 @@ import {
 } from '../components/form/helpers/validation.helper';
 import InputControl from '../components/form/models/input.model';
 import Icon from '../components/icon/icon';
+import ImagePicker from '../components/input/image-picker.tsx';
 import LoadingSpinner from '../components/loading/loading-spinner';
 import { AppContext } from '../context/app.provider';
 import { userUrl } from '../routes';
@@ -21,11 +22,17 @@ export default class UserEdit extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { user: undefined, controls: [] };
+    this.state = {
+      user: undefined,
+      controls: undefined,
+      selectedProfile: undefined,
+    };
   }
 
   componentDidMount() {
-    this.setState({ user: Object.assign({}, this.context.state.user) });
+    this.setState({
+      user: Object.assign({}, this.context.state.user),
+    });
   }
 
   goBack = () => {
@@ -51,6 +58,14 @@ export default class UserEdit extends Component {
             </span>
           </div>
           <form className="card-body d-flex flex-column" onSubmit={this.update}>
+            <div className="d-flex flex-column my-1 align-items-center">
+              <ImagePicker
+                defaultImage={this.state.user.profileImage}
+                onPick={(image) =>
+                  this.setState({ ...this.state, selectedProfile: image })
+                }
+              />
+            </div>
             <Form
               controls={this.state.controls || this.formData}
               onChange={(controls) => {
@@ -59,7 +74,10 @@ export default class UserEdit extends Component {
             />
             <button
               className="btn btn-primary ml-auto col-md-4"
-              disabled={!this.state.controls.some((c) => c.isValid)}>
+              disabled={
+                !this.state.controls?.some((c) => c.isValid) &&
+                !this.state.selectedProfile
+              }>
               Update
             </button>
           </form>
@@ -85,8 +103,11 @@ export default class UserEdit extends Component {
         u[d.name] = d.value;
       }
     });
+    if (this.state.selectedProfile) {
+      u.profileImage = this.state.selectedProfile;
+    }
 
-    if (Object.keys(u).length === 0) {
+    if (Object.keys(u).length === 0 && !this.state.selectedProfile) {
       uiSvc.toast('No changes to update!');
       return;
     }
