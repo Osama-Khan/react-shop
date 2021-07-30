@@ -6,6 +6,7 @@ import LoadingFailed from '../components/loading/loading-failed';
 import UserProfile from './profile/user-profile';
 import LoginForm from './login-form';
 import { userUrl } from '../routes';
+import UserState from '../state/user-state';
 
 export default class User extends React.Component {
   static contextType = AppContext;
@@ -117,12 +118,10 @@ export default class User extends React.Component {
 
   logout = () => {
     this.context.services.storageService.clearUserToken();
+    delete this.context.state.user;
     this.context.setState({
       ...this.context.state,
-      user: {
-        ...this.context.state.user,
-        token: undefined,
-      },
+      user: new UserState(),
     });
   };
 }
