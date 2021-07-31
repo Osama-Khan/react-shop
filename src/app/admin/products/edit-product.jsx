@@ -5,6 +5,8 @@ import { AppContext } from '../../context/app.provider';
 import LoadingSpinner from '../../components/loading/loading-spinner';
 import LoadingFailed from '../../components/loading/loading-failed';
 import { generateFormData } from './admin-product.helper';
+import ImagePicker from '../../components/image-picker/image-picker';
+import Icon from '../../components/icon/icon';
 
 export default class EditProduct extends Component {
   static contextType = AppContext;
@@ -12,7 +14,7 @@ export default class EditProduct extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { submitting: false };
+    this.state = { submitting: false, images: [], imagesChanged: false };
 
     // Create criteria to fetch all categories
     this.categoryCriteria = new Criteria();
@@ -35,6 +37,7 @@ export default class EditProduct extends Component {
           this.setState({
             ...this.state,
             product,
+            images: product.images.map((i) => i.image),
             controls: this.generateFormData(cats, product),
           });
         })
@@ -74,10 +77,52 @@ export default class EditProduct extends Component {
                       this.setState({ ...this.state, controls });
                     }}
                   />
+                  <div>
+                    <label>Product Images</label>
+                    <div className="row mx-0">
+                      {this.state.images.map((img, i) => (
+                        <div className="position-relative mr-1 mb-1">
+                          <img
+                            src={img}
+                            alt={'product-image-' + i}
+                            key={'product-img-' + i}
+                            className="img-large bg-light"
+                          />
+                          <div
+                            className="top-right m-1 rounded-circle bg-dark img-tiny opacity-3 text-clickable text-white text-center"
+                            onClick={() => {
+                              const images = this.state.images.filter(
+                                (_, ind) => ind !== i,
+                              );
+                              this.setState({ ...this.state, images });
+                            }}>
+                            <Icon dataIcon="fa:times" />
+                          </div>
+                        </div>
+                      ))}
+                      <ImagePicker
+                        onPick={(imgs) =>
+                          this.setState({
+                            ...this.state,
+                            images: this.state.images.concat(imgs),
+                            imagesChanged: true,
+                          })
+                        }
+                        noPreview={true}
+                        maxSize={2000000}
+                        onError={(e) =>
+                          this.context.services.uiService.errorToast(e.message)
+                        }
+                        allowMultiple={true}
+                        validFormats={['jpg', 'jpeg', 'png']}
+                      />
+                    </div>
+                  </div>
                   <button
                     className="btn btn-primary ml-auto"
                     disabled={
-                      !this.state.controls?.every((c) => c.isValid === true) ||
+                      (this.state.controls?.some((c) => c.isValid === false) &&
+                        !this.state.imagesChanged) ||
                       this.state.submitting
                     }>
                     Update
@@ -107,7 +152,6 @@ export default class EditProduct extends Component {
       product.category.id,
       product.price,
       product.stock,
-      product.images.map((i) => i.image).join('\n'),
     ];
     return generateFormData(categories, values);
   }
@@ -134,7 +178,6 @@ export default class EditProduct extends Component {
     this.state.controls.forEach((c) => {
       const prop = c.name.toLowerCase();
       const isHighlightsProp = prop === 'highlights';
-      const isImagesProp = prop === 'images';
       const isCategoryProp = prop === 'category';
 
       // Handles highlights property
@@ -145,17 +188,6 @@ export default class EditProduct extends Component {
         const isHighlightSame = c.value === oldHighlights;
         if (isHighlightSame) return;
         product['highlights'] = c.value.split('\n');
-        return;
-      }
-
-      // Handles images property
-      if (isImagesProp) {
-        const oldImages = this.state.product.images
-          .map((h) => h.image)
-          .join('\n');
-        const isImageSame = c.value === oldImages;
-        if (isImageSame) return;
-        product['images'] = c.value.split('\n');
         return;
       }
 
@@ -172,6 +204,9 @@ export default class EditProduct extends Component {
       const isValueSame = c.value === this.state.product[c.name];
       if (!isValueSame) product[c.name] = c.value;
     });
+    if (this.state.imagesChanged) {
+      product.images = this.state.images;
+    }
 
     // Creating promise and toast messages
     const promise = svc.productService.edit(this.state.product.id, product);

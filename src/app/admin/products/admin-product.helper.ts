@@ -1,8 +1,4 @@
-import {
-  isPattern,
-  min,
-  notEmpty,
-} from '../../components/form/helpers/validation.helper';
+import { min, notEmpty } from '../../components/form/helpers/validation.helper';
 import InputControl from '../../components/form/models/input.model';
 import SelectControl from '../../components/form/models/select.model';
 
@@ -76,17 +72,6 @@ export function generateFormData(categories: any[], values?: any[]) {
       placeholder: 'Stock available for the product',
       value: values ? values[6] : '',
       validators: [notEmpty, (v) => min(v, 0)],
-    }),
-    new InputControl({
-      label: 'Images',
-      name: 'images',
-      type: 'textarea',
-      placeholder: 'https://www.imagehost.com/image.jpg\n.../image2.png\n...',
-      value: values ? values[7] : '',
-      validators: [
-        (v) =>
-          isPattern(v, new RegExp(`^(${imgRegex})(\\n${imgRegex})*$`, 'i')),
-      ],
     }),
   ];
 

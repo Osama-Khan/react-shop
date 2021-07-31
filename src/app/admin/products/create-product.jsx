@@ -4,6 +4,8 @@ import Form from '../../components/form/form';
 import { AppContext } from '../../context/app.provider';
 import LoadingSpinner from '../../components/loading/loading-spinner';
 import { generateFormData } from './admin-product.helper';
+import ImagePicker from '../../components/image-picker/image-picker';
+import Icon from '../../components/icon/icon';
 
 export default class CreateProduct extends Component {
   static contextType = AppContext;
@@ -12,7 +14,7 @@ export default class CreateProduct extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { controls: undefined, submitting: false };
+    this.state = { controls: undefined, submitting: false, images: [] };
     this.criteria = new Criteria();
     this.criteria.setLimit(10000);
   }
@@ -48,6 +50,46 @@ export default class CreateProduct extends Component {
                     this.setState({ ...this.state, controls });
                   }}
                 />
+                <div>
+                  <label>Product Images</label>
+                  <div className="row mx-0">
+                    {this.state.images.map((img, i) => (
+                      <div className="position-relative mr-1 mb-1">
+                        <img
+                          src={img}
+                          alt={'product-image-' + i}
+                          key={'product-img-' + i}
+                          className="img-large bg-light"
+                        />
+                        <div
+                          className="top-right m-1 rounded-circle bg-dark img-tiny opacity-3 text-clickable text-white text-center"
+                          onClick={() => {
+                            const images = this.state.images.filter(
+                              (_, ind) => ind !== i,
+                            );
+                            this.setState({ ...this.state, images });
+                          }}>
+                          <Icon dataIcon="fa:times" />
+                        </div>
+                      </div>
+                    ))}
+                    <ImagePicker
+                      onPick={(imgs) =>
+                        this.setState({
+                          ...this.state,
+                          images: this.state.images.concat(imgs),
+                        })
+                      }
+                      noPreview={true}
+                      maxSize={2000000}
+                      allowMultiple={true}
+                      onError={(e) =>
+                        this.context.services.uiService.errorToast(e.message)
+                      }
+                      validFormats={['jpg', 'jpeg', 'png']}
+                    />
+                  </div>
+                </div>
                 <button
                   className="btn btn-primary ml-auto"
                   disabled={
@@ -78,7 +120,7 @@ export default class CreateProduct extends Component {
       product[c.name] = c.value;
     });
     product.highlights = product.highlights.split('\n');
-    product.images = product.images.split('\n');
+    product.images = this.state.images;
     const promise = svc.productService.create(
       product,
       this.context.state.user.id,
