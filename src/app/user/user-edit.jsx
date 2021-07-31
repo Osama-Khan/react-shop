@@ -10,7 +10,7 @@ import {
 } from '../components/form/helpers/validation.helper';
 import InputControl from '../components/form/models/input.model';
 import Icon from '../components/icon/icon';
-import ImagePicker from '../components/input/image-picker.tsx';
+import ImagePicker from '../components/image-picker/image-picker.tsx';
 import LoadingSpinner from '../components/loading/loading-spinner';
 import { AppContext } from '../context/app.provider';
 import { userUrl } from '../routes';
@@ -61,8 +61,8 @@ export default class UserEdit extends Component {
             <div className="d-flex flex-column my-1 align-items-center">
               <ImagePicker
                 defaultImage={this.state.user.profileImage}
-                onPick={(image) =>
-                  this.setState({ ...this.state, selectedProfile: image })
+                onPick={(imgs) =>
+                  this.setState({ ...this.state, selectedProfile: imgs[0] })
                 }
               />
             </div>
