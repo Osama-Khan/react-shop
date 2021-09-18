@@ -36,7 +36,7 @@ export default class ProductService extends ApiService {
    */
   async fetchFromCategory(name: string, criteria?: Criteria<any>) {
     const params = criteria?.getUrlParameters() || '';
-    const url = `${this.domain}/categories/products/${name}${params}`;
+    const url = `${this.domain}/products/category/${name}${params}`;
     const ret = await axios.get(url);
     return ret;
   }
