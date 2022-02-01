@@ -1,3 +1,3 @@
 export default class ApiService {
-  protected domain = 'http://localhost:3001';
+  protected domain = `http://${process.env.REACT_APP_API_DOMAIN}:${process.env.REACT_APP_API_PORT}`;
 }
